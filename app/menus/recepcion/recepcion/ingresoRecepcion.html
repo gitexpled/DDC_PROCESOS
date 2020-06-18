@@ -1,0 +1,266 @@
+<script src="app/menus/recepcion/recepcion/ingresoRecepcion.js"></script>
+<div class="{{page.animation}}" id="MenuInicial" ng-controller="ingresoRecepcion">
+    <div class="col-xs-12 col-md-12 col-lg-12" id="formProductor">
+            <div class="box-datos-generales">
+                <!-- GENERALES -->
+                <div class="row">
+                    <div class="hgroup">Datos generales</div>
+                    <div class="col-xs-6 col-md-6 col-lg-6">
+                        <h3>Productor</h3>
+                        <div class="" ng-click="mostrarProductores(true)">
+                        <p class='hh'>Productor</p>
+                        <div class="img-productor2 " style="height: 186px"></div> <!---->
+                        <div class="name-productor2 ">{{datosGranel.LIFNR.DESCRIPTION}}</div>
+                        <div class="code-productor2 ">{{datosGranel.LIFNR.VALUE_CHAR}}</div>
+                        </div>
+                        <!--<select class="inp-default" ng-model="datosGranel.LIFNR" ng-change="getPredios()" ng-options="item as item.DESCRIPTION for item in listaProductores track by item.VALUE_CHAR">
+                            <option value="">Seleccionar</option>
+                        </select>-->
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Fecha Contabilización</h3>
+                        <select class="inp-default" ng-model="datosGranel.BUDAT" ng-options="item as item.name for item in selFechaContabilizacionOpciones track by item.value">
+                            <option value="">Seleccionar</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Fecha cosecha</h3>
+                        <select class="inp-default" ng-model="datosGranel.HSDAT" ng-options="item as item.name for item in selFechaCosechaOpciones track by item.value">
+                            <option value="">Seleccionar</option>
+                        </select>
+                    </div>
+                   <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Predio SDP</h3>
+                        <div class="box-inp-tabs">
+                            <!--<input class="inp-default" ng-model="datosGranel.ZPREDIO"  placeholder="Ingresar" maxlength="10" ng-options="item as item.DESCRIPTION for item in listaPredio track by item.VALUE_CHAR"/>-->
+                            <select class="inp-default" ng-model="datosGranel.ZPREDIO" ng-change="plp()" placeholder="Ingresar"  ng-options="item as item.DESCRIPTION for item in listaPredio track by item.VALUE_CHAR">
+                            <option value="">Seleccionar</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Cuartel</h3>
+                        <div class="box-inp-tabs">
+                             <select class="inp-default" ng-model="datosGranel.ZCUARTEL" placeholder="Ingresar"  ng-options="item as item.DESCRIPTION for item in listaCuartel track by item.VALUE_CHAR">
+                            <option value="">Seleccionar</option>
+                            </select>
+                           <!-- <input class="inp-default" ng-model="datosGranel.ZCUARTEL"  placeholder="Ingresar" maxlength="10" disabled/>-->
+                        </div>
+                    </div>
+                    <!--<div class="col-xs-6 col-md-6 col-lg-6">
+                        <h3>Productor Etiqueta</h3>
+                        <select class="inp-default" ng-model="datosGranel.ZPRODUCTOR_ET" ng-options="item as item.DESCRIPTION for item in listaProductores track by item.VALUE_CHAR">
+                            <option value="">Seleccionar</option>
+                        </select>
+                    </div>-->
+                    <!-- FECJA COSECHA -->
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Tipo Material</h3>
+                        <div class="box-inp-tabs">
+                            <select class="inp-default" ng-model="datosGranel.TIPOMATERIAL" ng-options="item as item.DESCRIPTION for item in materialesProductorOpciones track by item.VALUE_CHAR" >
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Variedad</h3>
+                        <div class="box-inp-tabs">
+                            <select class="inp-default" ng-model="datosGranel.VARIEDAD" ng-options="itemS as itemS.DESCRIPTION for itemS in variedadOpciones track by itemS.VALUE_CHAR">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="display: {{mostrarUAT}}">
+                        <h3>UAT</h3>
+                        <div class="box-inp-tabs">
+                            <select class="inp-default" ng-change="validaUAT()" ng-model="datosGranel.UAT" ng-options="item as item.DESCRIPTION for item in listarUAT track by item.VALUE_CHAR"">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Guia de Despacho</h3>
+                        <div class="box-inp-tabs">
+                            <input class="inp-default"  ng-model="datosGranel.XBLNR" placeholder="Nº" maxlength="10" />
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Observaci&oacute;n</h3>
+                            <div class="box-inp-tabs">
+                                <textarea class="inp-default" type="number" ng-model="datosGranel.observacion" style="margin: 0px; width: 667px; height: 47px;color : #fff;text-transform: uppercase;font-weight: bold" /></textarea>
+                            </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Patente</h3>
+                        <div class="box-inp-tabs">
+                            <!--<select class="inp-default" ng-model="datosGranel.rutas" ng-options="item as item.DESCRIPTION for item in rutasOpciones track by item.VALUE_CHAR">
+                                <option value="">Seleccionar</option>
+                            </select>-->
+                            <input class="inp-default"  ng-model="datosGranel.ZPATENTE"  placeholder="" maxlength="6" />
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Conductor</h3>
+                        <div class="box-inp-tabs">
+                            <!--<select class="inp-default" ng-model="datosGranel.estadoFumigacion" ng-options="item as item.DESCRIPTION for item in tramportistaOpciones track by item.VALUE_CHAR">
+                                <option value="">Seleccionar</option>
+                            </select>-->
+                            <input class="inp-default"  ng-model="datosGranel.ZCONDUCTOR"  placeholder="NOMBRE" />
+                        </div>
+                    </div>
+
+                   <!-- <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Tratamiento</h3>
+                        <div class="box-inp-tabs">
+                            <select class="inp-default" ng-model="datosGranel.TRATAMIENTO" ng-options="itemS as itemS.DESCRIPTION for itemS in listaTratamiento track by itemS.VALUE_CHAR">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Tipo de frio</h3>
+                        <div class="box-inp-tabs">
+                            <select class="inp-default" ng-model="datosGranel.TIPOFRIO" ng-options="itemS as itemS.DESCRIPTION for itemS in listaTipoFrio track by itemS.VALUE_CHAR">
+                            </select>
+                        </div>
+                    </div>
+                    <!--<div class="col-xs-6 col-sm-6 col-md-6" style="">
+                        <h3>Lote</h3>
+                        <div class="box-inp-tabs">
+                            <input class="inp-default"  ng-model="datosGranel.LOTE"  placeholder="" maxlength="7" />
+                        </div>
+                    </div>-->
+                    
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="display: {{vistaDesate}}">
+                        <h3>Kilos Bruto Camion</h3>
+                            <div class="box-inp-tabs">
+                                <input class="inp-default" ng-readonly="{{disableCamion}}" ng-blur="actualizaKilos()" type="number" ng-model="datosGranel.kilosBrutosCamion" placeholder="Kg" style="width: 86%" />
+                                <img src="img/icon/e-scale-min.png" class="inp-pesabt-min" title="Capturar kilos" ng-click="btGetKilos('camion')">
+                            </div>
+                    </div>
+                    
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="display: {{vistaDesate}}">
+                        <h3>Kilos Destare Camion</h3>
+                            <div class="box-inp-tabs">
+                                <input class="inp-default" ng-blur="actualizaKilos()" ng-readonly="{{disableCamion}}" type="number" ng-model="datosGranel.kilosDestareCamion" style="width: 86%" placeholder="Kg"/>
+                                <img src="img/icon/e-scale-min.png" class="inp-pesabt-min" title="Capturar kilos" ng-click="btGetKilos('destare')">
+                            </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="display: {{vistaDesate}}">
+                        <h3>Cant. Envases 1</h3>
+                            <div class="box-inp-tabs">
+                                <input class="inp-default"  type="number" placeholder="Cantidad..." ng-model="datosGranel.cantEnvase" />
+                            </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="display: {{vistaDesate}}">
+                        <h3>Tipo Envase 1</h3>
+                        <div class="box-inp-tabs">
+                             <select class="inp-default ng-pristine ng-untouched ng-valid" ng-change="actualizaKilos()" ng-model="datosGranel.envase1" ng-options="item as item.DESCRIPTION for item in materialesTipoBins track by item.VALUE_CHAR">
+                             </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6"  style="display: {{vistaDesate}}">
+                        <h3>Cant. Envases 2</h3>
+                            <div class="box-inp-tabs">
+                                <input class="inp-default"  type="number" placeholder="Cantidad..." ng-model="datosGranel.cantEnvase2" />
+                            </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6"  style="display: {{vistaDesate}}">
+                        <h3>Tipo Envase 2</h3>
+                        <div class="box-inp-tabs">
+                             <select class="inp-default ng-pristine ng-untouched ng-valid" ng-change="actualizaKilos()" ng-model="datosGranel.envase2" ng-options="item as item.DESCRIPTION for item in materialesTipoBins track by item.VALUE_CHAR">
+                             </select>
+                        </div>
+                    </div>
+                </div>
+           <!--     <div class="variable-lote-granel">
+                    <div class="row">
+                        <div class="item-gr ng-scope">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <h3>Cantidad de BINS</h3>
+                                <div class="box-inp-tabs">
+                                    <input class="inp-default" ng-blur="actualizaKilos()"  ng-model="datosGranel.CANTIDADBINS"  placeholder="" maxlength="6" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>-->
+                <!-- GENERALES -->
+            </div>
+            <div class="mobile-full" style="display: flex;">
+                <div class="btn" id="btnContinuar_" ng-click="productorContinuear()">Continuar</div>
+                <div class="btn"  ng-click="showCamionViewv()" style="display:{{disableBtn}}">Guardar</div>
+		<div class="btn"  ng-click="showRecepcionesViewv()" style="display:{{disableBtn}}">Ver recepciones</div>
+                <div class="btn"  ng-click="bluetoothopen()" style="display:{{disableBtn}}"><img src="img/icon/Bluetooth-2.ico" id="Printimg"/></div>
+            </div>
+    </div> 
+        <div id="selectFormProductor" style="display: none; height: 600px">
+            <div class="almacen-box">
+                    <ul class="ul-almacen" id="selLotesManual">
+                        <li class="li-almacen" ng-repeat="item in listaCamionesRecepcion track by $index">
+                            <div class="li-almacen-status">
+                                <div class="lot-{{item.css}}"></div>
+                            </div>
+                            <div class="col-xs-2 col-md-2 li-item">
+                                <p>PRODUCTOR</p>
+                                <h3>{{item.LIFNR.VALUE_CHAR}}</h3>
+                            </div>
+                            <div class="col-xs-3 col-md-3 li-item">
+                                <p>ESPECIE</p>
+                                <h3>{{seleccionEspecie.DESCRIPTION}}</h3>
+                            </div>
+                            <div class="col-xs-2 col-md-1 li-item">
+                                <p>PATENTE</p>
+                                <h3>{{item.ZPATENTE}}</h3>
+                            </div>
+                            <div class="col-xs-1 col-md-1 li-item">
+                                <p>Guía</p>
+                                <!--<h3>{{item.CLABS}}</h3>-->
+                                <h3>{{item.XBLNR}}</h3>
+                            </div>
+                            <div class="col-xs-1 col-md-1 li-item">
+                                <p>Ver</p>
+                                <!--<h3>{{item.CLABS}}</h3>-->
+                                <h3 ng-click="showSelectViewv(item.ZPATENTE)">{{item.ZPATENTE}}</h3>
+                            </div>
+                            <!--
+                            <div id="btn_tab_tra_deshacer_2" class="btn-tab-delete" >
+                                <div id="btn-more" class="btn-delete"></div>
+                            </div>
+                            -->
+                            <div class="li-almacen-right">
+                                <div class="li-cant">#{{item.idx + 1}}</div>
+                                <div class="li-remover-stock" ng-click="selPaletizaQuitar(item);">Eliminar</div>
+                            </div>
+                        </li>
+                    </ul>
+                <div class="mobile-full" style="margin-top: 20px">
+                    <div class="btn" ng-click="hideCamionViewv()">Ver Formulario</div>
+                </div>
+            </div>
+        </div>
+    <div id="PROD_SelectProductor" class="PopUp" data-role="page" style="display:{{verSelProductor}}">
+            <div id="PROD_Productor" class="popup-productor">
+                <div class="cerrar-popup" ng-click="mostrarProductores(false)"></div>
+                <div class="header-popup">
+                    <h1>Seleccione Productor</h1>
+                </div>
+                <div class="box-inp-productor">
+                    <div class="img-productor"></div>
+                    <div class="box-inp-medium">
+                        <input ng-model='selProductor' id='selProductor' class="inp-red inp-productor" type="text" placeholder="Seleccionar Productor" />
+                    </div>
+                </div>
+                <!-- FOOTER -->
+                <div class="footer">
+                    <!-- inicia BOX MOBILE -->
+                    <div class="mobile-full">
+                        <div class="btn btn-center" ng-click="seleccionProductor();">CONFIRMAR</div>
+                    </div>
+                    <!-- end BOX MOBILE -->
+                </div>
+                <!-- /FOOTER -->
+            </div>
+         </div>
+</div>

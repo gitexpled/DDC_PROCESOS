@@ -1,0 +1,103 @@
+<script src="app/menus/asignacion/asignacion.js"></script>
+<div class="{{page.animation}}" id="MenuInicial" ng-controller="asigancionCalidad">
+<div class="container">
+    <style>
+        .t1{
+            color:#10147f;
+        }
+        .t2{
+            color:#E0FFFF;
+        }
+        .t3{
+            color:#FFFAF0;
+        }
+        .t4{
+            color:#F0FFFF;
+        }
+        table{
+            border-color: #ccc;
+        }
+    </style>
+        <div class="col-xs-20 col-md-20 col-lg-20">
+            <div class="box-datos-generales" >
+                <div class="row">
+                    <div class="col-xs-8 col-sm-6 col-md-4" style="margin-left: 1px;">
+                        <h3>Productor</h3>
+                        <div class="box-sl-tabs">
+                            <select class="inp-default" ng-model="datosAsignacionCalidad.productor" ng-options="item as item.DESCRIPTION for item in listaProductores track by item.VALUE_CHAR">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-6 col-md-2" style="margin-left: 1px;">
+                        <h3>Guía</h3>
+                        <div class="box-inp-tabs">
+                            <input  id="asignacionCalidadGuia" ng-model="datosAsignacionCalidad.guia" class="inp-default" type="text" placeholder="Ingresar Guía" maxlength="10" />
+                        </div>
+                    </div>
+                    <!--<div class="col-xs-8 col-sm-6 col-md-2" style="margin-left: 1px;margin-top: 12px;height: 0;">
+                        <div class="btn btn-center" ng-click="buscarAsignacionCalidad()">Buscar</div>
+                    </div>
+                </div>-->
+                </div>
+                <hr>
+                <!-- GENERALES -->
+                <div class="row">
+                    <table border="1">
+                        <tr>
+                            <th class="t1">Evaluacion 1</th>
+                            <th class="t1">Evaluacion 2</th>
+                            <th class="t1">Evaluacion 3</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="number" class="inp-default ng-pristine ng-valid ng-touched" ng-model="datosAsignacionCalidad.evaluacion1" id="rendPulpa">
+                            </td>
+                            <td>
+                                <input type="number" class="inp-default ng-pristine ng-valid ng-touched" ng-model="datosAsignacionCalidad.evaluacion2" id="rendPulpa">
+                            </td>
+                            <td>
+                                <input type="number" class="inp-default ng-pristine ng-valid ng-touched" ng-model="datosAsignacionCalidad.evaluacion3" id="rendPulpa">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="btn btn-center" ng-click="asignacionContinuar()">CONTINUAR</div>
+        </div>
+ </div>
+<div id="PROD_EnvioAsigCalidad" class="PopUp" data-role="page" style="display:{{verPopRespuesta}}">
+    <!-- CLOSEDdiv class="cerrar-popup" onClick="javascript:cerrarPopup('PROD_EnvioPaletiza', 'envioPaletizaPOP');cerrarPopup('PROD_PaletizarCajas', 'PaletizarCajas')"></div>-->
+    <div id="envioCajaEnvaladaPOP" class="popup-sap">
+        <!-- CLOSED-->
+        <!--<div class="cerrar-popup" onClick="cerrarPopup('PROD_EnvioCajaEmbalada', 'envioCajaEnvaladaPOP')"></div>
+         CLOSED -->
+        <!-- HEADER POP-UP -->
+        <div class="header-popup">
+            <h1>Respuesta SAP</h1>
+        </div>
+        <!-- HEADER POP-UP -->
+        
+        <!-- AQUI SE CARGARAN LOS MERCADOS -->
+        <div id="cargandoDatosSAP" class="LoadingMercados">
+            <h1>Enviando datos</h1>
+            <div id="loadingFumigacion" class="animarLoading">
+                <ul class="bokeh"><li></li><li></li><li></li><li></li></ul>
+            </div>
+        </div>
+        <!-- AQUI SE CARGA mensaje no encontrado  ercados -->
+        <div id="popRespuestaEnvioAsigCal"></div>
+       
+        <div class="clearfix"></div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <!-- inicia BOX MOBILE -->
+            <div class="mobile-full">
+                <div class="btn btn-center" id="btnContinuar_" ng-Click="goToPage('/menuBase');">ACEPTAR</div><!--ng-Click="navegacionPagina('menuPaletizar', 'fadeInRight','')"-->
+            </div>
+            <!-- end BOX MOBILE -->
+        </div>
+        <!-- /FOOTER -->
+    </div>
+</div>

@@ -1,0 +1,103 @@
+<script  src="app/menus/recepcionPallet/crtRecepcionPallet.js"></script>﻿
+<div id="recepcionCajaLote" data-role="page" ng-controller="recepPaletizadaProductor">
+    <div class="container">       
+        <div class="col-xs-12 col-md-12 col-lg-12">
+            <div class="box-datos-generales">
+                <!-- GENERALES -->
+                <div class="row">
+                    <div class="hgroup">Datos generales</div>
+                    <div class="col-xs-6 col-md-6 col-lg-6">
+                        <h3>Productor</h3>
+                        <div class="" ng-click="mostrarProductores(true)">
+                        <p class='hh'>Productor</p>
+                        <div class="img-productor2 "></div>
+                        <div class="name-productor2 ">{{datosGranel.LIFNR.DESCRIPTION}}</div>
+                        <div class="code-productor2 ">{{datosGranel.LIFNR.VALUE_CHAR}}</div>
+                        </div>
+                        <!--<select class="inp-default" ng-model="datosGranel.LIFNR" ng-change="getPredios()" ng-options="item as item.DESCRIPTION for item in listaProductores track by item.VALUE_CHAR">
+                            <option value="">Seleccionar</option>
+                        </select>-->
+                    </div>
+                    <br>
+                   
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Predio (SDP)</h3>
+                        <div class="box-inp-tabs">
+                            <!--<input class="inp-default" ng-model="datosGranel.ZPREDIO"  placeholder="Ingresar" maxlength="10" ng-options="item as item.DESCRIPTION for item in listaPredio track by item.VALUE_CHAR"/>-->
+                            <select class="inp-default" ng-model="datosGranel.ZPREDIO" ng-change="plp()" placeholder="Ingresar"  ng-options="item as item.DESCRIPTION for item in listaPredio track by item.VALUE_CHAR">
+                            <option value="">Seleccionar</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="display: {{mostrarUAT}}">
+                        <h3>UAT</h3>
+                        <div class="box-inp-tabs">
+                            <select class="inp-default" ng-change="validaUAT()" ng-model="datosGranel.UAT" ng-options="item as item.DESCRIPTION for item in listarUAT track by item.VALUE_CHAR"">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6"  style="display: {{visibleIDG}}" >
+                        <h3>IDG</h3>
+                        <select class="inp-default" ng-model="datosGranel.ZCUARTEL" placeholder="Ingresar"  ng-options="item as item.DESCRIPTION for item in listaCuartel track by item.VALUE_CHAR">
+                            <option value="">Seleccionar</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="display: {{visibleIDP}}" >
+                        <h3>IDP</h3>
+                        <select class="inp-default" ng-model="datosGranel.IDP" placeholder="Ingresar"  ng-options="item as item.DESCRIPTION for item in listaIDP track by item.VALUE_CHAR">
+                            <option value="">Seleccionar</option>
+                        </select>
+                    </div>
+                     <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Fecha Contabilización</h3>
+                        <select class="inp-default" ng-model="datosGranel.selFechaContabilizacion" ng-options="item as item.name for item in selFechaContabilizacionOpciones track by item.value">
+                            <option value="">Seleccionar</option>
+                        </select>
+                    </div>
+                    <!-- FECJA COSECHA -->
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Fecha cosecha</h3>
+                        <select class="inp-default" ng-model="datosGranel.HSDAT" ng-options="item as item.name for item in selFechaCosechaOpciones track by item.value">
+                            <option value="">Seleccionar</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Guia de Despacho</h3>
+                        <div class="box-inp-tabs">
+                            <input class="inp-default"  ng-model="datosGranel.XBLNR" placeholder="Nº" maxlength="10" />
+                        </div>
+                    </div>
+                    
+                </div>
+                <!-- GENERALES -->
+            </div>
+            <div class="mobile-full">
+                <div class="btn" id="btnContinuar_" ng-click="productorContinuar()">Continuar</div>
+            </div>
+        </div>
+    </div>
+    <div id="PROD_SelectProductor" class="PopUp" data-role="page" style="display:{{verSelProductor}}">
+            <div id="PROD_Productor" class="popup-productor">
+                <div class="cerrar-popup" ng-click="mostrarProductores(false)"></div>
+                <div class="header-popup">
+                    <h1>Seleccione Productor</h1>
+                </div>
+                <div class="box-inp-productor">
+                    <div class="img-productor"></div>
+                    <div class="box-inp-medium">
+                        <input ng-model='selProductor' id='selProductor' class="inp-red inp-productor" type="text" placeholder="Seleccionar Productor" />
+                    </div>
+                </div>
+                <!-- FOOTER -->
+                <div class="footer">
+                    <!-- inicia BOX MOBILE -->
+                    <div class="mobile-full">
+                        <div class="btn btn-center" ng-click="seleccionProductor();">CONFIRMAR</div>
+                    </div>
+                    <!-- end BOX MOBILE -->
+                </div>
+                <!-- /FOOTER -->
+            </div>
+         </div>
+</div>

@@ -1,0 +1,22 @@
+<script src="app/menus/MenuProceso/MenuProceso.js"></script>
+<div class="{{page.animation}}" id="MenuInicial" ng-controller="SelectPrd">
+    <div class="col-xs-12 col-md-12 col-lg-12">
+            <div class="box-datos-generales" >
+                <!-- GENERALES -->
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <h3>Selección de Especie</h3>
+                        <select class="inp-default" ng-model="Monitor.Especie" ng-options="item as item.DESCRIPTION for item in listaEspecies track by item.VALUE_CHAR">
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <h3>Lote Proceso</h3>
+                         <input class="inp-default"  ng-model="Monitor.Lote" placeholder="Nº" maxlength="20" />
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-full">
+                <div class="btn btn-primary" id="btnContinuar_" ng-click="Continuar()">Continuar</div>
+            </div>
+        </div> 
+</div>

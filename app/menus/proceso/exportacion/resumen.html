@@ -1,0 +1,143 @@
+<script src="app/menus/proceso/ctrExportacion.js"></script>
+﻿<div id="crtPaletizar" data-role="page" ng-controller="crtResumen">    
+    <div class="container">
+        <div class="box-resumen">
+            <!-- TOP -->
+            <div class="datos-productor">
+                <div class="productor-heredado">{{datoProductorDetalle.LIFNR}} {{datoProductorDetalle.nombre}}</div>
+                <div class="fecha-heredado">{{datosPaletizaje.detalle[idxTab].selFechaContabilizacion.value}}</div>
+            </div>
+            <!-- TOP -->
+            <!--  TAB CONTAINER  -->
+            <div class="tab-container">
+                <!--*****  RESUMEN POR MATERIAL  ****-->
+                <div class="tab-resumen" id="div_tab_resumen">
+                    <!-- TOP RESUMEN -->
+                    <div id="resumenCabecera" class="top-table tab-menu">
+                        <!-- MERCADO -->
+                        <div class="top-item">
+                            <div class="top-titular">Mercado</div>
+                            <div class="top-txt" id="resumenEmbalajeTab1">
+                                {{datosPaletizaje.detalle[idxTab].mercado.VALUE_CHAR}}
+                            </div>
+                        </div>
+                        <!-- MERCADO -->
+                        <!-- LOTE -->
+                        <div class="top-item" ng-hide="true">
+                            <div class="top-titular">Lote</div>
+                            <div class="top-txt" id="resumenFechaContabilizacionTab1">
+                                {{datosPaletizaje.detalle[idxTab].fechaContabiliza.name}}
+                            </div>
+                        </div>
+                        <!-- LOTE -->
+                    </div>
+                    <!-- TOP RESUMEN -->
+
+                    <!--**** ROW  ****-->
+                    <div class="row">
+                        <div class="clearbig"></div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-5">
+                            <div class="hgroup">Datos Paletizaje</div>
+                            <!-- RESUMEN LEFT -->
+                            <div class="section-resumen">
+                                <h4 id="resumFecha" ng-class="resumFecha">Fecha Embalaje</h4>
+                                <p id="resumenFechaTab1">{{datosPaletizaje.detalle[idxTab].fechaEmbalagePakingTab.value}}</p>
+                            </div>
+                            <div class="section-resumen">
+                                <h4 id="resumLote" ng-class="resumLote">Codigo Pallet</h4>
+                                <p id="resumenLoteTab1">{{datosPaletizaje.detalle[idxTab].codigoPallet}}</p>
+                            </div>
+                            <div class="section-resumen">
+                                <h4 id="resumLote" ng-class="resumLote">Pallet Completo</h4>
+                                <p id="resumenLoteTab1">{{datosPaletizaje.detalle[idxTab].palletCompleto}}</p>
+                            </div>
+                            <div class="section-resumen">
+                                <h4 id="resumLote" ng-class="resumLote">Productor Rotulado</h4>
+                                <p id="resumenLoteTab1">{{datosPaletizaje.detalle[idxTab].productorRotulado.VALUE_CHAR}}</p>
+                            </div>
+                            <div class="section-resumen">
+                                <h4 id="resumLote" ng-class="resumLote">Variedad rotulada</h4>
+                                <p id="resumenLoteTab1">{{datosPaletizaje.detalle[idxTab].variedadRotulada.VALUE_CHAR}}</p>
+                            </div>
+                            </div>
+                            <div class="section-resumen">
+                                <h4 id="resumLote" ng-class="resumLote">Categoria</h4>
+                                <p id="resumenLoteTab1">{{datosPaletizaje.detalle[idxTab].categoria.VALUE_CHAR}}</p>
+                            </div>
+                            <div class="section-resumen">
+                                <h4 id="resumCaja" ng-class="resumCaja">Material</h4>
+                                <p id="resumenNCajasTab1">{{datosPaletizaje.detalle[idxTab].material.MAKTG}}</p>
+                            </div>
+                            <div class="section-resumen">
+                                <h4 id="resumVariedad" ng-class="resumVariedad">Lote</h4>
+                                <p id="resumenVariedadTab1">{{datosPaletizaje.detalle[idxTab].lotePacking}}</p>
+                            </div>
+                            <div class="section-resumen">
+                                <h4 id="resumGia" ng-class="resumGia">Calibre</h4>
+                                <p id="resumenGuiaDespachoTab1">{{datosPaletizaje.detalle[idxTab].calibre.VALUE_CHAR}}</p>
+                            </div>
+                            <div class="section-resumen">
+                                <h4 id="resumGia" ng-class="resumGia">Especie</h4>
+                                <p id="resumenGuiaDespachoTab1">{{datosPaletizaje.especie.VALUE_CHAR}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--**** ROW  ****-->
+                </div>
+                <!--*****  RESUMEN POR MATERIAL  ****-->
+                <!--****  MENU TABS  ****-->
+                <div class="section-03">
+                    <div class="tab-menu" id="tabResumen">
+                        <!-- (SE REPITE CUANTAS VECES SE AGREGO LA PANTALLA EMBALAJES) -->
+                        <div id="btn_tab_emb_1" class="btn-tab-{{tabs.seleccionado}}" ng-repeat="tabs in selTab" ng-click="irAlTab(tabs.idx)">{{tabs.nombre}}</div>
+                        <!-- (SE REPITE CUANTAS VECES SE AGREGO LA PANTALLA EMBALAJES) -->
+                    </div>
+                </div>
+                <!--****  MENU TABS  ****-->
+                <div class="footer">
+                    <!-- inicia BOX MOBILE -->
+                    <div class="mobile-full">
+                        <div id="btnContinuar_" class="btn btn-center" ng-click="send_xml()">Enviar</div>
+                    </div>
+                    <!-- end BOX MOBILE -->
+                </div>
+            </div>
+            <!--  TAB CONTAINER  -->
+        </div>
+    
+    <div id="PACK_EnvioCajaEmbalada" class="PopUp" data-role="page" style="display:{{verPopRespuesta}}">
+    <div id="envioCajaEnvaladaPOP" class="popup-sap">
+        <!-- CLOSED-->
+        <!--<div class="cerrar-popup" onClick="cerrarPopup('PROD_EnvioCajaEmbalada', 'envioCajaEnvaladaPOP')"></div>
+         CLOSED -->
+        <!-- HEADER POP-UP -->
+        <div class="header-popup">
+            <h1>Respuesta SAP</h1>
+        </div>
+        <!-- HEADER POP-UP -->
+        
+        <!-- AQUI SE CARGARAN LOS MERCADOS -->
+        <div id="cargandoDatosSAP" class="LoadingMercados">
+            <h1>Enviando datos</h1>
+            <div id="loadingCajaEmabalda" class="animarLoading">
+                <ul class="bokeh"><li></li><li></li><li></li><li></li></ul>
+            </div>
+        </div>
+        <!-- AQUI SE CARGA mensaje no encontrado  ercados -->
+        <div id="popRespuestaEnvioCajaEmbalada"></div>
+
+        <div class="clearfix"></div>
+        <!-- FOOTER -->
+        <div class="footer">
+            <!-- inicia BOX MOBILE -->
+            <div class="mobile-full">
+                <div class="btn btn-center" id="btnContinuar_" style="display:{{btnContinuar}}" ng-Click="goToPage('/menuProceso')">ACEPTAR</div>
+                <div class="btn btn-center" id="btnError" style="display:none" ng-Click="navegacionPagina('PACK_MenuPacking', 'fadeInLeft', '')">VOLVER</div>
+            </div>
+            <!-- end BOX MOBILE -->
+        </div>
+        <!-- /FOOTER -->
+    </div>
+</div>
+</div>

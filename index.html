@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <!--fv
+        Personalice la directiva de seguridad de contenido en la etiqueta meta como sea necesario. Agregue "unsafe-inline" a default-src para permitir JavaScript insertado.
+        Para obtener más detalles, consulte http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+    <title>APP MOVIL</title>
+    <!--<link rel="shortcut icon" href="DDCfavicon.ico" type="image/x-icon">-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen" />
+    <link href="css/global/index.css" rel="stylesheet" />
+    <link href="css/global/animate.css" rel="stylesheet" />
+    <link href="css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="css/global/abgucomplete.css" rel="stylesheet" />
+    <link href="css/web/styles.css" rel="stylesheet" />
+    <!-- ANGULAR -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="js/angular/angular.min.js"></script>
+    <script src="js/angular/angular-route.min.js"></script>
+    <script src="js/angular/angular-resource.min.js"></script>
+    <script src="js/fastclick.js"></script>
+    <script src="js/immybox/jquery.immybox.js"></script>
+    <!-- Mario -->
+	<script src="js/ngDraggable.js"></script>
+	<link href="css/GaleriaStyle.css" rel="stylesheet" /> 
+    <link href="css/PopUp.css" rel="stylesheet">
+    <!--<link href="css/web/jquery.bxslider.css" rel="stylesheet" />
+    <script src="js/jquery/jquery.bxslider.min.js"></script>-->
+    
+    <!-- -->
+    <script src="app/global/appConfig.js"></script>
+    <script src="app/global/app.js"></script>
+    <script src="app/global/services.js"></script>
+    <script type="text/javascript" src="js/underscore-min.js"></script>
+    <script type="text/javascript" src="js/backbone-min.js"></script>
+    <script type="text/javascript" src="js/templates.js"></script>
+    <script src="js/appBluetooth.js"></script>
+    
+    <!-- <script type="text/javascript" src="cordova.js"></script>-->
+</head>
+<body class="bg-body" ng-app="appExpled" ng-controller="ctrGlobal">
+    <!-- VISTAS-->
+    <!-- HEADER -->
+    <div class="header" style="display:{{header.display}};visibility:{{header.visibility}};">
+        <div class="breadcrumbs">
+            <p style="font-weight: bold;float: right;color: #fff;display: {{totalNeto}}">Peso Neto: <span id="KTotal">0</span></p>
+            <img src="img/delcurto_logo.png" id="ddcimg">
+            <div class="nav-back" style="display:{{header.navBackButtonDisplay}};" ng-click="header.navBackButtonClick()">
+                <p>Volver</p>
+            </div>
+            <!--<img src="img/icon/options.png" ng-click="goToPage('/options',{headerOptions:'none'})" class="opciones-btn" style="display:{{header.options.display}}"/>-->
+            
+            <ul>
+               <li>{{header.title}}</li>
+            </ul>
+        </div>
+        
+    </div>
+    <!-- /HEADER -->
+    <div  class="{{page.animation}}" style="{{((header.display!=='none')?'margin-top: 65px;':'')}}" ng-view="" ></div>  
+    <!-- FIN VISTAS-->
+
+    <!-- LOADING-->
+    <div class="PopUp" data-role="page" style="display:{{ loading.display }}">
+        <div class="loading">
+            <div class="animarLoading">
+                <ul class="bokeh"><li></li><li></li><li></li><li></li></ul>
+            </div>
+            <h1 id="preloadMsg">{{ loading.message }}</h1>
+            <h1  ng-bind-html="alert.trustedHtml">{{ loading.message }}</h1>
+        </div>
+    </div>
+    <!-- FIN LOADING-->
+    <!-- SERVICE RESPONSE -->
+    <div id="serviceResponse" class="PopUp"  style="display:{{verPopRespuesta}};position:initial;height:auto">
+        <div id="envioLotesPakingPOP" class="popup-mercado">
+            <div class="header-popup">
+                <h1>Respuesta SAP</h1>
+            </div>
+            <div class="img-mercado"></div>
+            <div class="mobile-right mobile-60">
+                <div id="cargandoPopLotesPaking" class="LoadingMercados">
+                    <h1>Enviando datos</h1>
+                    <div id="loadingLotesPaking" class="animarLoading">
+                        <ul class="bokeh"><li></li><li></li><li></li><li></li></ul>
+                    </div>
+                </div>
+                <div id="popRespuestaLotesPaking"></div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="footer">
+                <div id="optionsResponse" class="mobile-full">
+                    <div class="btn btn-center" id="btnContinuar_" style="display:{{btnContinuar}}" ng-Click="mostrarRespuesta(false);httpRequest.goToRedirect()">CONTINUAR CON PROCESO</div>
+                    <div class="btn btn-center" id="btnError" style="display:none" ng-Click="mostrarRespuesta(false);httpRequest.goToRedirect()">VOLVER</div>
+                    <div class="btn btn-center" id="btnError" style="display:{{btnContinuarMARIO}}" ng-Click="mostrarRespuesta(false);goToPage('/menuBase')">VOLVER</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="PopUp" data-role="page" style="display:{{alert.display}}">
+        <div id="ContenidoAlertNO" class="popup-alert">
+            <div class="header-popup-alert">
+                <h1>{{alert.title}}</h1>
+            </div>
+            <div id="msgAlerta" class="mensaje-alert">
+                {{alert.message}}{{alert.message2}}
+            </div>
+            <div class="footer-alert">
+                <div class="mobile-full">
+                    <div class="btn-alert" ng-click="alert.buttons.accept.click()" id="actualizaData" style="display:{{alert.buttons.accept.show}}">{{alert.buttons.accept.text}}</div>
+                    <div class="btn-alert" ng-click="alert.buttons.cancel.click()" style="display:{{alert.buttons.cancel.show}}">{{alert.buttons.cancel.text}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="PopUp" data-role="page" style="display:{{displayBt}}" >
+        <div  class="popup-productor">
+            <div class="cerrar-popup" ng-click="hideBluetooth()"></div>
+            <div class="header-popup">
+                <div id="resultBtData"></div>
+                <div id="divBluetoothState"></div>
+            </div>
+            <div class="box-inp-productor">
+                <div class="appSection">
+                    <!-- On and Off buttons -->
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button id="btn-bsbt-bt-on" type="button" class="btn-bsbt btn-bsbt-success btn-bsbt-lg btn-bsbt-block btn-bsbt-bt" disabled >
+                                Encender BT
+                            </button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button id="btn-bsbt-bt-off" type="button" class="btn-bsbt btn-bsbt-danger btn-bsbt-lg btn-bsbt-block btn-bsbt-bt" disabled >
+                                Apagar BT
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Discovery button -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button id="btn-bsbt-bt-discover" type="button" class="btn-bsbt btn-bsbt-info btn-bsbt-lg btn-bsbt-block btn-bsbt-bt" data-loading-text="Buscando..." disabled >
+                                <span class="glyphicon glyphicon-eye-open"></span>Buscar Dispositivos
+                            </button>
+                        </div>
+                    </div>
+                    <!-- The found devices appear inside this div -->
+                    <div id="list-devices"></div>
+                 </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

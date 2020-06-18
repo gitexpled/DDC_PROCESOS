@@ -1,0 +1,95 @@
+<script src="app/menus/recepcion/ImprimirResumen/ImprimirResumen.js"></script>
+<div class="{{page.animation}}" id="MenuInicial" ng-controller="imprimirResumen">
+    <div class="container">
+        <div class="box-resumen-granel">
+            <!-- RESUMEN GRANEL -->
+            <div class="resumen-granel">
+                <h2 class="cajas-ok">Resumen Imprimir</h2>
+                <div class="box-datos-resumen">
+                    <div class="section-resumen-granel">
+                        <h4 id="resProductorGranel">NUMERO LOTE</h4>
+                        <p id="resProductorGranel_" class="font-bold">{{datosGranel.LOTE}}</p>
+						<!--<p id="resProductorGranel_">{{codProductor}} - {{datoProductorDetalle.NAME1}}</p>-->
+                    </div>
+                    <div class="section-resumen-granel">
+                        <h4 id="resContabilizadoGranel">CODIGO PRODUCTOR</h4>
+                        <p id="resContabilizadoGranel_" class="font-bold">{{datosGranel.LIFNR.VALUE_CHAR}}</p>
+                    </div>
+                    <div class="section-resumen-granel">
+                        <h4 id="resFechaCosechaGranel">VARIEDAD</h4>
+                        <p id="resFechaCosechaGranel_" class="font-bold">{{datosGranel.VARIEDAD.VALUE_CHAR}} / {{datosGranel.VARIEDAD.DESCRIPTION}}</p>
+                    </div>
+                    <div class="section-resumen-granel">
+                        <h4 id="resGuiaGranel">FECHA COSECHA</h4>
+                        <p id="resGuiaGranel_" class="font-bold">{{datosGranel.HSDAT}}</p>
+                    </div>
+                    <div class="section-resumen-granel">
+                        <h4 id="resVariedadGranel">CANTIDAD DE BINS</h4>
+                        <p id="resVariedadGranel_" class="font-bold">{{datosGranel.CANTIDADBINS }}</p>
+                    </div>
+                    <div class="section-resumen-granel">
+                        <h4 id="resCuartelGranel">ESPECIE</h4>
+                        <p id="resCuartelGranel_" class="font-bold">{{datosGranel.MATERIAL.DESCRIPTION}}</p>
+                    </div>
+                    <div class="section-resumen-granel" style="width:48%;">
+                        <h4 id="resSelectorGranel">MATERIAL</h4>
+                        <p id="resSelectorGranel_" class="font-bold">{{datosGranel.MATERIAL.DESCRIPTION}}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- RESUMEN GRANEL -->
+        </div>
+    </div>
+    <!-- FOOTER -->
+    <div class="footer">
+        <!-- inicia BOX MOBILE -->
+        <div class="mobile-full">
+            <div id="btnEnviarGranel" class="btn btn-center" style="display:{{btnGeneraXML}}" ng-click="imprimir()">ENVIAR</div>
+        </div>
+    </div>
+    
+    <!-- /FOOTER -->
+    <div id="PROD_EnvioLotesPaking" class="PopUp" data-role="page" style="display:{{verPopRespuesta}}">
+    <div id="envioLotesPakingPOP" class="popup-mercado">
+        <!-- CLOSED -->
+
+
+        <!-- CLOSED -->
+        <!-- HEADER POP-UP -->
+        <div class="header-popup">
+            <h1>Respuesta SAP</h1>
+        </div>
+        <!-- HEADER POP-UP -->
+        <!-- HEADER POP-UP -->
+        <!-- CONTENT POP-UP -->
+        <!-- inicia BOX MOBILE -->
+        <div class="mobile-right mobile-60">
+            <!-- AQUI SE CARGARAN LOS MERCADOS -->
+            <div id="cargandoPopLotesPaking" class="LoadingMercados">
+                <h1>Enviando datos</h1>
+                <div id="loadingLotesPaking" class="animarLoading">
+                    <ul class="bokeh"><li></li><li></li><li></li><li></li></ul>
+                </div>
+            </div>
+            <!-- AQUI SE CARGA mensaje no encontrado  ercados -->
+            <div id="popRespuestaLotesPaking"></div>
+        </div>
+        <!-- end BOX MOBILE -->
+
+        <div class="clearfix"></div>
+
+        <!-- FOOTER -->
+        <div class="footer" style="margin-top: 150px;">
+            <!-- inicia BOX MOBILE -->
+            <div class="mobile-full">
+                <!--<div class="btn btn-center" id="btnContinuar_" style="display:{{btnContinuar}}" ng-Click="navegacionPagina('menuSeleccionExpProd', 'fadeInRight', '');">FINALIZAR</div>
+                <div class="btn btn-center" id="btnError" style="display:none" ng-Click="navegacionPagina('PACK_MenuPackingEspecie', 'fadeInLeft', '/volver')">VOLVER</div>-->
+                <!--<div class="btn btn-center" id="btnContinuar_" style="display:{{btnContinuar}}" ng-Click="mostrarRespuesta(false)">FINALIZAR</div>-->
+                <div class="btn btn-center" id="btnContinuar_" style="display:{{btnContinuar}}" ng-Click="finalizar()">FINALIZAR</div>
+                <div class="btn btn-center" id="btnError" style="display:none" ng-Click="finalizar">VOLVER</div>
+            </div>
+            <!-- end BOX MOBILE -->
+        </div>
+        <!-- /FOOTER -->
+    </div>
+</div>

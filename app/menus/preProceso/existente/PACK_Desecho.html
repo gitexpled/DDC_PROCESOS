@@ -1,0 +1,145 @@
+<script src="app/preProceso/existente/crtProcesoExistente.js"></script>
+﻿<div id="PACK_Descartes" data-role="page" ng-controller="crtPACK_EmbalajesProcesoEspeciePP">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="nav-back" ng-click="navegacionPagina('PACK_FiltroProductor'+controllerMenu,'fadeInLeft','')">
+            <p>Volver</p>
+        </div>
+        <div class="breadcrumbs">
+            <ul>
+                <li>{{datosExportadora.exportadora.DESCRIPTION}}</li>
+                <li>{{nombreMenuPagina}}</li>
+                <li>{{datosExportadora.especie.DESCRIPTION}}</li>
+            </ul>
+        </div>
+    </div>
+    <!-- /HEADER -->
+    <!-- CONTENT -->
+    <div class="container">
+        <div class="box-embalajes">
+
+            <div class="datos-productor">
+                <div class="productor-heredado" id="selIdProductorDescarte">{{datoProductorDetalle.NAME1}}</div>
+                <div class="fecha-heredado" id="descarteFecha">{{datosLoteProcesoPaking.selFechaContabilizacion.name}}</div>
+            </div>
+            <!--  KILOS ACUMULADOS  -->
+            <div class="kilos-lote-packing">
+                <div class="acumulados-lote-proceso">
+                    <h2>Lote Proceso</h2>
+                    <p id="loteProcesoPaking_1">{{datosLoteProcesoPaking.embalajeLoteProcesoPaking}}</p>
+                </div>
+                <div class="acumulados-lote-proceso">
+                    <h2>Variedad</h2>
+                    <p id="loteProcesoPaking_1">{{datosLoteProcesoPaking.VARIEDAD}}</p>
+                </div>
+                <div class="acumulados-lote-proceso">
+                    <h2>Productor</h2>
+                    <p id="loteProcesoPaking_1">{{datosLoteProcesoPaking.nombreProductor}}</p>
+                </div>
+                <div class="acumulados-packing">
+                    <h2>Kg Total:</h2>
+                    <p id="kiloAcumuladoPaking_1">{{datosLoteProcesoPaking.kgLoteProcesoSaldo}}</p>
+                </div>
+            </div>
+            <!--  KILOS ACUMULADOS  -->
+            <!--  TAB CONTAINER  -->
+            <div class="tab-container">
+                <!--*****  TAB POR MATERIAL  *****-->
+                <div class="tab-embalajes" id="div_tab_DescartePaking">
+                    <div class="clearbig"></div>
+                    <div class="row">
+                        <div class="hgroup">Ingrese datos para este MATERIAL</div>
+                        <div class="col-xs-8 col-sm-4 col-md-3">
+                            <h3>Tipo de Material</h3>
+                            <select class="inp-default" ng-model="datosLoteProcesoPaking.detalle[idxTab].material" ng-change="controlDescarte()" ng-options="item as item.DESCRIPTION for item in pakingTipoMaterialOpciones track by item.MATNR">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                        <!-- CANTIDAD -->
+                        <div class="col-xs-4 col-sm-3 col-md-3">
+                            <h3>Cantidad de Kilos</h3>
+                            <div class="box-inp-tabs">
+                                <input class="inp-default" ng-change="restaKgTotal()" ng-model="datosLoteProcesoPaking.detalle[idxTab].embalajeKilos" type="number" placeholder="N&ordm;" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearbig"></div>
+                    <div class="row" id="divDescarteOpcion" style="display:{{divDescarteOpcion}}">
+                        <div class="hgroup">Datos Necesarios para este material</div>
+                        <div style="float:left;">
+                            <div class="scan" ng-click="codearLote()"></div>
+                        </div>
+                        <div class="col-xs-8 col-sm-4 col-md-3">
+                            <h3>Lote N&ordm;</h3>
+                            <div class="box-inp-tabs">
+                                <input ng-model="datosLoteProcesoPaking.detalle[idxTab].codigoLoteDescarte" id="codigoLoteDescarte" class="inp-default" type="text" placeholder="N&ordm;" maxlength="10"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4" style="display:{{divDescarteOpcionNA}}">
+                            <h3>Clasificación No Apta</h3>
+                            <div class="box-inp-tabs">
+                                <select class="inp-default" ng-model="datosLoteProcesoPaking.detalle[idxTab].NOAPTA" ng-options="item as item.DESCRIPTION for item in pakingTipoMaterialOpcionesNA track by item.VALUE_CHAR">
+                                    <option value="">Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--**********************  TAB POR MATERIAL  **********************-->
+                <div class="clear"></div>
+
+                <!--**********************  MENU TABS  **********************-->
+                <div class="section-03">
+                    <div class="tab-menu" id="tabDescartePaking">
+                        <div id="btn-more" class="btn-more" ng-click="agregarTab();"></div>
+                        <div id="btn_tab_emb_1" class="btn-tab-{{tabs.seleccionado}}" ng-repeat="tabs in selTab" ng-click="irAlTab(tabs.idx)">{{tabs.nombre}}</div>
+                        <div id="btn_tab_tra_deshacer_2" class="btn-tab-delete" ng-click="deshacerTab();" style="display:{{verBtnEliminar}}"><div id="btn-more" class="btn-delete"></div></div>
+                    </div>
+                </div>
+                <!--**********************  MENU TABS  **********************-->
+            </div>
+            <!--  TAB CONTAINER  -->
+        </div>
+    </div>
+    <!-- /CONTENT -->
+    <!-- FOOTER -->
+    <div class="footer">
+        <div class="btn btn-center" ng-click="embalajePakingContinuar()">CONTINUAR Y ENVIAR</div>
+    </div>
+    <!-- /FOOTER -->
+    
+<div id="PROD_envioDescarte" class="PopUp" data-role="page" style="display:{{verPopRespuesta}}">
+    <div id="envioLotesPakingPOP" class="popup-sap">
+        <!-- CLOSED -->
+        <!-- CLOSED -->
+        <!-- HEADER POP-UP -->
+        <div class="header-popup">
+            <h1>Respuesta SAP</h1>
+        </div>
+        <!-- HEADER POP-UP -->
+
+        <!-- AQUI SE CARGARAN LOS MERCADOS -->
+        <div id="cargandoPopLotesPaking" class="LoadingMercados">
+            <h1>Enviando datos</h1>
+            <div id="loadingLotesPaking" class="animarLoading">
+                <ul class="bokeh"><li></li><li></li><li></li><li></li></ul>
+            </div>
+        </div>
+        <!-- AQUI SE CARGA mensaje no encontrado  ercados -->
+        <div id="popRespuestaLotesPaking"></div>
+
+        <div class="clearfix"></div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <!-- inicia BOX MOBILE -->
+            <div class="mobile-full">
+                <div class="btn btn-center" id="btnContinuar_" style="display:{{btnContinuar}}" ng-Click="recargaStock()">CONTINUAR CON PROCESO</div>
+                <div class="btn btn-center" id="btnError" style="display:none" ng-Click="recargaStock()">VOLVER</div>
+            </div>
+            <!-- end BOX MOBILE -->
+        </div>
+        <!-- /FOOTER -->
+    </div>
+</div>
+</div>

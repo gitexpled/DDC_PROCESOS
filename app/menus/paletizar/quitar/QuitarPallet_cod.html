@@ -1,0 +1,26 @@
+<script src="app/menus/paletizar/ctrPaletizajeQuitar.js"></script>
+<div id="QuitarPallet_cod" data-role="page" ng-controller="ctrQuitarPallet_cod">
+    <!-- CONTENT -->
+    <div class="container">
+        <div class="box-menu-packing">
+            <div class="menu-packing">
+                <img class="img-lote-packing" src="img/barcode.png"  ng-click="codearPalet()">
+                <p>Pallet <br>Existente</p>
+                <br>
+                <div class="col-2">
+                    <input class="inp-default" type="text" ng-model="numeroPallet" ng-blur="autocompletarCero()" id="numeroPallet" placeholder="Nº" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CONTENT -->
+    <!-- FOOTER -->
+    <div class="footer">
+        <!-- inicia BOX MOBILE -->
+        <div class="mobile-full">
+            <div class="btn btn-center" ng-click="buscarPallet()">CONTINUAR</div>
+        </div>
+        <!-- end BOX MOBILE -->
+    </div>
+    <!-- /FOOTER -->
+</div>

@@ -1,0 +1,67 @@
+<script src="app/menus/paletizar/ctrActualizarHU.js"></script>
+<div id="QuitarPallet_Pallet" data-role="page" ng-controller="ctrActualizarHU">
+    <div class="container">
+        <div class="box-datos-generales">
+            <div class="row">
+                <div class="hgroup">Datos generales</div>
+                <div class="col-xs-5 col-sm-5 col-md-5">
+                    <h3>Inspección SAG</h3>
+                    <select class="inp-default ng-pristine ng-valid ng-touched" ng-model="datosPalet.inspeccion" ng-options="item as item.BEZEI for item in ZMOV_QUERY_HU_DATOADICIONAL.VEGR2 track by item.VEGR2">
+                        <option value="" class="">Seleccionar</option>
+                    </select>
+                </div>
+                <div class="col-xs-5 col-sm-5 col-md-5">
+                    <h3>Tratamiento SAG</h3>
+                    <select class="inp-default ng-pristine ng-valid ng-touched" ng-model="datosPalet.tratamiento" ng-options="item as item.BEZEI for item in ZMOV_QUERY_HU_DATOADICIONAL.VEGR3 track by item.VEGR3">
+                        <option value="" class="">Seleccionar</option>
+                    </select>
+                </div>
+                <div class="col-xs-5 col-sm-5 col-md-5">
+                    <h3>Altura</h3>
+                    <select class="inp-default ng-pristine ng-valid ng-touched" ng-model="datosPalet.altura" ng-options="item as item.BEZEI for item in ZMOV_QUERY_HU_DATOADICIONAL.VEGR4 track by item.VEGR4">
+                        <option value="" class="">Seleccionar</option>
+                    </select>
+                </div>
+                <div class="col-xs-5 col-sm-5 col-md-5">
+                    <h3>Destino</h3>
+                    <select class="inp-default ng-pristine ng-valid ng-touched" ng-model="datosPalet.destino" ng-options="item as item.BEZEI for item in ZMOV_QUERY_HU_DATOADICIONAL.VEGR5 track by item.VEGR5">
+                        <option value="" class="">Seleccionar</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="box-almacen" style="margin-top:20px;height: 400px;">
+            <div class="almacen" id="VentanaSelect" style="height: 370px;">
+                <div class="hgroup">Nº Palet</div>
+                <div class="almacen-box" style="overflow: auto;max-height: 370px;">
+                    <li class="li-almacen" ng-repeat="item in datosPalet.numeroPalet">
+                        <div class="li-almacen-status2">
+                            <div class="lot-{{item}}"></div>
+                        </div>
+                        <div class="col-xs-6 col-md-6 li-item">
+                            <h3>{{item}}<img ng-click="eliminarNumPalet($index)" src="img/icon/eliminar.png" style="float:left;width: 50px;cursor: pointer;" title="Eliminar num. palet"></h3>
+                        </div>
+                    </li>
+                </div>
+            </div>
+        </div>
+        <div class="almacen-pie">
+            <div class="scan-almacen">
+                <div class="scan-lotes" style="margin:0px;padding:0px;" ng-click="codearPalet()"></div>
+                <div class="box-tabs ws-250 ml-10">
+                    <h3 style="margin-bottom:5px;">DIGITA NUEMERO DE PALET</h3>
+                    <div class="box-inp-tabs">
+                        <input id="inSelLotesManual" ng-keypress="($event.charCode==13)?paletizajeIngreso('OK'):return;" class="inp-default" type="text" ng-model="datosPalet.inSelLotesManual" placeholder="Ingresar Código" style="height:25px;" maxlength="20">
+                    </div>
+                </div>
+            </div>
+            <div class="clear-almacen">
+                <div class="img-clear-almacen" ng-click="limpiarCargaScaner()"></div>
+                <p>Limpiar</p>
+            </div>
+        </div>
+        <div class="mobile-full">
+            <div class="btn btn-primary" id="btnContinuar_" ng-click="generaXML()">Enviar</div>
+        </div>
+    </div>
+</div>

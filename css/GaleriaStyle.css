@@ -1,0 +1,128 @@
+.MainGallery{
+    width: 97%;
+    border: 1px solid #3f3f3f;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.TablaInspeccion{
+    border-collapse: collapse;
+}
+.mant1{
+    margin-left: 14px;
+    width: 95%;
+    padding-top: 13px;
+}
+.TablaInspeccion thead{
+    background-color: rgba(52,98,156,0.38);
+}
+.TablaInspeccion tr:nth-child(event){
+    background-color: #f2f2f2;
+}
+.TablaInspeccion td{
+    text-align: left;
+    padding: 15px;
+    border: solid 1px black;
+}
+.LineGallery{
+    /*width:100%;*/
+    height: 20%;
+    padding: 5px;
+    margin: 5px;
+    margin-bottom: 20px;
+}
+.ProcesoGAl{
+    float: right;
+    width: 18%;
+    padding: 0%;
+    height: 100%;
+    border:solid 1px #37647f;
+    text-align: center;
+    background-color: rgba(28,53,79);
+    color: white;
+    font-size: initial;
+}
+.bannerGal{
+    background-color: rgb(52,92,134);
+    height: 32px;
+    font-size: x-large;
+}
+.bannerGal2{
+    background-color:#37699d;
+    height: 45px;
+}
+.btnGal{
+    padding: 3px 40px 8px 9px;
+    cursor: pointer;
+    margin-top: 3px;
+    font-family: arial, verdana;
+    letter-spacing: 3px;
+    text-shadow:none;
+    font-weight: 700;
+    border-radius: 11px;
+    border: 1px solid black;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+.MantenFil{
+    height:154px; 
+   /* overflow-x: auto;
+    overflow-y:hidden;*/
+    white-space:nowrap;
+    /*width: 1000px;*/
+    overflow: scroll;
+}
+
+.FileGallery{
+    width:33%;
+    border:1px solid blue;
+    height: 90%;
+    padding: 5px;
+    display:inline-block;
+    margin: 5px;
+}
+.ZPLGallery1{
+    width:50%;
+    border:1px solid green;
+    height: 50%;
+    float:left;
+    padding: 5px;
+}
+.ZPLGallery2{
+    width:50%;
+    border:1px solid red;
+    height: 50%;
+    float:left;
+    padding: 5px;
+}
+.Izquierda{
+    float:left;
+    width: 50%;
+    height: 100%;
+}
+.Derecha{
+    float: right;
+    width: 50%;
+    height: 100%;
+}
+.Izquierda2{
+    float:left;
+    width: 50%;
+    height: 75%;
+}
+.Derecha2{
+    float: left;
+    width: 48%;
+    height: 75%;
+    margin-left: 5px;
+}
+.btn-hide{
+    float: right;
+    height: 24px;
+    text-align: center;
+    font-size: small;
+    margin-right: 12px;
+}

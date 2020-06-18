@@ -1,0 +1,122 @@
+<script src="app/menus/reembalaje/reembalaje.js"></script>
+<div class="{{page.animation}}" ng-controller="reembalajeEntrada">
+<div class="container">
+    <div class="col-xs-20 col-md-20 col-lg-20">
+        <div class="box-datos-generales" >
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <h3>Seleccionar Especie</h3>
+                    <select class="inp-default ng-valid" ng-model="dataSeleccion.especie" ng-options="item as item.DESCRIPTION for item in listaEspecies track by item.VALUE_CHAR">
+                    </select>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <h3>Motivo</h3>
+                    <div class="box-inp-medium">
+                        <select class="inp-default ng-valid" ng-model="dataSeleccion.motivo" ng-options="item as item.DESCRIPTION for item in listaMotivo track by item.VALUE_CHAR">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <h3>Responsable</h3>
+                    <div class="box-inp-medium">
+                        <select class="inp-default ng-valid" ng-model="dataSeleccion.responzable" ng-options="item as item.DESCRIPTION for item in listaResponsable track by item.VALUE_CHAR">
+                        </select>
+                        <!--<input id='loteProceso' ng-model="dataSeleccion.responzable"  class="inp-default" type="text" maxlength="10" placeholder="" />-->
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <h3>Acuenta de</h3>
+                    <div class="box-inp-medium">
+                        <select class="inp-default ng-valid" ng-model="dataSeleccion.cuenta" ng-options="item as item.DESCRIPTION for item in listaCuenta track by item.VALUE_CHAR">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div style="float:left;">
+                        <div class="scan" ng-click="codearPallet()"></div>
+                    </div>
+                    <h3>Pallet</h3>
+                    <div class="box-inp-medium">
+                        <input id='loteProceso' ng-model="codPallet"  ng-keypress="($event.charCode==13)?codearPallet():return;" class="inp-default" type="text" maxlength="20" placeholder="" />
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div style="cont-pallet">
+                <table border="1" cellpadding="6" cellspacing="3">
+                    <tbody>
+                        <tr>
+                            <th>Lote</th>
+                            <th>Material</th>
+                            <th>Almacen</th>
+                            <th>Productor ET.</th>
+                            <th>Calibre</th>
+                            <th>Cajas Pallet</th>
+                            <th>Total Cajas</th>
+                            <th>Cantidad</th>
+                            <th>Peso S.</th>
+                            <th>Peso R.</th>
+                            <th>Lote P.</th>
+                            <th> </th>
+                        </tr>
+                    </tbody>
+                    <tbody ng-repeat="items in detalleLote track by $index">
+                        <tr ng-repeat="item in items track by $index">
+                            <td>{{item.CHARG}}</td>
+                            <td>{{item.MATNR}}</td>
+                            <td>{{item.LGORT}}</td>
+                            <td>{{item.PRODUCTOR_ET}}</td>
+                            <td>{{item.CALIBRE}}</td>
+                            <td>{{item.VEMNG}}</td>
+                            <td><fieldset class="atr-fieldset">
+                                <input type="checkbox" id="chk1_2_{{item.id}}" ng-model="item.reembalaCaja" ng-click="item.totalCajas(item,$index)" ng-true-value="'X'" ng-false-value="''" class="ng-pristine ng-untouched ng-valid">
+                                <label for="chk1_2_{{item.id}}"></label>
+                            </fieldset></td>
+                            <td><input type="number" style="color:black"  ng-model="item.cantidadRembala" ng-readonly="item.readonly" ng-blur="item.validaCantidad(item)" ></td>
+                            <td>{{item.PESOSIS}}</td>
+                            <td><input type="text" style="color:black"  ng-model="item.pesoR"></td>
+                            <td><input type="text" style="color:black"  ng-model="item.loteProceso" ng-blur="validaLoteProceso(item,$index)" maxlength="10"></td>
+                            <td><label ng-click="item.EliminarLote(item.id)">Eliminar</label></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="btn btn-center" ng-click="asignacionContinuar()">REEMBALAR</div>
+    </div>
+        <div id="PACK_EnvioCajaEmbalada" class="PopUp" data-role="page" style="display:{{verPopRespuesta}}">
+            <div id="envioCajaEnvaladaPOP" class="popup-sap">
+                <!-- CLOSED-->
+                <!--<div class="cerrar-popup" onClick="cerrarPopup('PROD_EnvioCajaEmbalada', 'envioCajaEnvaladaPOP')"></div>
+                CLOSED -->
+                <!-- HEADER POP-UP -->
+                <div class="header-popup">
+                    <h1>Respuesta SAP</h1>
+                </div>
+                <!-- HEADER POP-UP -->
+                
+                <!-- AQUI SE CARGARAN LOS MERCADOS -->
+                <div id="cargandoDatosSAP" class="LoadingMercados">
+                    <h1>Enviando datos</h1>
+                    <div id="loadingCajaEmabalda2" class="animarLoading">
+                        <ul class="bokeh"><li></li><li></li><li></li><li></li></ul>
+                    </div>
+                </div>
+                <!-- AQUI SE CARGA mensaje no encontrado  ercados -->
+                <div id="popRespuestaEnvioCajaEmbalada2"></div>
+        
+                <div class="clearfix"></div>
+                <!-- FOOTER -->
+                <div class="footer">
+                    <!-- inicia BOX MOBILE -->
+                    <div class="mobile-full">
+                        <div class="btn btn-center" id="btnContinuar_2" style="display:{{btnContinuar}}" ng-Click="header.navBackButtonClick()">ACEPTAR</div>
+                        <div class="btn btn-center" id="btnError" style="display:none" ng-Click="header.navBackButtonClick()">VOLVER</div>
+                    </div>
+                    <!-- end BOX MOBILE -->
+                </div>
+                <!-- /FOOTER -->
+            </div>
+        </div>
+    </div>
+</div>

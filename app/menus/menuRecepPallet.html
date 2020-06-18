@@ -1,0 +1,18 @@
+<script src="app/menus/crtMenu.js"></script>
+<div class="{{page.animation}}" id="MenuInicial" ng-controller="crtRecepPallet">
+    <div class="col-xs-12 col-md-12 col-lg-12">
+            <div class="box-datos-generales" >
+                <!-- GENERALES -->
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <h3>Seleccionar Especie</h3>
+                        <select class="inp-default ng-valid" ng-model="dataSeleccionCaja.especie" ng-options="item as item.DESCRIPTION for item in listaEspecies track by item.VALUE_CHAR">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-full">
+                <div class="btn btn-primary" id="btnContinuar_" ng-click="Continuar()">Continuar</div>
+            </div>
+        </div>  
+</div>

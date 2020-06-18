@@ -1,0 +1,220 @@
+<script src="app/paletizarCajas/ctrPaletizaje.js"></script>
+﻿<div id="StockAlmacen" data-role="page" ng-controller="ctrStockAlmacen">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="nav-back" ng-click="navegacionPagina('menuPaletizar','fadeInLeft','')">
+            <p>Volver</p>
+        </div>
+        <div class="breadcrumbs">
+            <ul>
+                <li>{{datosExportadora.exportadora.DESCRIPTION}}</li>
+                <li>{{datosExportadora.especie.DESCRIPTION}}</li>
+                <li>Peletizar Cajas</li>
+                <li>Stock en Almacén</li>
+            </ul>
+        </div>
+    </div>
+    <!-- /HEADER -->
+    <!-- CONTENT -->
+    <div class="container">
+            <div class="menu-almacen">
+                <h1>{{datosExportadora.especie.DESCRIPTION}}</h1>
+            </div>
+        <div class="box-almacen">
+            <!--**** MENU ALMACEN ****-->
+            <div class="menu-almacen">
+                <div id="btnAlamcenSelect" ng-Click="verVentanaSelect1()" class="almacen-sl "><h1>SELECCIONAR</h1></div>
+                <div id="btnAlmacenStock" ng-Click="verVentanaSelect2()" class="almacen-stock inactivo"><h1>EN STOCK</h1></div>
+            </div>
+            <!--**** MENU ALMACEN ****-->
+            <!--**** SELECCIONAR O SCANEAR ****-->
+            <div class="almacen" id="VentanaSelect">
+                <div class="almacen-box">
+                    <ul class="ul-almacen" id="selLotesManual">
+                        <li class="li-almacen" ng-repeat="item in datosPaletiza.manual">
+                            <div class="li-almacen-status">
+                                <div class="lot-{{item.css}}"></div>
+                            </div>
+                            <div class="col-xs-2 col-md-2 li-item">
+                                <p>Lote Nº</p>
+                                <h3>{{item.CHARG}}</h3>
+                            </div>
+                            <div class="col-xs-3 col-md-3 li-item">
+                                <p>MATERIAL</p>
+                                <h3>{{item.MATNR}}</h3>
+                            </div>
+                            <div class="col-xs-2 col-md-1 li-item">
+                                <p>ORIGEN</p>
+                                <h3>{{item.LGORT}}</h3>
+                            </div>
+                            <div class="col-xs-1 col-md-1 li-item">
+                                <p>CAJAS</p>
+                                <!--<h3>{{item.CLABS}}</h3>-->
+                                <h3>{{item.CLABS}}</h3>
+                            </div>
+                            <div class="col-xs-1 col-md-1 li-item">
+                                <p>CALIBRE</p>
+                                <!--<h3>{{item.CLABS}}</h3>-->
+                                <h3>{{item.CALIBRE}}</h3>
+                            </div>
+                            <!--
+                            <div id="btn_tab_tra_deshacer_2" class="btn-tab-delete" >
+                                <div id="btn-more" class="btn-delete"></div>
+                            </div>
+                            -->
+                            <div class="li-almacen-right">
+                                <div class="li-cant">#{{item.idx + 1}}</div>
+                                <div class="li-remover-stock" ng-click="selPaletizaQuitar(item.idx);">Eliminar</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="almacen-pie">
+                    <div class="scan-almacen">
+                        <div class="scan-lotes" style="margin:0px;padding:0px;" ng-click="codearPalet()"></div>
+                        <div class="box-tabs ws-250 ml-10">
+                            <h3 style="margin-bottom:5px;">DIGITA LOTE A PALETIZAR</h3>
+                            <div class="box-inp-tabs">
+                                <input id="inSelLotesManual" ng-keypress="($event.charCode==13)?paletizajeIngreso('OK'):return;" class="inp-default" type="text" ng-model="inSelLotesManual" placeholder="Ingresar Código" style="height:25px;" maxlength="10">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear-almacen">
+                        <div class="img-clear-almacen" ng-click="limpiarCargaScaner()"></div>
+                        <p>Limpiar</p>
+                    </div>
+                </div>
+            </div>
+            <!--**** SELECCIONAR O SCANEAR ****-->
+            <!--**** STOCK EN ALMACEN ****-->
+            <div class="almacen" id="VentanStock">
+                <!-- PIE -->
+                <!--<div class="almacen-pie">
+                    <div class="row">
+                        <div class="col-xs-6 col-md-6">
+                            <h3>FILTRAR POR MATERIAL</h3>
+                            <div class="box-sl-tabs">
+                                <input class="inp-default" ng-model="filtroPaletiza" />
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+                <!-- PIE -->
+                <!-- APROBADOS -->
+                <div id="BoxAlmacenOk" class="almacen-box" style="display:{{stockVisible.selA}};">
+                    <div class="title-alamcen ta-ok" style="font-size: 11px">
+                        <h3 class="col-xs-2">LOTE</h3>
+                        <h3 class="col-xs-2">PRODUCTOR</h3>
+                        <h3 class="col-xs-2">VARIEDAD</h3>
+                    </div>
+                    <div class="title-alamcen ta-ok" style="font-size: 11px">
+                        <h3 class="col-xs-2"><input  class="inp-default" ng-model="fCHARG"/></h3>
+                        <h3 class="col-xs-2"><input  class="inp-default" ng-model="fLIFNR"/></h3>
+                        <h3 class="col-xs-2"><input  class="inp-default" ng-model="fVARIEDAD"/></h3>
+                        
+                    </div>
+                    <div class="title-alamcen ta-ok" style="font-size: 11px">
+                        <h3 class="col-xs-2">CALIBRE</h3>
+                        <h3 class="col-xs-2">MATERIAL</h3>
+                        <h3 class="col-xs-2">ORIGEN</h3>
+                    </div>
+                    <div class="title-alamcen ta-ok">
+                        <h3 class="col-xs-2"><input  class="inp-default" ng-model="fCALIBRE"/></h3>
+                        <h3 class="col-xs-2"><input  class="inp-default" ng-model="fMATNR"/></h3>
+                        <h3 class="col-xs-2"><input  class="inp-default" ng-model="fLGORT"/></h3>
+                    </div>
+                    <!-- LISTADO EN STOCK -->
+                    <div class="title-alamcen ta-ok" style="font-size: 11px">
+                        <h3 class="col-xs-2">LOTE</h3>
+                        <h3 class="col-xs-2">VARIEDAD</h3>
+                        <h3 class="col-xs-2">CALIBRE</h3>
+                        <h3 class="col-xs-2">MATERIAL</h3>
+                        <h3 class="col-xs-2">CAJAS</h3>
+                    </div>
+                    <div class="ul-stock-almacen">
+                        <div class="result-alamcen" ng-repeat="item in datosPaletiza.selA | filter:{CHARG:fCHARG,LIFNR:fLIFNR,VARIEDAD:fVARIEDAD,CALIBRE:fCALIBRE,MATNR:fMATNR,LGORT:fLGORT,CLABS:fCLABS}" style="font-size:8px">
+                            <h3 class="col-xs-2">{{item.CHARG}}</h3>
+                            <h3 class="col-xs-2">{{item.VARIEDAD}}</h3>
+                            <h3 class="col-xs-2">{{item.CALIBRE}}</h3>
+                            <h3 class="col-xs-2">{{item.MATNR}}</h3>
+                            <h3 class="col-xs-2">{{item.CLABS}}</h3>
+                            <div class="switch-almacen">
+                                <fieldset style="padding-top:3px;">
+                                    <input type="checkbox" id="chk1_{{item.idx}}" ng-model="datosPaletiza.selA[item.idx].seleccionado" />
+                                    <label for="chk1_{{item.idx}}"></label>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- LISTADO EN STOCK -->
+                </div>
+                <!-- APROBADOS -->
+                <!-- OBJETADOS 
+                <div class="almacen-box" style="display:{{stockVisible.selO}};">
+                    <div class="title-alamcen ta-obj">
+                        <h3 class="col-xs-3">LOTE</h3>
+                        <h3 class="col-xs-4 col-md-3">MATERIAL</h3>
+                        <h3 class="col-xs-2">ORIGEN</h3>
+                        <h3 class="col-xs-1">CAJAS</h3>
+                    </div>
+                    <!-- LISTADO EN STOCK 
+                    <div class="ul-stock-almacen">
+                        <div class="result-alamcen" ng-repeat="item in datosPaletiza.selO | filter:{MATNR:filtroPaletiza}">
+                            <h3 class="col-xs-3">{{item.CHARG}}</h3>
+                            <h3 class="col-xs-4 col-md-3">{{item.MATNR}}</h3>
+                            <h3 class="col-xs-2">{{item.LGORT}}</h3>
+                            <h3 class="col-xs-1">{{item.CLABS}}</h3>
+                            <div class="switch-almacen">
+                                <fieldset style="padding-top:3px;">
+                                    <input type="checkbox" id="chk2_{{item.idx}}" ng-model="datosPaletiza.selO[item.idx].seleccionado" />
+                                    <label for="chk2_{{item.idx}}"></label>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- LISTADO EN STOCK 
+                </div>
+                OBJETADOS -->
+                <!-- SIN CLASIFICAR 
+                <div class="almacen-box" style="display:{{stockVisible.selNC}};">
+                    <div class="title-alamcen ta-no">
+                        <h3 class="col-xs-3">LOTE</h3>
+                        <h3 class="col-xs-4 col-md-3">MATERIAL</h3>
+                        <h3 class="col-xs-2">ORIGEN</h3>
+                        <h3 class="col-xs-1">CAJAS</h3>
+                    </div>
+                    <!-- LISTADO EN STOCK 
+                    <div class="ul-stock-almacen">
+                        <div class="result-alamcen" ng-repeat="item in datosPaletiza.selNC | filter:{MATNR:filtroPaletiza}">
+                            <h3 class="col-xs-3">{{item.CHARG}}</h3>
+                            <h3 class="col-xs-4 col-md-3">{{item.MATNR}}</h3>
+                            <h3 class="col-xs-2">{{item.LGORT}}</h3>
+                            <h3 class="col-xs-1">{{item.CLABS}}</h3>
+                            <div class="switch-almacen">
+                                <fieldset style="padding-top:3px;">
+                                    <input type="checkbox" id="chk3_{{item.idx}}" ng-model="datosPaletiza.selNC[item.idx].seleccionado" />
+                                    <label for="chk3_{{item.idx}}"></label>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- LISTADO EN STOCK 
+                </div>
+                <!-- SIN CLASIFICAR -->
+                
+            </div>
+            <!--**** STOCK EN ALMACEN ****-->
+        </div>
+    </div>
+    <!-- CONTENT -->
+    <!-- FOOTER -->
+    <div class="footer">
+        <!-- inicia BOX MOBILE -->
+        <div class="mobile-full">
+            <div class="btn btn-center" id="#" ng-Click="continuarPelatizaPaso2()">CONTINUAR</div>
+        </div>
+        <!-- end BOX MOBILE -->
+    </div>
+    <!-- /FOOTER -->
+
+</div>

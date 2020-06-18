@@ -1,0 +1,211 @@
+<script src="app/menus/recepcion/vistaimpresion/vistaimpresion.js"></script>
+<div class="{{page.animation}}" id="MenuInicial" ng-controller="vistaimpresion">
+       <div class="col-xs-12 col-md-12 col-lg-12" id="formProductor">
+            <div class="box-datos-generales">
+                <!-- GENERALES -->
+                <div class="row">
+                    <div class="hgroup">Contener ZPL</div>
+                      <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="box-inp-tabsV">
+                             <h3>Codigo ZPL</h3>
+                         <textarea class="inp-default ZPL" id="CZPL"></textarea>
+                    
+                        </div>
+                    </div> 
+                     <div class="col-xs-6 col-sm-6 col-md-6 ">
+                     
+                        <div class="box-inp-tabsV">
+                             <h3>Ancho Pulgadas</h3>
+                            <input class="inp-default" placeholder="Ancho" maxlength="10" id="W"/>
+                       </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="box-inp-tabsV">
+                            <h3>Alto Pulgadas</h3>
+                            <input class="inp-default" placeholder="Alto" maxlength="10" id="H"/>
+                       </div>
+                    </div>  
+                      <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="box-inp-tabsV">
+                            <h3>Densidad de impresión</h3>
+                            <select class="inp-default" id="dpmn">
+                                <option value="6dpmm">6dpmm</option>
+                                <option value="8dpmm">8dpmm</option>
+                                <option value="12dpmm">12dpmm</option>
+                                <option value="24dpmm">24dpmm</option>
+                            </select>
+                       </div>
+                    </div> 
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="box-inp-tabsV">
+                            <h3>Nombre Etiqueta</h3>
+                            <input class="inp-default" placeholder="Nombre" maxlength="15" id="Nom"/>
+                       </div>
+                    </div> 
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="box-inp-tabsV">
+                             <h3>Diccionario de Datos</h3>
+                            <div id="btnEnviarGranel" class="btn btn-center" style="float: left;width: 31%;height: 37px" ng-click="diccionario()">{{mostrar}}</div>
+                       </div>
+                    </div>
+                </div>
+           </div>
+         <div class="footer">
+            <!-- inicia BOX MOBILE -->
+            <div class="mobile-full">
+                <div id="btnEnviarGranel" class="btn btn-center"  ng-click="Vista()">Ver imagen</div>
+            </div>
+        </div> 
+    </div>
+        
+        <div ng-hide="Diccionario">
+            <div class="MainGallery" style="background-color: rgba(0,0,0,0.2);margin-left: 1%;margin-right: 1%;margin-bottom: 2%;height: 372px;">
+                <div class="hgroup" style="color:#d3dde3">Diccionario de Datos</div>
+                <div class="MainGallery" style="height: 319px;overflow: scroll">
+                   <!-- GENERALES -->
+                    
+                    <div style="width: 1836px;height: 300px; white-space: nowrap">
+                        <div class="tablaGal">
+                             <table class="TablaGaleria">
+                                 <tr>
+                                    <th>NOMBRE</th><th>DESCRIPCÓN</th>
+                                </tr>
+                               <tr>
+                                   <td>@NOMESPECIE</td><td>Nombre de la especie</td>
+                               </tr>
+                               <tr>
+                                   <td>@NOMVARIEDAD</td><td>Nombre de Variedad</td>
+                               </tr>
+                               <tr>
+                                   <td>@TIPOEMB</td><td>Tipo Embalaje</td>
+                               </tr>
+                               <tr>
+                                   <td>@GRSMUNIT</td><td></td>
+                               </tr>
+                               <tr>
+                                   <td>@COUNTAPP</td><td></td>
+                               </tr>
+                               <tr>
+                                   <td>@NOM1CALIBRE</td><td>Calibre</td>
+                               </tr>
+                               <tr>
+                                   <td>@GLOSALIBRE</td><td></td>
+                               </tr>
+                               <tr>
+                                   <td>@PROD</td><td>Productor</td>
+                               </tr>
+                               <tr>
+                                   <td>@GGLOTE</td><td> GGN Productor</td>
+                               </tr>
+                               <tr>
+                                   <td>@COMPRODUCTOR</td><td>Comuna Productor</td>
+                               </tr>
+                           </table> 
+                        </div>
+                        <div class="tablaGal">
+                           <table class="TablaGaleria">
+                               <tr>
+                                    <th>NOMBRE</th><th>DESCRIPCÓN</th>
+                                </tr>
+                               <tr>
+                                   <td>@PROPRODUCTOR</td><td>Provincia Productor</td>
+                               </tr>
+                               <tr>
+                                   <td>@PRODESCRIPCION2</td><td>Region Productor</td>
+                               </tr>
+                               <tr>
+                                   <td>@CSLOTE</td><td>CSG Productor</td>
+                               </tr>
+                               <tr>
+                                   <td>@IDLOTE</td><td>IDG Productor</td>
+                               </tr>
+                               <tr>
+                                   <td>@SDLOTE</td><td>SDP Productor</td>
+                               </tr>
+                               <tr>
+                                   <td>@ENVAEIN14</td><td></td>
+                               </tr>
+                               <tr>
+                                   <td>@EMBASEX14</td><td></td>
+                               </tr>
+                               <tr>
+                                   <td>@DUN14</td><td></td>
+                               </tr>
+                               <tr>
+                                   <td>@LOTEGTI</td><td></td>
+                               </tr>
+                               <tr>
+                                   <td>@NOMFRUT</td><td>Nombre Exportadora</td>
+                               </tr>
+                           </table> 
+                       </div>
+                       <div class="tablaGal">
+                             <table class="TablaGaleria">
+                                 <tr>
+                                    <th>NOMBRE</th><th>DESCRIPCÓN</th>
+                                </tr>
+                               <tr>
+                                   <td>@COMFRUT</td><td>Comuna Exportadora</td>
+                               </tr>
+                               <tr>
+                                   <td>@PROVFRUT</td><td>Provincia Exportadora</td>
+                               </tr>
+                               <tr>
+                                   <td>@CSPFRUT</td><td>CSP Exportadora</td>
+                               </tr>
+                               <tr>
+                                   <td>@IDPFRUT</td><td>IDP Exportadora</td>
+                               </tr>
+                               <tr>
+                                   <td>@FDAFRUT</td><td>FDA Exportadora</td>
+                               </tr>
+                               <tr>
+                                   <td>@KILOS</td><td>Kilos de Lote</td>
+                               </tr>
+                               <tr>
+                                   <td>@DIAMETRO</td><td></td>
+                               </tr>
+                               <tr>
+                                   <td>@CODMAT</td><td></td>
+                               </tr>
+                               <tr>
+                                   <td>@NUMLOTE</td><td>Numero Lote</td>
+                               </tr>
+                               <tr>
+                                   <td>@FECHAAPROD_MM_DD_AA</td><td>Fecha Produccion formato(Mes-Dia-Año)</td>
+                               </tr>
+                           </table> 
+                       </div>
+                       <div class="tablaGal">
+                            <table class="TablaGaleria">
+                                <tr>
+                                    <th>NOMBRE</th><th>DESCRIPCÓN</th>
+                                </tr>
+                               <tr>
+                                   <td>@FECHAAPROD_MMMDDNORM</td><td>Fcha de produccion formato(Mes-Dia)</td>
+                               </tr>
+                               <tr>
+                                   <td>@VOICEPICKB</td><td></td>
+                               </tr>
+                               <tr>
+                                   <td>@VOICEPICKA</td><td></td>
+                               </tr>
+                               <tr>
+                                   <td>@CORRELATIVO</td><td></td>
+                               </tr>
+                               <tr>
+                                   <td>@SALIDA</td><td>Salida del Lote</td>
+                               </tr>
+                               <tr>
+                                   <td>@TURNO</td><td>Turno del Usuario</td>
+                               </tr>
+                               <tr>
+                                   <td>@LINEAPACK</td><td>Linea del Proceso</td>
+                               </tr>
+                           </table>  
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>    

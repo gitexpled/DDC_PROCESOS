@@ -1,0 +1,176 @@
+var paisarr= [];
+                                               
+                               paisarr['AF'] = 'AFGANISTAN';
+                               paisarr['AL'] = 'ALBANIA';
+                               paisarr['DE'] = 'ALEMANIA';
+                               paisarr['AD'] = 'ANDORRA';
+                               paisarr['AO'] = 'ANGOLA';
+                               paisarr['AR'] = 'ARGENTINA';
+                               paisarr['DZ'] = 'ARGELIA';
+                               paisarr['SA'] = 'ARABIA SAUDITA';
+                               paisarr['AT'] = 'AUSTRIA';
+                               paisarr['AU'] = 'AUSTRALIA';
+                               paisarr['BH'] = 'BAHREIN';
+                               paisarr['BS'] = 'BAHAMAS';
+                               paisarr['BD'] = 'BANGLADESH';
+                               paisarr['BB'] = 'BARBADOS';
+                               paisarr['BE'] = 'BELGICA';
+                               paisarr['BJ'] = 'BENIN';
+                               paisarr['BM'] = 'BERMUDAS';
+                               paisarr['BO'] = 'BOLIVIA';
+                               paisarr['BW'] = 'BOTSWANA';
+                               paisarr['BR'] = 'BRASIL';
+                               paisarr['BN'] = 'BRUNEI';
+                               paisarr['BG'] = 'BULGARIA';
+                               paisarr['BI'] = 'BURUNDI';
+                               paisarr['BT'] = 'BUTAN';
+                               paisarr['KH'] = 'CAMBOYA';
+                               paisarr['CM'] = 'CAMERUN';
+                               paisarr['CA'] = 'CANADA';
+                               paisarr['TD'] = 'CHAD';
+                               paisarr['CN'] = 'CHINA';
+                               paisarr['CL'] = 'CHILE';
+                               paisarr['CY'] = 'CHIPRE';
+                               paisarr['KP'] = 'COREA DEL NORTE';
+                               paisarr['CO'] = 'COLOMBIA';
+                               paisarr['CG'] = 'CONGO';
+                               paisarr['CI'] = 'COSTA MARFIL';
+                               paisarr['CR'] = 'COSTA RICA';
+                               paisarr['KR'] = 'COREA DEL SUR';
+                               paisarr['CU'] = 'CUBA';
+                               paisarr['DK'] = 'DINAMARCA';
+                               paisarr['EAU'] = 'EMIRATOS ARABES';
+                               paisarr['EC'] = 'ECUADOR';
+                               paisarr['EG'] = 'EGIPTO';
+                               paisarr['SI'] = 'ESLOVENIA';
+                               paisarr['ES'] = 'ESPAÑA';
+                               paisarr['ET'] = 'ETIOPIA';
+                               paisarr['FJ'] = 'FIJI';
+                               paisarr['PH'] = 'FILIPINAS';
+                               paisarr['FI'] = 'FINLANDIA';
+                               paisarr['FR'] = 'FRANCIA';
+                               paisarr['GA'] = 'GABON';
+                               paisarr['GM'] = 'GAMBIA';
+                               paisarr['GE'] = 'GEORGIA';
+                               paisarr['GH'] = 'GHANA';
+                               paisarr['GR'] = 'GRECIA';
+                               paisarr['GT'] = 'GUATEMALA';
+                               paisarr['GW'] = 'GUINEA-BISSAU';
+                               paisarr['GQ'] = 'GUINEA ECUATORIAL';
+                               paisarr['GN'] = 'GUINEA';
+                               paisarr['GY'] = 'GUYANA';
+                               paisarr['HT'] = 'HAITI';
+                               paisarr['NL'] = 'HOLANDA';
+                               paisarr['HN'] = 'HONDURAS';
+                               paisarr['HK'] = 'HONG KONG';
+                               paisarr['HU'] = 'HUNGRIA';
+                               paisarr['KM'] = 'ISLAS COMORAS';
+                               paisarr['CK'] = 'ISLAS COOK';
+                               paisarr['CV'] = 'CABO VERDE';
+                               paisarr['FO'] = 'ISLAS FAROE';
+                               paisarr['GP'] = 'GUADALUPE';
+                               paisarr['NF'] = 'ISLAS FALKLAND';
+                               paisarr['IN'] = 'INDIA';
+                               paisarr['ID'] = 'INDONESIA';
+                               paisarr['GB'] = 'INGLATERRA';
+                               paisarr['IQ'] = 'IRAK';
+                               paisarr['IR'] = 'IRAN';
+                               paisarr['IE'] = 'IRLANDA';
+                               paisarr['IS'] = 'ISLANDIA';
+                               paisarr['IL'] = 'ISRAEL';
+                               paisarr['IT'] = 'ITALIA';
+                               paisarr['JM'] = 'JAMAICA';
+                               paisarr['JP'] = 'JAPON';
+                               paisarr['JO'] = 'JORDANIA';
+                               paisarr['KE'] = 'KENYA';
+                               paisarr['KW'] = 'KUWAIT';
+                               paisarr['LA'] = 'LAOS';
+                               paisarr['LS'] = 'LESOTHO';
+                               paisarr['LV'] = 'LETONIA';
+                               paisarr['LB'] = 'LIBANO';
+                               paisarr['LR'] = 'LIBERIA';
+                               paisarr['LY'] = 'LIBIA';
+                               paisarr['LI'] = 'LIECHTENSTEIN';
+                               paisarr['LT'] = 'LITUANIA';
+                               paisarr['LU'] = 'LUXEMBURGO';
+                               paisarr['MO'] = 'MACAO';
+                               paisarr['MG'] = 'MADAGASCAR';
+                               paisarr['MY'] = 'MALASIA';
+                               paisarr['ML'] = 'MALI';
+                               paisarr['MT'] = 'MALTA';
+                               paisarr['MW'] = 'MALAWI';
+                               paisarr['MQ'] = 'MARTINICA';
+                               paisarr['MA'] = 'MARRUECOS';
+                               paisarr['MU'] = 'MAURICIO';
+                               paisarr['MR'] = 'MAURITANIA';
+                               paisarr['MX'] = 'MEXICO';
+                               paisarr['MN'] = 'MONGOLIA';
+                               paisarr['MZ'] = 'MOZAMBIQUE';
+                               paisarr['NR'] = 'NAURU';
+                               paisarr['NC'] = 'NUEVA CALEDONIA';
+                               paisarr['NP'] = 'NEPAL';
+                               paisarr['NI'] = 'NICARAGUA';
+                               paisarr['NE'] = 'NIGER';
+                               paisarr['NG'] = 'NIGERIA';
+                               paisarr['NO'] = 'NORUEGA';
+                               paisarr['NZ'] = 'NUEVA ZELANDIA';
+                               paisarr['OM'] = 'OMAN';
+                               paisarr['PK'] = 'PAKISTAN';
+                               paisarr['PA'] = 'PANAMA';
+                               paisarr['PG'] = 'PAPUA/NUEVA GUINEA';
+                               paisarr['PY'] = 'PARAGUAY';
+                               paisarr['PE'] = 'PERU';
+                               paisarr['PL'] = 'POLONIA';
+                               paisarr['PT'] = 'PORTUGAL';
+                               paisarr['PR'] = 'PUERTO RICO';
+                               paisarr['QA'] = 'QATAR';
+                               paisarr['DO'] = 'REP. DOMINICANA';
+                               paisarr['RW'] = 'RUANDA';
+                               paisarr['RO'] = 'RUMANIA';
+                               paisarr['RU'] = 'RUSIA';
+                               paisarr['SV'] = 'SALVADOR';
+                               paisarr['WS'] = 'SAMOA';
+                               paisarr['SN'] = 'SENEGAL';
+                               paisarr['SL'] = 'SIERRA LEONA';
+                               paisarr['SG'] = 'SINGAPUR';
+                               paisarr['SY'] = 'SIRIA';
+                               paisarr['SO'] = 'SOMALIA';
+                               paisarr['LK'] = 'SRI LANKA';
+                               paisarr['SD'] = 'SUDAN';
+                               paisarr['ZA'] = 'SUDAFRICA';
+                               paisarr['SE'] = 'SUECIA';
+                               paisarr['CH'] = 'SUIZA';
+                               paisarr['TW'] = 'TAIWAN';
+                               paisarr['TZ'] = 'TANZANIA';
+                               paisarr['TH'] = 'THAILANDIA';
+                               paisarr['TG'] = 'TOGO';
+                               paisarr['TO'] = 'TONGA';
+                               paisarr['TT'] = 'TRINIDAD Y TOBAGO';
+                               paisarr['TN'] = 'TUNEZ';
+                               paisarr['TR'] = 'TURQUIA';
+                               paisarr['UA'] = 'UCRANIA';
+                               paisarr['EU'] = 'UNION EUROPEA';
+                               paisarr['UG'] = 'UGANDA';
+                               paisarr['UY'] = 'URUGUAY';
+                               paisarr['US'] = 'ESTADOS UNIDOS';
+                               paisarr['VE'] = 'VENEZUELA';
+                               paisarr['VN'] = 'VIETNAM';
+                               paisarr['YE'] = 'YEMEN';
+                               paisarr['ZM'] = 'ZAMBIA';
+ 
+var pais = "";
+ 
+ 
+if(i==0){
+                                                                                                              if(val['ZZPAIS_INSP1'] != ''){ pais += paisarr[val['ZZPAIS_INSP1']];}
+                                                                                                              if(val['ZZPAIS_INSP2'] != ''){ pais += "-" + paisarr[val['ZZPAIS_INSP2']];}
+                                                                                                              if(val['ZZPAIS_INSP3'] != ''){ pais += "-" + paisarr[val['ZZPAIS_INSP3']];}
+                                                                                                              if(val['ZZPAIS_INSP4'] != ''){ pais += "-" + paisarr[val['ZZPAIS_INSP4']];}
+                                                                                                              if(val['ZZPAIS_INSP5'] != ''){ pais += "-" + paisarr[val['ZZPAIS_INSP5']];}
+                                                                                                              if(val['ZZPAIS_INSP6'] != ''){ pais += "-" + paisarr[val['ZZPAIS_INSP6']];}
+                                                                                                              if(val['ZZPAIS_INSP7'] != ''){ pais += "-" + paisarr[val['ZZPAIS_INSP7']];}
+                                                                                                              if(val['ZZPAIS_INSP8'] != ''){ pais += "-" + paisarr[val['ZZPAIS_INSP8']];}
+                                                                                                              if(val['ZZPAIS_INSP9'] != ''){ pais += "-" + paisarr[val['ZZPAIS_INSP9']];}
+                                                                                                              if(val['ZZPAIS_INSP10'] != ''){ pais += "-" + paisarr[val['ZZPAIS_INSP10']];}
+                                                                                                              
+                                                                                              }

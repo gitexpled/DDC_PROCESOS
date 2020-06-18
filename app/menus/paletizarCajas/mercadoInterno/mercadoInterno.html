@@ -1,0 +1,107 @@
+<script src="app/menus/paletizarCajas/ctrMercadoInterno.js"></script>
+﻿<div id="crtPaletizar" data-role="page" ng-controller="ctrMercadoInterno">
+   <div class="container">
+        <div class="box-embalajes">
+            <div class="datos-productor">
+                <div class="productor-heredado" id="embalajePakingNombre_Codigo">{{datoProductorDetalle.NAME1}}</div>
+            </div>
+            <!--  KILOS ACUMULADOS  -->
+            <div class="kilos-lote-packing">
+                <div class="acumulados-lote-proceso">
+                    <h2>Lote Proceso</h2>
+                    <p id="loteProcesoPaking_1">{{dataSeleccion.loteProceso}}</p>
+                </div>
+                <div class="acumulados-packing">
+                    <h2>Kg Total:</h2>
+                    <p id="kiloAcumuladoPaking_1">{{datosPaletizaje.kgTotal}}</p>
+                </div>
+            </div>
+            <!--  KILOS ACUMULADOS  -->
+            <!--  TAB CONTAINER  -->
+            <div class="tab-container">
+                <!--**********************  TAB POR MATERIAL  **********************-->
+                <div class="tab-embalajes" id="div_tab_embalajePaking">
+                    <!--**** ROW ****-->
+                    <div class="row">
+                        <div class="hgroup">Ingrese datos para Mercado Interno</div>
+                        <!-- FECHA EMBALAJE -->
+                        <div class="col-xs-12 col-sm-4 col-md-3">
+                            <h3>Fecha Contabilización</h3>
+                            <select class="inp-default inp-fecha ng-pristine ng-valid ng-touched" ng-model="datosMI.selFechaContabilizacion" ng-options="item as item.name for item in selFechaContabilizacionOpciones track by item.value">
+                                <option value="" class="">Seleccionar</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-3">
+                            <h3>Fecha embalaje</h3>
+                                <input id="fechaEmbalagePakingTab" class="inp-default inp-fecha ng-valid ng-touched ng-dirty ng-valid-parse" type="text" placeholder="Seleccionar" />
+                                <input ng-model="datosMI.fechaEmbalagePakingTab" type="hidden" />
+                        </div>
+                        <div class="col-xs-4 col-sm-3 col-md-3">
+                            <h3>Kilos</h3>
+                            <div class="box-inp-tabs">
+                                <input class="inp-default" ng-change="recalculaDescartes()" ng-model="datosMerma.kilos" type="number" placeholder="N&ordm;" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FECHA EMBALAJE -->
+                    <div class="clearfix"></div>
+                    <div class="border-grey"></div>
+                    <div class="clearfix"></div>
+                    <!-- EMBALAJE Y MERCADO -->
+                    <div class="col-xs-12 col-sm-6 col-md-5">
+                            <h3>Material</h3>
+                            <select class="inp-default" ng-model="datosMI.material" ng-change="controlDescarte()" ng-options="item as item.MAKTG for item in listarMaterialFERT track by item.MATNR">
+                                <option value="">Seleccionar</option>
+                            </select>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-5">
+                            <h3>Tipo Envase</h3>
+                            <select class="inp-default" ng-model="datosMI.tipoEnvase" ng-change="controlDescarte()" ng-options="item as item.DESCRIPTION for item in listarMaterialZVER track by item.VALUE_CHAR">
+                                <option value="">Seleccionar</option>
+                            </select>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3">
+                        <h3>Cantidad Envase</h3>
+                        <div class="box-inp-tabs">
+                            <input class="inp-default" ng-change="recalculaDescartes()" ng-model="datosMerma.cantidadEnvase" type="number" placeholder="N&ordm;" />
+                        </div>
+                    </div>
+                    <!-- EMBALAJE Y MERCADO -->
+                    <div class="clearfix"></div>
+                    <div class="border-grey"></div>
+                    <div class="clearfix"></div>
+                    <!-- LOTE -->
+                    <div style="float:left;">
+                        <div class="scan" ng-click="codearLote()"></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-5">
+                        <h3>Lote N&ordm;</h3>
+                        <div class="box-inp-tabs">
+                            <input id="embalajeLoteTab1" ng-model="datosMI.lotePacking" class="inp-default" type="text" placeholder="Ingresar C&oacute;digo" maxlength="10"/>
+                        </div>
+                    </div>
+                    <!-- LOTE -->
+                    <div class="clearfix"></div>
+                    <div class="border-grey"></div>
+                    <div class="clearfix"></div>
+                    <!-- KILOS -->
+                </div>
+                <!--**** ROW ****-->
+            </div>
+            <!--**********************  TAB POR MATERIAL  **********************-->
+            <div class="clear"></div>
+        </div>
+        <!--  TAB CONTAINER  -->
+        <!-- /CONTENT -->
+        <!-- FOOTER -->
+        <div class="footer">
+            <!-- inicia BOX MOBILE -->
+            <div class="mobile-full">
+                <div id="btnContinuar_" class="btn btn-center" ng-click="embalajePakingContinuar()">CONTINUAR</div>
+            </div>
+            <!-- end BOX MOBILE -->
+        </div>
+        <!-- /FOOTER -->
+    </div>
+</div>   
+ 

@@ -1,0 +1,70 @@
+<script src="app/menus/paletizar/ctrPaletizajeQuitar.js"></script>
+<div id="QuitarPallet_Pallet" data-role="page" ng-controller="ctrQuitarPallet_Pallet">
+    <!-- CONTENT -->
+    <div class="container">
+        <div class="top-aumenta">
+            <ul class="titulares-aumenta">
+                <li>PALLET</li>
+                <li>MATERIAL</li>
+                <li>TOTAL CAJA</li>
+                <li>VARIEDAD ET</li>
+                <li>INSPECCIÓN</li>
+            </ul>
+            <ul class="result-aumenta">
+                <li>{{datosPaletiza.numero}} </li>
+                <li>{{ZMOV_QUERY_HU_READ.LT_HU_CABECERA[0].MATNR}} </li>
+                <li>{{ZMOV_QUERY_HU_READ.LT_HU_CABECERA[0].VEMNG}} </li>
+                <li>{{ZMOV_QUERY_HU_READ.LT_HU_CABECERA[0].VARIEDAD_ET}} </li>
+                <li>{{ZMOV_QUERY_HU_READ.LT_HU_CABECERA[0].BEZEI_VEGR2}} </li>
+            </ul>
+        </div>
+        <div class="BoxQuitarPallet" style="margin-top:20px;padding-top:15px;">
+            <!-- PALETIZAR CAJAS -->
+            <div class="paletizar-popup">
+                <h2 class="ta-no" style="background-color:#F00;">ELIMINAR Lotes de este Pallet</h2>
+                <div class="titulos-paletizar-popup">
+                    <h3 class="col-xs-2 col-md-2">LOTE</h3>
+                    <h3 class="col-xs-2 col-md-2">MAT</h3>
+                    <h3 class="col-xs-2 col-md-1">CAL</h3>
+                    <h3 class="col-xs-2 col-md-2">PROD</h3>
+                    <h3 class="col-xs-2 col-md-2">ALMACEN</h3>
+                    <h3 class="col-xs-3 col-md-1">CJS</h3>
+                    <h3 class="col-xs-2 col-md-2">Quitar Cajas</h3>
+                </div>
+                <div class="ul_pallet_popup">
+                    <div class="result-paletizar-popup" ng-repeat="item in datosPaletiza.manual">
+                        <p class="col-xs-2 col-md-2">{{item.CHARG}}</p>
+                        <p class="col-xs-3 col-md-2">{{item.MATNR}}</p>
+                        <p class="col-xs-3 col-md-1">{{item.CALIBRE}}</p>
+                        <p class="col-xs-3 col-md-2">{{item.PRODUCTOR_ET}}</p>
+                        <p class="col-xs-2 col-md-2">{{item.LGORT}}</p>
+                        <p class="col-xs-3 col-md-1">{{item.VEMNG}}</p>
+                        <p class="col-xs-2 col-md-2"><input ng-model="datosPaletiza.manual[item.idx].inLotePaletizar" type="number" /></p>
+                    </div>
+                </div>
+            </div>
+            <center>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-3" style="margin-left: 26%;">
+                        <h3>Altura</h3>
+                        <select class="inp-default" ng-model="datosPaletiza.altura" ng-options="item as item.BEZEI for item in ZMOV_QUERY_HU_DATOADICIONAL.VEGR4 track by item.VEGR4">
+                            <option value="">Seleccionar</option>
+                        </select>
+                    </div>
+                    <!--<div class="col-xs-6 col-sm-6 col-md-3" style="margin-left: 26%;">
+                        <h3>Destino</h3>
+                        <select class="inp-default" ng-model="datosPaletiza.destino" ng-options="item as item.BEZEI for item in ZMOV_QUERY_HU_DATOADICIONAL.VEGR5 track by item.VEGR5">
+                            <option value="">Seleccionar</option>
+                        </select>
+                    </div>-->
+                </div>
+            </center>
+            <!-- PALETIZAR CAJAS -->
+            <div class="BoxQuitarPalletFooter">
+                <div ng-Click="generaXML()" class="btn btn-center" style="background:#F00;">QUITAR CAJAS</div>
+            </div>
+        </div>
+    </div>
+    <!-- CONTENT --> 
+</div>
+

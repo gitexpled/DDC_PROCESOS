@@ -1,0 +1,287 @@
+<script src="app/paletizarCajas/ctrPaletizaje.js"></script>
+﻿<div id="ctrPROD_Contabilizar" data-role="page" ng-controller="ctrPROD_Contabilizar">
+    <!-- CONTENT -->
+    <div class="container">
+        <div class="box-contabilizar">
+
+            <div class="paletizar-box">
+                <div class="paletizar" style="display:{{contabilizarPaletizaNOK}}">
+                    <h2 class="cajas-null">Embalajes Objetados</h2>
+                    <div class="content-paletizar">
+                        <div class="titulos-paletizar">
+                            <h3 class="w-25">LOTE</h3>
+                            <h3 class="w-33">MATERIAL</h3>
+                            <h3 class="w-16">ORIGEN</h3>
+                            <h3 class="w-18">CAJAS</h3>
+                        </div>
+                        <div class="box_p_paletizar" id="contabilizaNOK">
+                            <div class="p-paletizar" ng-repeat="item in datosPaletiza.manual | filter:{ESTADO_REC:'O'}">
+                                <p class="w-25">{{item.CHARG}}</p>
+                                <p class="w-33">{{item.MATNR}}</p>
+                                <p class="w-16">{{item.LGORT}}</p>
+                                <p class="w-18">{{item.CLABS}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-btn-paletizar">
+                        <div class="btn-paletizar" ng-click="paletizarCajaEmbalada('NOK')">PALETIZAR CAJAS</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paletizar-box" style="width:100%">
+                <div class="paletizar-black" style="display:{{contabilizarPaletizaOK}}">
+                    <h2 class="cajas-ok">Embalajes Aprobados</h2>
+                    <div class="content-paletizar">
+                        <div class="titulos-paletizar">
+                            <h3 class="w-25">LOTE</h3>
+                            <h3 class="w-33">MATERIAL</h3>
+                            <h3 class="w-16">ORIGEN</h3>
+                            <h3 class="w-18">CAJAS</h3>
+                        </div>
+                        <div class="box_p_paletizar" id="contabilizaOK">
+                            <div class="p-paletizar" ng-repeat="item in datosPaletiza.manual | filter:{ESTADO_REC:'A'}">
+                                <p class="w-25">{{item.CHARG}}</p>
+                                <p class="w-33">{{item.MATNR}}</p>
+                                <p class="w-16">{{item.LGORT}}</p>
+                                <p class="w-18">{{item.CLABS}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-btn-paletizar">
+                        <div class="btn-paletizar" ng-click="paletizarCajaEmbalada('OK')">PALETIZAR CAJAS</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="paletizar-box">
+                <div class="paletizar" style="display:{{contabilizarPaletizaNC}}">
+                    <h2 class="cajas-sn">Embalajes sin clasificar</h2>
+                    <div class="content-paletizar">
+                        <div class="titulos-paletizar">
+                            <h3 class="w-25">LOTE</h3>
+                            <h3 class="w-33">MATERIAL</h3>
+                            <h3 class="w-16">ORIGEN</h3>
+                            <h3 class="w-18">CAJAS</h3>
+                        </div>
+                        <div class="box_p_paletizar" id="contabilizaNC">
+                            <div class="p-paletizar" ng-repeat="item in datosPaletiza.manual | filter:{ESTADO_REC:'X'}">
+                                <p class="w-25">{{item.CHARG}}</p>
+                                <p class="w-33">{{item.MATNR}}</p>
+                                <p class="w-16">{{item.LGORT}}</p>
+                                <p class="w-18">{{item.CLABS}}</p>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="box-btn-paletizar">
+                        <div class="btn-paletizar" ng-click="paletizarCajaEmbalada('NC')">PALETIZAR CAJAS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+            
+                   
+    </div>
+    <!-- CONTENT -->
+    <!-- FOOTER -->
+    <div class="footer">
+        <!-- inicia BOX MOBILE -->
+        <div class="mobile-full" style="display:{{verBtnFin}}">
+            <div class="btn btn-center" ng-click="navegacionPagina('menuPaletizar', 'fadeInRight','')">FINALIZAR</div>
+        </div>
+        <!-- end BOX MOBILE -->
+    </div>
+    <!-- /FOOTER -->
+    
+    
+<div id="PROD_PaletizarCajas" class="PopUp" data-role="page" style="display:{{verPopPaletiza}}">
+    <div id="PaletizarCajas" class="popup-paletizar" style="overflow: auto">
+        <!-- CLOSED -->
+        <div class="cerrar-popup" ng-Click="mostrarPaletizaje(false)"></div>
+        <!-- CLOSED -->
+        <!-- HEADER POP-UP -->
+        <div class="header-popup">
+            <h1>Paletizar Cajas</h1>
+        </div>
+        <!-- HEADER POP-UP -->
+        <div class="clearfix"></div>
+
+        <!-- INGRESAR PALLET -->
+        <div class="box-scan-paletizar col-xs-12 col-md-3" style="width:95%">
+            <div class="scan-small" ng-click="codearPalet()"></div>
+            <input placeholder="Codigo Pallet" ng-model="datosPaletiza.HU_EXID" id="paletizaCajaNumeroPalet" class="inp-default col-xs-8" type="text" placeholder="Numero de Pallet" style="margin-bottom:0px;" />
+        </div>
+        <!-- INGRESAR PALLET -->
+        <!-- INGRESAR ALMACEN -->
+        <!--<div class="col-xs-6 col-md-2" style="display:{{pop.selPaletizaAlmacen}}">
+            <h3 style="margin-bottom:5px;">Condición</h3>
+            <div class="box-sl-tabs"> 
+                <select class="inp-default" ng-model="datosPaletiza.HU_GRP2" ng-options="item as item.BEZEI for item in ZMOV_QUERY_HU_DATOADICIONAL.VEGR2 track by item.VEGR2">
+                    <option value=''>Ninguno</option>
+                </select>
+            </div>
+        </div>-->
+        <!-- INGRESAR ALMACEN -->
+
+        <!-- TIPO DE PALLET -->
+        <div class="col-xs-6 col-md-2" id="#" style="">
+            <h3 style="margin-bottom:5px;">Tipo de Pallet</h3>
+            <div class="box-sl-tabs">
+                <select class="inp-default" ng-model="datosPaletiza.CONTENT" ng-options="item as item.INHALT for item in ZMOV_QUERY_HU_DATOADICIONAL.INHALT track by item.INHALT">
+                    <option value="">-Sin Info-</option>
+                </select> 
+            </div>
+        </div>
+        <!-- TIPO DE PALLET -->
+        <!-- PALLET COMPLETO -->
+        <div class="col-xs-6 col-md-2" id="" style="">
+            <h3 style="margin-bottom:5px;">¿Pallet Completo?</h3>
+            <div class="box-inp-tabs">
+                <fieldset>
+                    <input class="SwitchVerde" type="checkbox" id="selPaletizaPCompleto" ng-model="datosPaletiza.KZGVH" ng-true-value="'X'" ng-false-value="''">
+                    <label class="SwitchVerde" for="selPaletizaPCompleto"></label>
+                </fieldset>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-2" id="#" style="">
+            <h3 style="margin-bottom:5px;">Mercado</h3>
+            <div class="box-sl-tabs">
+                <select class="inp-default" ng-model="datosPaletiza.HU_GRP3" ng-options="item as item.BEZEI for item in ZMOV_QUERY_HU_DATOADICIONAL.VEGR3 track by item.VEGR3">
+                    <option value="">-Sin Info-</option>
+                </select> 
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-2" id="#" style="">
+            <h3 style="margin-bottom:5px;">Total</h3>
+            <div class="box-sl-tabs">
+                <h3 style="margin-bottom:5px;">{{totalCajas}}</h3>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-2" id="#" style="display:none">
+            <h3 style="margin-bottom:5px;">Variedad </h3>
+            <div class="box-sl-tabs">
+                <select style="" class="inp-default" ng-model="datosPaletiza.VARIEDAD" ng-options="item as item.name for item in selPaletizaTipiPalletOpciones track by item.value">
+                    <option value="">-Sin Info-</option>
+                </select> 
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-2" id="#" style="display:none">
+            <h3 style="margin-bottom:5px;">Calibre</h3>
+            <div class="box-sl-tabs">
+                <select class="inp-default" ng-model="datosPaletiza.CALIBRE" ng-options="item as item.name for item in selPaletizaTipiPalletOpciones track by item.value">
+                    <option value="">-Sin Info-</option>
+                </select> 
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-2" id="#" style="display:none">
+            <h3 style="margin-bottom:5px;">Ubicacion</h3>
+            <div class="box-sl-tabs">
+                <select class="inp-default" ng-model="datosPaletiza.HU_GRP5" ng-options="item as item.BEZEI for item in ZMOV_QUERY_HU_DATOADICIONAL.VEGR5 track by item.VEGR5">
+                    <option value="">-Sin Info-</option>
+                </select> 
+            </div>
+        </div>
+        <!--<div class="col-xs-6 col-md-2" id="#" style="">
+            <h3 style="margin-bottom:5px;">Productor etiqueta</h3>
+            <div class="box-sl-tabs">
+                <select class="inp-default" ng-model="selPaletizaTipiPallet" ng-options="item as item.name for item in selPaletizaTipiPalletOpciones track by item.value">
+                    <option value="">-Sin Info-</option>
+                </select> 
+            </div>
+        </div>-->
+        <!--<div class="col-xs-6 col-md-2" id="#" style="">
+            <h3 style="margin-bottom:5px;">Tarifa Paletizaje</h3>
+            <div class="box-sl-tabs">
+               <select class="inp-default" ng-model="datosPaletiza.selPaletizaTipiPallet" >
+                    <option value="">-Sin Info-</option>
+                    <option value="SI">SI</option>
+                    <option value="NO">NO</option>
+                </select> 
+            </div>
+        </div>-->
+        <!--<div class="col-xs-6 col-md-2" id="#" style="">
+            <h3 style="margin-bottom:5px;">Tratamiento</h3>
+            <div class="box-sl-tabs">
+                <select class="inp-default" ng-model="datosPaletiza.HU_GRP4" ng-options="item as item.BEZEI for item in ZMOV_QUERY_HU_DATOADICIONAL.VEGR4 track by item.VEGR4">
+                    <option value="">-Sin Info-</option>
+                </select> 
+            </div>
+        </div>-->
+        <!-- PALLET COMPLETO -->
+        <!-- OTRA CARACTERISTICA -->
+        <!--<div class="col-xs-6 col-md-2" id="#" style="">
+            <h3 style="margin-bottom:5px;">Tarifia Gasificado</h3>
+            <div class="box-sl-tabs">
+                <select class="inp-default" ng-model="selPaletizaOtrasC">
+                    <option value="">Ninguno</option>
+                    <option value="SI">SI</option>
+                    <option value="NO">NO</option>
+                </select> 
+            </div>
+        </div>-->
+        <!-- OTRA CARACTERISTICA -->
+
+        <div class="clearfix"></div>
+
+        <!-- PALETIZAR CAJAS -->
+        <div class="paletizar-popup">
+            <h2 class="ta-{{pop.css}}">{{pop.titulo}}</h2>
+            <div class="titulos-paletizar-popup">
+                <h3 class="col-xs-2 col-md-3">Lote</h3>
+                <h3 class="col-xs-4 col-md-3">Material</h3>
+                <h3 class="col-xs-2 col-md-2">ORIGEN</h3>
+                <h3 class="col-xs-2 col-md-2">Cajas</h3>
+                <h3 class="col-xs-2 col-md-2">Paletizar</h3>
+            </div>
+            <div class="ul_pallet_popup">
+                <div class="result-paletizar-popup" ng-repeat="item in datosPaletiza.manual | filter:{ESTADO_REC:pop.filtro}">
+                    <p class="col-xs-2 col-md-3">{{item.CHARG}}</p>
+                    <p class="col-xs-4 col-md-3">{{item.MATNR}}</p>
+                    <p class="col-xs-2 col-md-2">{{item.LGORT}}</p>
+                    <p class="col-xs-2 col-md-2">{{item.CLABS}}</p>
+                    <p class="col-xs-2 col-md-2"><input ng-model="datosPaletiza.manual[item.idx].inLotePaletizar" type="number" ng-change="sumarLote()" /></p>
+                </div>
+            </div>
+        </div>
+        <!-- PALETIZAR CAJAS -->
+
+        <div class="clear"></div>
+        <!-- FOOTER -->
+        <div class="footer">
+            <div class="btn btn-center" ng-Click="generaXML()">PALETIZAR</div>
+        </div>
+        <!-- /FOOTER -->
+    </div>
+</div>
+
+<div id="PROD_EnvioLotesPaking" class="PopUp" data-role="page" style="display:{{verPopRespuesta}}">
+    <div id="envioLotesPakingPOP" class="popup-mercado">
+        <div class="header-popup">
+            <h1>Respuesta SAP</h1>
+        </div>
+        <div class="img-mercado"></div>
+        <div class="mobile-right mobile-60">
+            <div id="cargandoPopLotesPaking" class="LoadingMercados" style="display:none">
+                <h1>Enviando datos</h1>
+                <div id="loadingLotesPaking" class="animarLoading">
+                    <ul class="bokeh"><li></li><li></li><li></li><li></li></ul>
+                </div>
+            </div>
+            <div id="popRespuestaLotesPaking"></div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="footer">
+            <!-- inicia BOX MOBILE -->
+            <div class="mobile-full">
+                <div class="btn btn-center" id="btnContinuar_" style="display:none" ng-Click="irMovimiento('FIN')">FINALIZAR</div>
+                <div class="btn btn-center" id="btnError" style="display:none" ng-Click="irMovimiento('VOLVER')">VOLVER</div>
+            </div>
+            <!-- end BOX MOBILE -->
+        </div>
+        <!-- /FOOTER -->
+    </div>
+</div>   
+</div>
+ 

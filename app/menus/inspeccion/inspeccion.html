@@ -1,0 +1,20 @@
+<script src="app/menus/inspeccion/inspeccion.js"></script>
+<div class="{{page.animation}}" id="MenuInicial" ng-controller="Inspeccion">
+    <div class="box-datos-generales" >
+        <!-- GENERALES -->
+        <div class="row">
+                 <div class="hgroup">Inspección: {{Inspeccion.numeroInspeccion}}</div>
+             <table class="TablaInspeccion">
+                 <thead>
+                 <td>Pallet</td><td>Especie</td><td>Variedad</td><td>Pais Inspección</td><td>Envases</td><td><select class="inp-default" ng-model="Inspeccion.TODO" ng-change="TODO(Inspeccion.TODO)" ng-options="item.option for item in eleccion"><option value=""></option></select></td>
+                 </thead>
+                 <tbody ng-repeat="item in Inspeccion.TablaInspeccion">
+                 <td>{{item.EXIDV}}</td><td>{{item.ESPECIE}}</td><td>{{item.VARIEDAD_ET}}</td><td>{{item.pais}}</td><td>{{item.VEMNG}}</td><td><select class="inp-default" id="chk1_{{$index}}" ng-model="item.envio" ng-options="item.option for item in eleccion"><option value=""></option></select></td>
+                 </tbody>
+             </table>
+        </div>
+    </div>
+     <div class="mobile-full">
+       <div class="btn btn-primary" id="btnContinuar_" ng-click="Envio()">Enviar</div>
+     </div>
+</div>

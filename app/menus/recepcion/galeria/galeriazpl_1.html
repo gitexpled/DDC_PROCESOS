@@ -1,0 +1,164 @@
+<script src="app/menus/recepcion/galeria/galeriazpl.js"></script>
+<div class="{{page.animation}}" id="MenuInicial" ng-controller="gallery">
+    <div class="box-datos-generales" style="z-index: -1">
+        <div class="row">
+            <div class="btn btn-hide" style="width: 85px" ng-click="hide()">{{Ocultar}}</div>
+           <div class="hgroup">Modelos de etiqueta</div>
+        </div>
+
+        <div ng-hide="ocultar">
+            <ul class="draggable-objects">
+            <li ng-repeat="obj in listItems">
+                <div ng-drag="true" ng-drag-data="obj" data-allow-transform="true" class="item"><div class="dname"><p class="pname">{{obj.name}}</p></div><div class="dimg"><img src="{{obj.url}}" ng-dblclick="Imagen(obj)" style="width:90%; height: 87%; margin-top: 4px"/></div></div>
+            </li>
+          </ul> 
+        </div>
+    </div>
+       <div class="box-datos-generales" style="z-index: -1">
+           <div class="row">
+               <div class="hgroup">Proceso</div>
+               <div class="col-xs-6 col-sm-3 col-md-">
+                    <h3>Productor</h3>
+                    <div class="box-inp-tabs">
+                        {{PROCESO.productor}} 
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-3">
+                    <h3>Especie</h3>
+                    <div class="box-inp-tabs">
+                        {{PROCESO.especie}} 
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-3">
+                    <h3>Variedad</h3>
+                    <div class="box-inp-tabs">
+                        {{PROCESO.variedad}} 
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-3">
+                    <h3>Material</h3>
+                    <div class="box-inp-tabs">
+                        {{PROCESO.material}} 
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-3">
+                    <h3>Kilos Granel</h3>
+                    <div class="box-inp-tabs">
+                        {{PROCESO.kilos1}} 
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-3">
+                    <h3>Kilos Paletizados</h3>
+                    <div class="box-inp-tabs">
+                        {{PROCESO.kilos2}} 
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-3">
+                    <h3>Kilos etiqueta</h3>
+                    <div class="box-inp-tabs">
+                        {{PROCESO.kilos3}} 
+                    </div>
+                </div>
+           </div>
+        </div>
+       <div class="box-LoteGranel">     
+        <div  class="drop-container MainGallery">
+          <div ng-repeat="objLinea in Linea"  class="LineGallery">
+            <div class="hgroup">Linea Nº{{objLinea.index+1}}</div>
+            <div class="MantenFil">  
+                <div ng-repeat="objFilas in objLinea.filas"  class="FileGallery">
+                    <div class="Izquierda">   
+                        <div ng-repeat="objZpl in objFilas.Pantalla1" ng-drag="true" ng-drop="true" ng-drag-data="objZpl" ng-drag-success="onDragComplete($data,$event,objZpl)" ng-drop-success="onDropComplete($data,$event,objZpl)" class="ZPLGallery1">
+                           <img src="{{objZpl.url}}" style="width:100%;height: 100%" ng-dblclick="PopUP(objZpl)"/>
+                        </div>
+                    </div>
+                    <div class="Derecha">
+                        <div ng-repeat="objZpl in objFilas.Pantalla2" ng-drag="true" ng-drop="true" ng-drag-data="objZpl" ng-drag-success="onDragComplete($data,$event,objZpl)" ng-drop-success="onDropComplete($data,$event,objZpl)" class="ZPLGallery2">
+                           <img src="{{objZpl.url}}" style="width:100%;height: 100%" ng-dblclick="PopUP(objZpl)"/>
+                        </div>
+                    </div>    
+                </div>    
+            </div>   
+          </div>
+        </div>
+     </div>
+        <div class="footer"  style="z-index: 0">
+            <!-- inicia BOX MOBILE -->
+            <div class="mobile-full" style="display: flex;">
+            <div class="btn btn-center"  ng-click="Save()">Enviar</div>
+            <div class="btn btn-center"  ng-click="Generar()" >Generar Etiqueta</div>
+            </div>
+        </div>
+    <div class="PopUp ng-scope" data-role="page" style="display:{{IMG}}">
+        <div  class="popup-productor">
+            <div class="cerrar-popup" ng-click="IMG='none';"></div>
+            <div class="header-popup">
+                <h1>Etiqueta {{imagen.title}}</h1>
+            </div>
+                <img src='{{imagen.imagen}}' style='width: 98%;height: 350px;margin: 8px;'>
+        </div>
+    </div>   
+    <div class="PopUp ng-scope" data-role="page" style="display:{{displayTextCodeInput}}">
+        <div  class="popup-productor" style="height: auto">
+            <div class="cerrar-popup" ng-click="displayTextCodeInput='none';"></div>
+                <div class="header-popup">
+                    <h1>Etiqueta {{etiqueta.name}}</h1>
+                </div>
+            <div class="box-datos-generales">
+     
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="inp-atr-chk">
+                                Duplicar Etiqueta
+                        </div>
+                        <fieldset class="atr-fieldset">
+                            <input type="checkbox" id="chk1_2" ng-model="etiqueta.duplicateTag" ng-true-value="'SI'" ng-false-value="'NO'" />
+                            <label for="chk1_2"></label>
+                        </fieldset>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Stock</h3>
+                        <div class="box-inp-tabs">
+                            <input class="inp-default" type="number" ng-model="etiqueta.Stock" placeholder="-" maxlength="10" />
+                        </div>
+                    </div>
+                     <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Cuartel</h3>
+                        <div class="box-inp-tabs">
+                            <input class="inp-default"  ng-model="etiqueta.cuartel" placeholder="Cuartel" maxlength="10" />
+                        </div>
+                    </div>
+                     <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Predio</h3>
+                        <div class="box-inp-tabs">
+                            <input class="inp-default"  ng-model="etiqueta.predio" placeholder="Predio" maxlength="10" />
+                        </div>
+                    </div>
+                     <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3>Codigo</h3>
+                        <div class="box-inp-tabs">
+                            <input class="inp-default"  ng-model="etiqueta.codigo" placeholder="Codigo" maxlength="10" />
+                        </div>
+                     </div>
+                     <div class="col-xs-6 col-sm-12 col-md-12">
+                        <div class="btn btn-center popUE" ng-click="validate()">Vista</div>
+                     </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                     <img src='{{etiqueta.url}}' style="width: 100%; height: 100%">
+                </div>
+            </div>
+             <div class="footer"  style="z-index: 0">
+            <!-- inicia BOX MOBILE -->
+                <div class="mobile-full" style="display: flex;">
+                <div class="btn btn-center popUE"  ng-click="Acept()" style="margin-bottom: 1px">Aceptar</div>
+                <div class="btn btn-center popUE"  ng-click="Confirmar()" style="margin-bottom: 1px">Clonar</div>
+                <div class="btn btn-center popUE"  ng-click="eliminar()" style="margin-bottom: 1px">Eliminar</div>
+                </div>
+             </div>
+        </div> 
+    </div>  
+    
+</div>   
+    
+

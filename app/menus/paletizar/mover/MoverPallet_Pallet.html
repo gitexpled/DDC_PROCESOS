@@ -1,0 +1,102 @@
+<script src="app/menus/paletizar/ctrPaletizajeMover.js"></script>
+<div id="QuitarPallet_Pallet" data-role="page" ng-controller="ctrMoverPallet_Pallet">
+    <!-- /HEADER -->
+    <!-- CONTENT -->
+    <div class="container">
+        <div class="top-aumenta">
+            <ul class="titulares-aumenta">
+                <li>PALLET</li>
+                <li>MATERIAL</li>
+                <li>TOTAL CAJA</li>
+                <li>VARIEDAD ET</li>
+                <li>INSPECCIÓN</li>
+            </ul>
+            <ul class="result-aumenta">
+                <li>{{datosPaletiza.numero}} </li>
+                <li>{{ZMOV_QUERY_HU_READ.LT_HU_CABECERA[0].MATNR}} </li>
+                <li>{{ZMOV_QUERY_HU_READ.LT_HU_CABECERA[0].VEMNG}} </li>
+                <li>{{ZMOV_QUERY_HU_READ.LT_HU_CABECERA[0].VARIEDAD_ET}} </li>
+                <li>{{ZMOV_QUERY_HU_READ.LT_HU_CABECERA[0].BEZEI_VEGR2}} </li>
+            </ul>
+        </div>
+        <div class="BoxQuitarPallet" style="margin-top:20px;padding-top:15px;">
+            <div class="col-xs-6 col-md-2" id="#" style="">
+                <h3 style="margin-bottom:5px;">ALMACEN</h3>
+                <div class="box-sl-tabs">
+                    <select class="inp-default" ng-model="datosPallet.almacen" ng-options="item as item.DESCRIPTION for item in listarAlmacen track by item.VALUE_CHAR">
+                        <option value="">-Sin Info-</option>
+                    </select>
+                </div>
+            </div>
+            <!-- PALETIZAR CAJAS -->
+            <div class="paletizar-popup">
+                <h2 class="ta-no" style="background-color:#F00;">Lotes de este Pallet</h2>
+                <div class="titulos-paletizar-popup">
+                    <h3 class="col-xs-2 col-md-2">Lote</h3>
+                    <h3 class="col-xs-2 col-md-2">Material</h3>
+                    <h3 class="col-xs-2 col-md-2">Almacen</h3>
+                    <h3 class="col-xs-3 col-md-2">Cajas Pallet</h3>
+                    <h3 class="col-xs-2 col-md-2">Calibre</h3>
+                    <h3 class="col-xs-2 col-md-2">Productor Et.</h3>
+                </div>
+                <div class="ul_pallet_popup">
+                    <div class="result-paletizar-popup" ng-repeat="item in datosPaletiza.manual">
+                        <p class="col-xs-2 col-md-2">{{item.CHARG}}</p>
+                        <p class="col-xs-3 col-md-2">{{item.MATNR}}</p>
+                        <p class="col-xs-2 col-md-2">{{item.LGORT}}</p>
+                        <p class="col-xs-3 col-md-2">{{item.VEMNG}}</p>
+                        <p class="col-xs-3 col-md-2">{{item.CALIBRE}}</p>
+                        <p class="col-xs-3 col-md-2">{{item.PRODUCTOR_ET}}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- PALETIZAR CAJAS -->
+            <div class="BoxQuitarPalletFooter">
+                <div ng-Click="Pop_Up_Material()" class="btn btn-center" style="background:#F00;">MOVER PALLET</div>
+            </div>
+        </div>
+    </div>
+    <!-- CONTENT -->
+    <!-- FOOTER -->
+    <div class="footer">
+        <div class="btn btn-center" ng-click="goToPage('menuPaletizar')">SALIR Y VOLVER</div>
+    </div>
+    <div id="PACK_SelectLoteProceso" class="PopUp" ng-hide="POP_DATA" data-role="page">
+        <div id="BuscarLoteProceso" class="popup-sap" style="min-height: 300px">
+            <div class="header-popup">
+                <h1>Listado Material</h1>
+            </div>
+            <div ng-hide="Componentes">
+                <table style="width: 100%">
+                    <tr>
+                        <td class="tableHeader">MATERIAL</td>
+                        <td class="tableHeader">DESCRIPCIÓN</td>
+                        <td class="tableHeader">CANTIDAD</td>
+                        <td class="tableHeader">CHECK</td>
+                    </tr>
+                    <tr ng-repeat="item in dataTable.LT_DETALLE track by $index">
+                        <td class="tableBody">{{item.MATNR}}</td>
+                        <td class="tableBody">{{item.MAKTX}}</td>
+                        <td class="tableBody" style="text-align: center">{{item.CANTIDAD}}</td>
+                        <td class="tableBody" ng-disabled='{{item.disabled}}' ng-click="clickearCheck($index)">
+                            <center>
+                                <img src="{{item.img}}" width="15px">
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div ng-show="Componentes">
+                <div id="msgAlerta" class="mensaje-alert">Componentes de pallets ya fueron consumidos. Se mueve UM</div>
+            </div>
+            <div class="clearfix" style="height: 150px;"></div>
+            <div class="footer">
+                <div class="col-md-12 col-xs-12 col-lg-12" id="optionsResponse">
+                    <div class="btn col-md-6 col-xs-6 col-lg-6" id="btnError" ng-Click="POP_DATA=true">CANCELAR</div>
+                    <div class="btn col-md-6 col-xs-6 col-lg-6" id="btnContinuar_" style="width: 50%!important;"
+                        ng-click="Send_XML()">ENVIAR</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

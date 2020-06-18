@@ -1,0 +1,243 @@
+<div id="PACK_Resumen" data-role="page">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="nav-back" ng-click="navegacionPagina('PACK_TrazabilidadP', 'fadeInLeft', '/volver');">
+            <p>Volver</p>
+        </div>
+        <div class="breadcrumbs">
+            <ul>
+                <li>Caja Embalada Packing</li>
+                <li>Resumen</li>
+            </ul>
+        </div>
+    </div>
+    <!-- /HEADER -->
+    <!-- CONTENT -->
+    <div class="container">
+        <div class="box-resumen">
+            <!-- TOP -->
+            <div class="datos-productor">
+                <div class="productor-heredado" id="resumenNombre_CodigoPaking">{{datoProductorDetalle.NAME1}}</div>
+                <div class="fecha-heredado" id="resumenFechaContabilizaPaking">{{datosLoteProcesoPaking.selFechaContabilizacion.name}}</div>
+            </div>
+            <!-- TOP -->
+            <!--  TAB CONTAINER  -->
+            <div class="tab-container">
+                <!--*****  RESUMEN POR MATERIAL  ****-->
+                <div class="tab-resumen" id="div_tab_resumen" >
+                    <!-- TOP RESUMEN -->
+                    <div id="resumenCabeceraPaking" class="top-table" ng-class="datosLoteProcesoPaking.detalle[idxTab].estado.css">
+                        <!-- EMBALAJE -->
+                        <div class="top-item">
+                            <div class="top-titular">Embalaje</div>
+                            <div class="top-txt" id="resumenEmbalajePakingTab">
+                                {{datosLoteProcesoPaking.detalle[idxTab].selMercadoPakingTab.MAKTG}}
+                            </div>
+                        </div>
+                        <!-- EMBALAJE -->
+                        <!-- MERCADO -->
+                        <div class="top-item">
+                            <div class="top-titular">Mercado</div>
+                            <div class="top-txt" id="resumenMercadoPakingTab">
+                                {{datosLoteProcesoPaking.detalle[idxTab].selMercadoPakingTab.ZMAT_MERCADO}}
+                            </div>
+                        </div>
+                        <!-- MERCADO -->
+                        <!-- FECHA -->
+                        <div class="top-item" ng-hide="true">
+                            <div class="top-titular">Fecha Contabilizaci&oacute;n</div>
+                            <div class="top-txt" id="resumenFechaContabilizaPaking">
+                                {{datosLoteProcesoPaking.selFechaContabilizacion.name}}
+                            </div>
+                        </div>
+                        <!-- FECHA -->
+                        <!-- FECHA -->
+                        <div class="top-item" ng-hide="true">
+                            <div class="top-titular"></div>
+                            <div class="top-txt" id="resumenNombre_CodigoPaking">
+                                {{datoProductorDetalle.LIFNR}} {{datoProductorDetalle.NAME1}}
+                            </div>
+                        </div>
+                        <!-- FECHA -->
+                    </div>
+                    <!-- TOP RESUMEN -->
+                    <!--**** ROW  ****-->
+                    <div class="row">
+                        <div class="clearbig"></div>
+                        <!-- COL 5 - DATOS EMBALAJES -->
+                        <div class="col-xs-12 col-sm-12 col-md-5">
+                            <div class="hgroup">datos del embalaje</div>
+                            <div class="section-resumen">
+                                <h4 id="resumFecha" ng-class="resumFecha">Fecha</h4>
+                                <p id="resumenFechaTab1">{{datosLoteProcesoPaking.detalle[idxTab].fechaEmbalagePakingTab}}</p>
+                            </div>
+                            <div class="section-resumen">
+                                <h4 id="resumLote" ng-class="resumLote">Lote</h4>
+                                <p id="resumenLoteTab1">{{datosLoteProcesoPaking.detalle[idxTab].embalajeLotePakingTab}}</p>
+                            </div>
+                            <div class="section-resumen">
+                                <h4 id="resumCaja" ng-class="resumCaja">N&ordm; Cajas</h4>
+                                <p id="resumenNCajasTab1">{{datosLoteProcesoPaking.detalle[idxTab].embalajeCajaPaking}}</p>
+                            </div>
+                            <div class="section-resumen" style="display:{{selKilosDivPakingTab}}">
+                                <h4 id="resumKilosPaking" ng-class="resumKilosPaking">Kilos Neto</h4>
+                                <p id="resKilosPaking">{{datosLoteProcesoPaking.detalle[idxTab].embalajeKilosPaking}}</p>
+                            </div>
+                            <div class="section-resumen">
+                                <h4 id="resumVariedad" ng-class="resumVariedad">Variedad</h4>
+                                <p id="resumenVariedadTab1">{{datosLoteProcesoPaking.detalle[idxTab].selVariedadPakingTab}}</p>
+                            </div>
+                            <div class="section-resumen">
+                                <h4 class='bueno'>Lote Proceso</h4>
+                                <p id="resumenLoteProcesoPakingTab">{{datosLoteProcesoPaking.embalajeLoteProcesoPaking}}</p>
+                            </div>
+                            <div class="section-resumen">
+                                <h4 id="resumCuertel" ng-class="resumCuertel">Cuartel</h4>
+                                <p id="resumenCuartelTab1">{{datosLoteProcesoPaking.detalle[idxTab].selCuartelTab}}</p>
+                            </div>
+                        </div>
+                        <!-- COL 5- DATOS EMBALAJES -->
+                        <!-- COL 7 -->
+                        <div class="col-xs-12 col-sm-12 col-md-7" style="padding:0px;">
+                            <!-- COL 6 - MERCADO -->
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <div class="hgroup">Req. del Mercado</div>
+                                <div class="title-trazabilidad" style="display:none" id="resumenSinCertificadosPaking">No requiere Certificados</div>
+                                <div class="section-resumen">
+                                    <h4 id="resumSDP" ng-class="resumSDP">SDP</h4>
+                                    <p id="resumSDP_">{{datosLoteProcesoPaking.detalle[idxTab].selSDP}}</p>
+                                </div>
+                                <div class="section-resumen">
+                                    <h4 id="resumCSG" ng-class="resumCSG">CSG</h4>
+                                    <p id="resumCSG_">{{datosLoteProcesoPaking.detalle[idxTab].selCSG}}</p>
+                                </div>
+                                <div class="section-resumen">
+                                    <h4 id="resumCSP" ng-class="resumCSP">CSP</h4>
+                                    <p id="resumCSP_">{{datosLoteProcesoPaking.detalle[idxTab].selCSP}}</p>
+                                </div>
+                                <div class="section-resumen">
+                                    <h4 id="resumGGN" ng-class="resumGGN">GGN</h4>
+                                    <p id="resumGGN_">{{datosLoteProcesoPaking.detalle[idxTab].selGGN}}</p>
+                                </div>
+                            </div>
+                            <!-- COL 6 - CLIENTE -->
+                            <div class="col-xs-12 col-sm-6 col-md-6" style="margin-bottom: 0px;">
+                                <div class="hgroup">Requerimientos del CLIENTE</div>
+                                <div class="section-resumen">
+                                    <h4 id="resumFechaSAG" ng-class="resumFechaSAG">Fecha SAG</h4>
+                                    <p id="resumFechaSAG_">{{datosLoteProcesoPaking.detalle[idxTab].selDatosTrazabilidad_FechaSag}}</p>
+                                </div>
+                                <div class="section-resumen" id="resCELIDL" style="display:{{divCELIDL}}">
+                                    <h4 id="resumLIDL" ng-class="resumLIDL">LIDL</h4>
+                                    <p id="resumLIDL_">{{datosLoteProcesoPaking.detalle[idxTab].selDatosTrazabilidad_LDTL}}</p>
+                                </div>
+                                <div class="section-resumen">
+                                    <h4 id="resumFechaJuliana" ng-class="resumJuliano">F. Juliana</h4>
+                                    <p id="resumFechaJuliana_">{{datosLoteProcesoPaking.detalle[idxTab].selDatosTrazabilidad_FechaJuliana}}</p>
+                                </div>
+                                <div class="section-resumen" id="resCEPTI" style="display:{{divCEPTI}}">
+                                    <h4 id="resumPTI" ng-class="resumPTI">PTI</h4>
+                                    <p id="resumPTI_">{{datosLoteProcesoPaking.detalle[idxTab].selDatosTrazabilidad_PTI}}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- COL 7 -->
+                        <!-- COL 12 - PRODUCTOR Y PACKING -->
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="hgroup">DATOS DEL PRODUCTOR Y PACKING</div>
+                            <!-- PRODUCTOR -->
+                            <div class="col-xs-12 col-sm-12 col-md-6">
+                                <div class="section-resumen">
+                                    <p style="float:left;margin-bottom:10px;">Productor</p>
+                                    <div class="clear"></div>
+                                    <h4 id="resumProRegion" ng-class="ProRegion">Regi&oacute;n</h4>
+                                    <p id="resumProRegion_">{{datosLoteProcesoPaking.detalle[idxTab].trazabilidadProRegionTab.name}}</p>
+                                    <div class="separador"></div>
+                                    <h4 id="resumProProvincia" ng-class="ProProvincia">Provincia</h4>
+                                    <p id="resumProProvincia_">{{datosLoteProcesoPaking.detalle[idxTab].trazabilidadProProvinciaTab.name}}</p>
+                                    <div class="separador"></div>
+                                    <h4 id="resumProComuna" ng-class="ProComuna">Comuna</h4>
+                                    <p id="resumProComuna_">{{datosLoteProcesoPaking.detalle[idxTab].trazabilidadProComunaTab.name}}</p>
+                                </div>
+                            </div>
+                            <!-- PACKING -->
+                            <div class="col-xs-12 col-sm-12 col-md-6">
+                                <div class="section-resumen">
+                                    <p style="float:left;margin-bottom:10px;">Packing</p>
+                                    <div class="clear"></div>
+                                    <h4 id="resumPacRegion" ng-class="PacRegion">Regi&oacute;n</h4>
+                                    <p id="resumPacRegion_">{{datosLoteProcesoPaking.detalle[idxTab].trazabilidadPacRegionTab.name}}</p>
+                                    <div class="separador"></div>
+                                    <h4 id="resumPacProvincia" ng-class="PacProvincia">Provincia</h4>
+                                    <p id="resumPacProvincia_">{{datosLoteProcesoPaking.detalle[idxTab].trazabilidadPacProvinciaTab.name}}</p>
+                                    <div class="separador"></div>
+                                    <h4 id="resumPacComuna" ng-class="PacComuna">Comuna</h4>
+                                    <p id="resumPacComuna_">{{datosLoteProcesoPaking.detalle[idxTab].trazabilidadPacComunaTab.name}}</p>
+                                </div>         
+                            </div>
+                        </div>
+                        <!-- COL 12 - PRODUCTOR Y PACKING -->
+                    </div>
+                    <!--**** ROW  ****-->
+                </div>
+                <!--*****  RESUMEN POR MATERIAL  ****-->
+                <!--****  MENU TABS  ****-->
+                <div class="section-03">
+                    <div class="tab-menu" id="tabResumenPaking">
+                        <!-- (SE REPITE CUANTAS VECES SE AGREGO LA PANTALLA EMBALAJES) -->
+                        <div id="btn_tab_emb_1" class="btn-tab-{{tabs.seleccionado}}" ng-repeat="tabs in selTab" ng-click="irAlTab(tabs.idx)"><span ng-class="tabs.alerta">.</span>{{tabs.nombre}}</div>
+                        <!-- (SE REPITE CUANTAS VECES SE AGREGO LA PANTALLA EMBALAJES) -->
+                    </div>
+                </div>
+                <!--****  MENU TABS  ****-->
+            </div>
+            <!--  TAB CONTAINER  -->
+        </div>
+    </div>
+    <!-- /CONTENT -->
+    <!-- FOOTER -->
+    <div class="footer">
+        <!-- inicia BOX MOBILE -->
+        <div class="mobile-full">
+            <div class="btn btn-center" style="display:{{btnGeneraXML}}" ng-click="generaXML();">CONTINUAR</div>
+        </div>
+        <!-- end BOX MOBILE -->
+    </div>
+    <!-- /FOOTER -->
+</div>
+
+<div id="PACK_EnvioCajaEmbalada" class="PopUp" data-role="page" style="display:{{verPopRespuesta}}">
+    <div id="envioCajaEnvaladaPOP" class="popup-sap">
+        <!-- CLOSED-->
+        <!--<div class="cerrar-popup" onClick="cerrarPopup('PROD_EnvioCajaEmbalada', 'envioCajaEnvaladaPOP')"></div>
+         CLOSED -->
+        <!-- HEADER POP-UP -->
+        <div class="header-popup">
+            <h1>Respuesta SAP</h1>
+        </div>
+        <!-- HEADER POP-UP -->
+        
+        <!-- AQUI SE CARGARAN LOS MERCADOS -->
+        <div id="cargandoDatosSAP" class="LoadingMercados">
+            <h1>Enviando datos</h1>
+            <div id="loadingCajaEmabalda" class="animarLoading">
+                <ul class="bokeh"><li></li><li></li><li></li><li></li></ul>
+            </div>
+        </div>
+        <!-- AQUI SE CARGA mensaje no encontrado  ercados -->
+        <div id="popRespuestaEnvioCajaEmbalada"></div>
+
+        <div class="clearfix"></div>
+        <!-- FOOTER -->
+        <div class="footer">
+            <!-- inicia BOX MOBILE -->
+            <div class="mobile-full">
+                <div class="btn btn-center" id="btnContinuar_" style="display:{{btnContinuar}}" ng-Click="btnAceptar()">ACEPTAR</div>
+                <div class="btn btn-center" id="btnError" style="display:none" ng-Click="navegacionPagina('PACK_MenuPacking', 'fadeInLeft', '')">VOLVER</div>
+            </div>
+            <!-- end BOX MOBILE -->
+        </div>
+        <!-- /FOOTER -->
+    </div>
+</div>
