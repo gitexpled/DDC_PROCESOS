@@ -1,22 +1,36 @@
-appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootScope, $http) {
+appExpled.lazyController('ctrExportacion', function ($scope, $routeParams, $rootScope, $http, $timeout) {
   $scope.clienteSeleccion = "none";
   if ($rootScope.userData.mail == "servicio") {
     $scope.clienteSeleccion = "";
   }
   console.log($rootScope.dataSeleccion);
+  console.log($rootScope.TEMPORADA_);
+
   if ($rootScope.dataSeleccion.especie.VALUE_CHAR === "UVAS") {
     $scope.vistaUva = "";
   } else {
     $scope.vistaUva = "none";
   }
   $rootScope.datosPaletizaje = {
+    especie: $rootScope.dataSeleccion.especie,
     detalle: []
   }
-  console.log($rootScope.dataSeleccion,'hola');
-  console.log($rootScope.switch_embalaje);
-  
+  //Nuevo MARIO
+  $scope.Cliente_Switch = false;
+  $scope.Lista_Pedidos = [];
+  $scope.bool_pedido = true;
+  $scope.TEMP = {};
+  angular.forEach($rootScope.TEMPORADA_, (item) => {
+    if ($rootScope.dataSeleccion.especie.VALUE_CHAR == item.ESPECIE && $rootScope.dataSeleccion.variedad == item.VARIEDAD) {
+      console.log(item);
+      $scope.TEMP.DESDE = item.DESDE.split('-');
+      $scope.TEMP.HASTA = item.HASTA.split('-');
+      //$scope.TEMP = item;
+    }
+  })
+  //NUEVO MARIO FIN
   $scope.listarColor = [];
-  angular.forEach($rootScope.ZMOV_QUERY_COLOR, function(value, key) {
+  angular.forEach($rootScope.ZMOV_QUERY_COLOR, function (value, key) {
     if (value.ATBEZ === $rootScope.dataSeleccion.especie.DESCRIPTION) {
       $scope.listarColor.push({
         DESCRIPTION: value.DESCRIPTION,
@@ -25,7 +39,9 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
       });
     }
   });
-  $scope.cargaDatos = function(idx) {
+  //console.log($rootScope.MERCADOS);
+
+  $scope.cargaDatos = function (idx) {
     $rootScope.datosPaletizaje.detalle[idx] = {
       fechaEmbalagePakingTab: '',
       altura: '',
@@ -37,10 +53,11 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
       calibre: '',
       cantidad: '',
       ZPREDIO: '',
-      lotePacking: '',
+      lotePacking: $rootScope.dataSeleccion.loteProceso,
       variedadRotulada: '',
       IDG: '',
       tipificacion: '',
+      MERCADO_NEW: '',
       PLU: '',
       color: '',
       IDP: ''
@@ -75,7 +92,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
   } else {
     $scope.campoCaroso = "none";
   }
-  $scope.validaLotePallet = function() {
+  $scope.validaLotePallet = function () {
     var jsonValidate = [{
       campo: "Codigo Pallet",
       value: $rootScope.datosPaletizaje.detalle[$rootScope.idxTab].codigoPallet,
@@ -85,9 +102,8 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
     }];
     if (!$rootScope.validaForm(jsonValidate)) return 0;
   }
-
   function parseLotePallet(value) {
-    console.log(value)
+    //console.log(value)
     var res
     if (!isNaN(parseInt(value))) {
       res = ("00000000000000000000" + value).slice(-20);
@@ -96,10 +112,10 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
     }
     return res;
   }
-  $scope.codearLote = function(data, id) {
+  $scope.codearLote = function (data, id) {
     if (APPMOVIL) {
       cordova.plugins.barcodeScanner.scan(
-        function(result) {
+        function (result) {
           //alert(result.text)
           if (data == "codigoPallet") {
             document.getElementById('codigoPallet').value = parseLotePallet(result.text);
@@ -111,7 +127,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
             $rootScope.$apply();
           }
         },
-        function(error) {
+        function (error) {
           $rootScope.mostrarAlerta(true, "Error", "Scanning failed: " + error);
         }
       );
@@ -153,19 +169,19 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
     }
   ];
   $rootScope.listarAltura = [];
-  $scope.Carga_Altura = function() {
+  $scope.Carga_Altura = function () {
     $rootScope.listarAltura = [];
-    angular.forEach($rootScope.ZMOV_QUERY_HU_DATOADICIONAL.VEGR4, function(value, key) {
+    angular.forEach($rootScope.ZMOV_QUERY_HU_DATOADICIONAL.VEGR4, function (value, key) {
       var auxALT = value.VEGR4.replace('ALT', '');
       auxALT = auxALT * 1;
       if ($rootScope.datosPaletizaje.detalle[0].palletCompleto != 'X') {
-        if (auxALT > 95)
+        if (auxALT > 97)
           $rootScope.listarAltura.push({
             DESCRIPTION: value.BEZEI,
             VALUE_CHAR: value.VEGR4
           });
       } else {
-        if (auxALT < 95)
+        if (auxALT < 97)
           $rootScope.listarAltura.push({
             DESCRIPTION: value.BEZEI,
             VALUE_CHAR: value.VEGR4
@@ -176,7 +192,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
   }
   $scope.Carga_Altura();
   $rootScope.listarCategoria = [];
-  angular.forEach($rootScope.CATEGORIA, function(value, key) {
+  angular.forEach($rootScope.CATEGORIA, function (value, key) {
     if (value.ATBEZ == $rootScope.dataSeleccion.especie.VALUE_CHAR) {
       $scope.listarCategoria.push({
         DESCRIPTION: value.DESCRIPTION,
@@ -186,7 +202,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
   })
   $scope.listarMaterial = [];
   if ($rootScope.userData.mail == "servicio") {
-    angular.forEach($rootScope.ZMOV_QUERY_MATERIAL, function(value, key) {
+    angular.forEach($rootScope.ZMOV_QUERY_MATERIAL, function (value, key) {
       if (value.MTART == "UNBW" &&
         value.ZMAT_ESPECIE == $rootScope.dataSeleccion.especie.VALUE_CHAR &&
         value.ZMAT_PROCESO == "SEXPORTACION" &&
@@ -200,7 +216,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
       }
     })
   } else {
-    angular.forEach($rootScope.ZMOV_QUERY_MATERIAL, function(value, key) {
+    angular.forEach($rootScope.ZMOV_QUERY_MATERIAL, function (value, key) {
       if (value.MTART == "FERT" &&
         value.ZMAT_ESPECIE == $rootScope.dataSeleccion.especie.VALUE_CHAR &&
         value.ZMAT_VIGENTE == "SI") {
@@ -213,7 +229,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
       }
     })
   }
-  $scope.controlDescarte = function() {
+  $scope.controlDescarte = function () {
     //console.log(IPSERVER + 'JSON_ZMOV_QUERY_LIST_MATER.aspx?I_MATNR=' + $rootScope.datosPaletizaje.detalle[0].material.MATNR + '&I_WERKS=' + $rootScope.userData.centro)
     $scope.listarListaMateriales = [];
     $http({
@@ -222,10 +238,10 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
       timeout: 500000
-    }).success(function(data) {
+    }).success(function (data) {
       console.log(data);
       angular.forEach(data.LT_LIST_MAT, function (val, key) {
-        if(val.STLAL=="01"){
+        if (val.STLAL == "01") {
           $scope.listarListaMateriales.push({
             DESCRIPTION: val.STLAL + ' - ' + val.STKTX,
             VALUE_CHAR: val.STLAL
@@ -257,11 +273,11 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
         $rootScope.dataSeleccion.totalKilo = $rootScope.kiloInicial;
       }
     }
-    console.log($rootScope.dataSeleccion.totalKilo)
+    //console.log($rootScope.dataSeleccion.totalKilo)
   }
-  $scope.getPredios = function() {
+  $scope.getPredios = function () {
     $rootScope.listaPredio = []; //ZPRD_CSDP , NAME1=PRODUCTOR
-    angular.forEach($rootScope.ZMOV_QUERY_PRODUCTOR.ET_PROD_SDP, function(value, key) {
+    angular.forEach($rootScope.ZMOV_QUERY_PRODUCTOR.ET_PROD_SDP, function (value, key) {
       if (true &&
         value.ESPECIE === $rootScope.dataSeleccion.especie.VALUE_CHAR && value.LIFNR === $rootScope.datosPaletizaje.detalle[0].productorRotulado.VALUE_CHAR
       ) {
@@ -277,7 +293,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
     });
   }
   $scope.listarProductor = [];
-  angular.forEach($rootScope.ZMOV_QUERY_PRODUCTOR.ET_PRODUCT, function(value, key) {
+  angular.forEach($rootScope.ZMOV_QUERY_PRODUCTOR.ET_PRODUCT, function (value, key) {
     if (value.ESPECIE == $rootScope.dataSeleccion.especie.VALUE_CHAR) {
       $scope.listarProductor.push({
         DESCRIPTION: value.LIFNR,
@@ -293,7 +309,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
     $scope.getPredios();
   })
   $scope.listarCalibre = [];
-  angular.forEach($rootScope.ZMOV_QUERY_GRUPO_CATE, function(value, key) {
+  angular.forEach($rootScope.ZMOV_QUERY_GRUPO_CATE, function (value, key) {
     if (value.ATBEZ == $rootScope.dataSeleccion.especie.VALUE_CHAR) {
       $scope.listarCalibre.push({
         DESCRIPTION: value.DESCRIPTION,
@@ -302,7 +318,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
     }
   })
   $scope.listarVariedad = [];
-  angular.forEach($rootScope.ZMOV_QUERY_PRODUCTOR.ET_PROD_VAR, function(value, key) {
+  angular.forEach($rootScope.ZMOV_QUERY_PRODUCTOR.ET_PROD_VAR, function (value, key) {
     if (value.ESPECIE === $rootScope.dataSeleccion.especie.VALUE_CHAR &&
       $rootScope.dataSeleccion.LIFNR == value.LIFNR
     ) {
@@ -319,7 +335,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
     }
   });
   $rootScope.listaCuartel = [];
-  angular.forEach($rootScope.ZMOV_QUERY_PRODUCTOR.ET_PROD_IDG, function(value, key) {
+  angular.forEach($rootScope.ZMOV_QUERY_PRODUCTOR.ET_PROD_IDG, function (value, key) {
     if (true &&
       value.LIFNR === $rootScope.dataSeleccion.LIFNR && value.ESPECIE === $rootScope.dataSeleccion.especie.VALUE_CHAR
     ) {
@@ -331,7 +347,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
     }
   });
   $rootScope.listaIDP = [];
-  angular.forEach($rootScope.ZMOV_QUERY_PRODUCTOR.ET_PROD_IDP, function(value, key) {
+  angular.forEach($rootScope.ZMOV_QUERY_PRODUCTOR.ET_PROD_IDP, function (value, key) {
     if (true &&
       value.LIFNR === $rootScope.dataSeleccion.LIFNR && value.ESPECIE === $rootScope.dataSeleccion.especie.VALUE_CHAR
     ) {
@@ -342,14 +358,14 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
     }
   });
   $scope.listarTipoPallet = [];
-  angular.forEach($rootScope.ZMOV_QUERY_HU_DATOADICIONAL.INHALT, function(value, key) {
+  angular.forEach($rootScope.ZMOV_QUERY_HU_DATOADICIONAL.INHALT, function (value, key) {
     $scope.listarTipoPallet.push({
       DESCRIPTION: value.INHALT,
       VALUE_CHAR: value.INHALT
     })
   });
   $scope.listarMercado = [];
-  angular.forEach($rootScope.ZMOV_QUERY_HU_DATOADICIONAL.VEGR5, function(value, key) {
+  angular.forEach($rootScope.ZMOV_QUERY_HU_DATOADICIONAL.VEGR5, function (value, key) {
     $scope.listarMercado.push({
       DESCRIPTION: value.BEZEI,
       VALUE_CHAR: value.VEGR5
@@ -357,7 +373,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
   })
   //$rootScope.COLOR
   $scope.listarColor = [];
-  angular.forEach($rootScope.COLOR, function(value, key) {
+  angular.forEach($rootScope.COLOR, function (value, key) {
     if (value.ATBEZ == $rootScope.dataSeleccion.especie.VALUE_CHAR)
       $scope.listarColor.push({
         DESCRIPTION: value.DESCRIPTION,
@@ -366,7 +382,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
   })
   //$rootScope.PLU
   $scope.listarPLU = [];
-  angular.forEach($rootScope.PLU, function(value, key) {
+  angular.forEach($rootScope.PLU, function (value, key) {
     $scope.listarPLU.push({
       DESCRIPTION: value.DESCRIPTION,
       VALUE_CHAR: value.VALUE_CHAR
@@ -374,7 +390,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
   })
 
   $scope.listarTipificacion = [];
-  angular.forEach($rootScope.TIPIFICACION, function(value, key) {
+  angular.forEach($rootScope.TIPIFICACION, function (value, key) {
     if (value.ATBEZ === $rootScope.dataSeleccion.especie.VALUE_CHAR) {
       $scope.listarTipificacion.push({
         DESCRIPTION: value.DESCRIPTION,
@@ -383,8 +399,8 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
       });
     }
   });
-  $scope.validaFormRecep = function() {
-    console.log($rootScope.datosPaletizaje.detalle);
+  $scope.validaFormRecep = function () {
+    //console.log($rootScope.datosPaletizaje.detalle);
     var jsonValidate = [
       //{campo:"Codigo Pallet",value:$rootScope.datosPaletizaje.detalle[$rootScope.idxTab].codigoPallet,type:"input"},
       {
@@ -450,27 +466,27 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
         value: $rootScope.datosPaletizaje.detalle[$rootScope.idxTab].color,
         type: "aSelect",
         index: "VALUE_CHAR"
-      } );
+      });
     }
     if ($rootScope.dataSeleccion.especie.VALUE_CHAR === "UVAS") {
       jsonValidate.push([{
-          campo: "IDG",
-          value: $rootScope.datosPaletizaje.detalle[$rootScope.idxTab].IDG,
-          type: "aSelect",
-          index: "VALUE_CHAR"
-        },
-        {
-          campo: "IDP",
-          value: $rootScope.datosPaletizaje.detalle[$rootScope.idxTab].IDP,
-          type: "aSelect",
-          index: "VALUE_CHAR"
-        },
-        {
-          campo: "Lote Packing",
-          value: $rootScope.datosPaletizaje.detalle[$rootScope.idxTab].tipificacion,
-          type: "aSelect",
-          index: "VALUE_CHAR"
-        },
+        campo: "IDG",
+        value: $rootScope.datosPaletizaje.detalle[$rootScope.idxTab].IDG,
+        type: "aSelect",
+        index: "VALUE_CHAR"
+      },
+      {
+        campo: "IDP",
+        value: $rootScope.datosPaletizaje.detalle[$rootScope.idxTab].IDP,
+        type: "aSelect",
+        index: "VALUE_CHAR"
+      },
+      {
+        campo: "Lote Packing",
+        value: $rootScope.datosPaletizaje.detalle[$rootScope.idxTab].tipificacion,
+        type: "aSelect",
+        index: "VALUE_CHAR"
+      },
       ]);
     }
     if ($rootScope.userData.mail == "servicio") {
@@ -481,17 +497,17 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
         index: "VALUE_CHAR"
       });
     }
-    console.log(jsonValidate);
+    //console.log(jsonValidate);
     if (!$rootScope.validaForm(jsonValidate)) return 0;
 
   }
-  $scope.agregarTab = function() {
+  $scope.agregarTab = function () {
     if (!$scope.validaFormRecep()) {
       return 0;
     }
     $rootScope.datosPaletizaje.detalle[$rootScope.idxTab].fechaEmbalagePakingTab = $('#fechaEmbalagePakingTab').datepicker({
       dateFormat: 'yy-mm-dd',
-      onSelect: function(dateText) {
+      onSelect: function (dateText) {
         $rootScope.datosPaletizaje.detalle[$rootScope.idxTab].fechaEmbalagePakingTab = dateText;
       }
     }).val();
@@ -527,14 +543,14 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
     $scope.cargaDatos($rootScope.idxTab);
     $scope.auxKilo = 0;
   }
-  $scope.autoCompletaLote = function() {
+  $scope.autoCompletaLote = function () {
     var lote = parseLotePallet($rootScope.datosPaletizaje.detalle[0].codigoPallet);
     if (lote) {
       $rootScope.datosPaletizaje.detalle[0].codigoPallet = lote;
     }
-    console.log($rootScope.datosPaletizaje.detalle[0].codigoPallet)
+    //console.log($rootScope.datosPaletizaje.detalle[0].codigoPallet)
   }
-  $scope.irAlTab = function(idx) {
+  $scope.irAlTab = function (idx) {
     if (!$scope.validaFormRecep()) {
       return 0;
     };
@@ -542,7 +558,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
     $rootScope.datosPaletizaje.detalle[$rootScope.idxTab].fechaEmbalagePakingTab = $('#fechaEmbalagePakingTab').datepicker({
       dateFormat: 'yy-mm-dd'
     }).val();
-    angular.forEach($scope.selTab, function(value, key) {
+    angular.forEach($scope.selTab, function (value, key) {
       $scope.selTab[aux].seleccionado = "off";
       aux++;
     });
@@ -555,7 +571,7 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
     $('#fechaEmbalagePakingTab').val($rootScope.datosPaletizaje.detalle[$rootScope.idxTab].fechaEmbalagePakingTab);
     //$('#embalajeLoteTab1').val($rootScope.datosPaletizaje.detalle[$rootScope.idxTab].lotePacking);
     $scope.selMercadoDivTab1 = 'none';
-    //console.log($rootScope.datosLoteProcesoPaking)
+    ////console.log($rootScope.datosLoteProcesoPaking)
     try {
       if (($rootScope.datosPaletizaje.detalle[$rootScope.idxTab].material.MAKTG == '') || ($rootScope.datosPaletizaje.detalle[$rootScope.idxTab].material.MAKTG == undefined)) {
         $scope.selMercadoDivTab1 = 'none';
@@ -568,9 +584,9 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
     $scope.auxKilo = 0;
   }
 
-  $scope.deshacerTab = function() {
+  $scope.deshacerTab = function () {
     var aux = 0;
-    angular.forEach($scope.selTab, function(value, key) {
+    angular.forEach($scope.selTab, function (value, key) {
       $scope.selTab[aux].seleccionado = "off";
       aux++;
     });
@@ -592,8 +608,8 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
     $scope.selTab.pop();
     $scope.restaKgTotal();
   }
-  $scope.Changue_Tipo_Pallet = function(i) {
-    console.log(i);
+  $scope.Changue_Tipo_Pallet = function (i) {
+    //console.log(i);
     $http({
       method: 'POST',
       url: IPSERVER + 'JSON_ZMOV_10021.aspx?IV_MATNR=' + $rootScope.datosPaletizaje.detalle[0].material.MATNR + '&IV_WERKS=' + $rootScope.userData.centro,
@@ -602,8 +618,8 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
       },
       processData: false,
       dataType: 'json',
-    }).success(function(data) {
-      console.log(data);
+    }).success(function (data) {
+      //console.log(data);
       if (data.LT_DETALLE.length > 0) {
         $rootScope.datosPaletizaje.detalle[0].tipoPallet = data.LT_DETALLE[0].TIPO_PALLET;
       } else {
@@ -612,19 +628,102 @@ appExpled.lazyController('ctrExportacion', function($scope, $routeParams, $rootS
 
     })
   }
-  $scope.embalajePakingContinuar = function() {
+  $scope.embalajePakingContinuar = function () {
     if ($scope.validaFormRecep() == 0) {
       return 0;
     } else {
       $rootScope.goToPage('/resumenPaletizar');
     }
   }
-})
-appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope, $http) {
-  //$rootScope.antiRefrescar();
-  $scope.selTab = [];
+  $scope.Cambio_cliente = (x, items) => {
+    //console.log(x);
+    $scope.Cliente_Switch = (x == 'X') ? true : false;
+    items.CLIENTE_NEW = '';
+    items.PEDIDO_NEW = '';
+    items.MERCADO_NEW = '';
+    $timeout(function () {
+      $('#selClientes').immybox({
+        choices: $rootScope.CLIENTES_ARR
+      });
+    }, 1000);
+  }
+  $scope.Get_pedidos = (id) => {
+    console.log(id);
+    if ($('#selClientes').val() == '') {
+      return;
+    }
+    $rootScope.loading.show();
+    var cod = '';
+    angular.forEach($rootScope.CLIENTES_ARR, function (v, k) {
+      if (v.text == $('#selClientes').val()) {
+        $rootScope.datosPaletizaje.detalle[id].CLIENTE_NEW = v.text;
+        cod = v.value;
+      }
+    })
+    var json_envio = [{ KUNNR: cod }]
+    $http({
+      method: 'POST',
+      url: IPSERVER + 'JSON_ZMOV_10036.aspx?KUNNR=' + JSON.stringify(json_envio),
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      timeout: 500000
+    }).success(function (data) {
+      //console.log($scope.TEMP);
+      var desde = new Date($scope.TEMP.DESDE[0], parseInt($scope.TEMP.DESDE[1]) - 1, $scope.TEMP.DESDE[2]);
+      var hasta = new Date($scope.TEMP.HASTA[0], parseInt($scope.TEMP.HASTA[1]) - 1, $scope.TEMP.HASTA[2]);
+      $scope.Lista_Pedidos = [];
+      var pedidos_list = [];
+      angular.forEach(data.E_RESULT, (item) => {
+        var f = item.AUDAT.split('-');
+        var check = new Date(f[0], parseInt(f[1]) - 1, f[2]);
+        if (check >= desde && check <= hasta) {
+          console.log(check >= desde && check <= hasta);
+          pedidos_list.push(item.VBELN)
+          //$scope.Lista_Pedidos.push({ DESCRIPTION: item.VBELN, VALUE_CHAR: item.VBELN })
+        }
+        /*if (fechita[0] == $rootScope.TEMPORADA_.DESDE || fechita[0] == $rootScope.TEMPORADA_.hasta) {
+          $scope.Lista_Pedidos.push({ DESCRIPTION: item.VBELN, VALUE_CHAR: item.VBELN })
+        }*/
+      })
+      pedidos_list = pedidos_list.sort();
+      //console.log(pedidos_list.sort());
 
-  $scope.mostrarRespuesta = function(estado) {
+      angular.forEach(pedidos_list, function (item) {
+        $scope.Lista_Pedidos.push({ DESCRIPTION: item, VALUE_CHAR: item })
+      })
+      //console.log($scope.Lista_Pedidos);
+
+      if ($scope.Lista_Pedidos.length == 0) {
+        //$rootScope.alert.show({ message: "No se encontraron pedidos" });
+        $scope.bool_pedido = true;
+      } else {
+        $scope.bool_pedido = false;
+      }
+      $rootScope.loading.hide();
+    })
+  }
+})
+appExpled.lazyController('crtResumen', function ($scope, $routeParams, $rootScope, $http) {
+  //$rootScope.antiRefrescar();
+  // $rootScope.sid = 'old';
+  $scope.selTab = [];
+  console.log($rootScope.datosPaletizaje)
+  $scope.CLIENTE_DESTINO = '';
+  if ($rootScope.datosPaletizaje.detalle[0].MERCADO_NEW && $rootScope.datosPaletizaje.detalle[0].MERCADO_NEW.VALUE_CHAR != '') {
+    console.log('existe');
+    $scope.CLIENTE_DESTINO = $rootScope.datosPaletizaje.detalle[0].MERCADO_NEW.DESCRIPTION
+  } else {
+    console.log('Se selecciono cliente');
+    if ($rootScope.datosPaletizaje.detalle[0].CLIENTE_NEW && $rootScope.datosPaletizaje.detalle[0].CLIENTE_NEW != '') {
+      $scope.CLIENTE_DESTINO = $rootScope.datosPaletizaje.detalle[0].CLIENTE_NEW;
+      if ($rootScope.datosPaletizaje.detalle[0].PEDIDO_NEW && $rootScope.datosPaletizaje.detalle[0].PEDIDO_NEW.DESCRIPTION != '') {
+        $scope.CLIENTE_DESTINO += ' | ' + $rootScope.datosPaletizaje.detalle[0].PEDIDO_NEW.DESCRIPTION;
+      }
+    }
+  }
+  console.log($scope.CLIENTE_DESTINO);
+
+  $scope.mostrarRespuesta = function (estado) {
     if (estado == true) {
       $scope.verPopRespuesta = "block";
     } else {
@@ -634,13 +733,13 @@ appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope
   // estableser oculto
   $scope.mostrarRespuesta(false);
 
-  $scope.btnFinalizar = function() {
+  $scope.btnFinalizar = function () {
     $rootScope.goToPage('/resumenPaletizar');
   }
 
-  $scope.irAlTab = function(idx) {
+  $scope.irAlTab = function (idx) {
     var aux = 0;
-    angular.forEach($scope.selTab, function(value, key) {
+    angular.forEach($scope.selTab, function (value, key) {
       $scope.selTab[aux].seleccionado = "off";
       aux++;
     });
@@ -660,6 +759,54 @@ appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope
       alerta: 'status-alert'
     });
   }
+  $scope.POP_DATA2 = true;
+  $scope.Pop_Up_Material = function () {
+    $rootScope.loading.show();
+    $http({
+      method: 'POST',
+      url: IPSERVER + 'JSON_ZMOV_10020.aspx?IV_MATNR=' + $rootScope.datosPaletizaje.detalle[0].material.MATNR + '&IV_WERKS=' + angular.uppercase($rootScope.userData.centro) + '&IV_HU_GRP4=' + $rootScope.datosPaletizaje.detalle[0].altura.VALUE_CHAR + '&IV_STLAL_PALLET=01&IV_TIP_PACKING=' + (($rootScope.userData.mail === 'recepcionPallet') ? 'S' : 'C'),
+      headers: { 'Content-Type': 'text/xml; charset=utf-8' },
+      processData: false,
+      dataType: 'json',
+    }).success(function (data) {
+      $rootScope.loading.hide();
+      //console.log(data);
+      if (data.LT_DETALLE.length > 0) {
+        $scope.POP_DATA2 = false;
+        $scope.dataTable = data;
+        angular.forEach($scope.dataTable.LT_DETALLE, function (v, k) {
+          v.img = "img/check.png";
+          v.chek = false;
+          v.Esquina = false;
+          if ($scope.Completo !== 'X') {
+            v.disable = false;
+          } else {
+            v.disable = true;
+          }
+        })
+        angular.forEach($scope.dataTable.LT_DETALLE, function (v, k) {
+          angular.forEach($scope.JSON_ESQUINERO, function (value, ley) {
+            if (value.MATNR == v.MATNR) {
+              v.Esquina = true;
+            }
+          })
+        })
+      } else {
+        $rootScope.alert.show({ message: "Falta configurar lista estandar" });
+      }
+    })
+  }
+  $scope.clickearCheck = function (id) {
+    if (!$scope.dataTable.LT_DETALLE[id].disable) {
+      if ($scope.dataTable.LT_DETALLE[id].chek) {
+        $scope.dataTable.LT_DETALLE[id].img = "img/check.png";
+        $scope.dataTable.LT_DETALLE[id].chek = false;
+      } else {
+        $scope.dataTable.LT_DETALLE[id].img = "img/x.png";
+        $scope.dataTable.LT_DETALLE[id].chek = true;
+      }
+    }
+  };
   $scope.selTab[$rootScope.idxTab].seleccionado = "on";
 
 
@@ -673,24 +820,28 @@ appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope
     $scope.irAlTab(i);
   }
   $scope.irAlTab($rootScope.idxTab);
-  $scope.Get_XML = function() {
+  $scope.Get_XML = function () {
     var ListaMateriales_Aux = '';
     try {
       if ($rootScope.datosPaletizaje.detalle[0].listaMateriales) {
-        console.log('existe');
+        //console.log('existe');
         ListaMateriales_Aux = $rootScope.datosPaletizaje.detalle[0].listaMateriales.VALUE_CHAR;
-        console.log($rootScope.datosPaletizaje.detalle[0].listaMateriales.VALUE_CHAR)
+        //console.log($rootScope.datosPaletizaje.detalle[0].listaMateriales.VALUE_CHAR)
       } else {
-        console.log('No existe');
+        //console.log('No existe');
 
       }
     } catch (e) {
-      console.log(e);
+      //console.log(e);
+    }
+    var rfc = "0";
+    if ($rootScope.dataSeleccion.reembalaje) {
+      rfc = "4";
     }
     var cadenaXML = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">';
     cadenaXML += '   <soapenv:Header/>';
     cadenaXML += '   <soapenv:Body>';
-    cadenaXML += '      <tem:ZMOV_20030>';
+    cadenaXML += '      <tem:ZMOV_2003' + rfc + '>';
     cadenaXML += '         <tem:datos>';
     cadenaXML += '            <tem:HEADER>';
     cadenaXML += '               <tem:BUKRS>' + $rootScope.userData.sociedad + '</tem:BUKRS>'; // sociedad usuario
@@ -712,12 +863,12 @@ appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope
     cadenaXML += '               <tem:SERVICIO>' + (($rootScope.userData.mail === 'servicio') ? 'X' : '') + '</tem:SERVICIO>';
     cadenaXML += '            </tem:HEADER_ADIC>';
     cadenaXML += '              <tem:IR_MTART_NOT_541>';
-    cadenaXML += '              <tem:ZMOV_20030_IR_MTART_NOT_541>';
+    cadenaXML += '              <tem:ZMOV_2003' + rfc + '_IR_MTART_NOT_541>';
     cadenaXML += '                  <tem:SIGN>I</tem:SIGN>\
                                         <tem:OPTION>NE</tem:OPTION>\
                                         <tem:LOW>ROH</tem:LOW>\
                                         <tem:HIGH></tem:HIGH>\
-                                        </tem:ZMOV_20030_IR_MTART_NOT_541>\
+                                        </tem:ZMOV_2003'+ rfc + '_IR_MTART_NOT_541>\
                                     </tem:IR_MTART_NOT_541>';
     cadenaXML += '            <tem:HEADER_HU>';
     cadenaXML += '               <tem:PACK_MAT>PALLET</tem:PACK_MAT>';
@@ -736,167 +887,230 @@ appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope
     cadenaXML += '            </tem:HEADER_HU>';
     cadenaXML += '            <tem:LOG></tem:LOG>';
     cadenaXML += '            <tem:LT_CARACT>';
-    cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
     cadenaXML += '               <tem:BATCH></tem:BATCH>';
     cadenaXML += '               <tem:CHARACT>Z' + $rootScope.dataSeleccion.especie.VALUE_CHAR + '_VARIEDAD</tem:CHARACT>';
     cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.variedad + '</tem:VALUE_CHAR>';
-    cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     //if ($rootScope.userData.linea !== '') {
-      cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
-      cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
-      cadenaXML += '               <tem:BATCH></tem:BATCH>';
-      cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.LINEA_PRD + '</tem:VALUE_CHAR>';
-      cadenaXML += '               <tem:CHARACT>ZLINEA</tem:CHARACT>';
-      cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
+    cadenaXML += '               <tem:BATCH></tem:BATCH>';
+    cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.LINEA_PRD + '</tem:VALUE_CHAR>';
+    cadenaXML += '               <tem:CHARACT>ZLINEA</tem:CHARACT>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     //}
     //if ($rootScope.userData.turno !== '' && $rootScope.userData.turno !== 'PA02') {
-      cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
+    cadenaXML += '               <tem:BATCH></tem:BATCH>';
+    cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.TURNO_PRD + '</tem:VALUE_CHAR>';
+    cadenaXML += '               <tem:CHARACT>ZTURNO</tem:CHARACT>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    //}
+    var almacen = $rootScope.userData.almacenGranel;
+    if ($rootScope.dataSeleccion.reembalaje) {
+      almacen = "PA03";
+      cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
       cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
       cadenaXML += '               <tem:BATCH></tem:BATCH>';
-      cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.TURNO_PRD + '</tem:VALUE_CHAR>';
-      cadenaXML += '               <tem:CHARACT>ZTURNO</tem:CHARACT>';
-      cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
-    //}
-    cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+      cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.MOTIVO_REEM + '</tem:VALUE_CHAR>';
+      cadenaXML += '               <tem:CHARACT>ZMOTIVOREEM</tem:CHARACT>';
+      cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+      cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+      cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
+      cadenaXML += '               <tem:BATCH></tem:BATCH>';
+      cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.ACUENTA_REEM + '</tem:VALUE_CHAR>';
+      cadenaXML += '               <tem:CHARACT>ZACUENTAREEM</tem:CHARACT>';
+      cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+      cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+      cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
+      cadenaXML += '               <tem:BATCH></tem:BATCH>';
+      cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.AUTORIZA_REEM + '</tem:VALUE_CHAR>';
+      cadenaXML += '               <tem:CHARACT>ZAUTORIZAREEM</tem:CHARACT>';
+      cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+      cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+      cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
+      cadenaXML += '               <tem:BATCH></tem:BATCH>';
+      cadenaXML += '               <tem:VALUE_CHAR>REEMBALAJE</tem:VALUE_CHAR>';
+      cadenaXML += '               <tem:CHARACT>Z_TIPO_PROCESO</tem:CHARACT>';
+      cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    }
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
     cadenaXML += '               <tem:BATCH></tem:BATCH>';
     cadenaXML += '               <tem:CHARACT>Z' + $rootScope.dataSeleccion.especie.VALUE_CHAR + '_VARIEDAD_ET</tem:CHARACT>';
     cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.datosPaletizaje.detalle[0].variedadRotulada.VALUE_CHAR + '</tem:VALUE_CHAR>';
-    cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
-    cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
     cadenaXML += '               <tem:BATCH></tem:BATCH>';
     cadenaXML += '               <tem:CHARACT>Z' + $rootScope.dataSeleccion.especie.VALUE_CHAR + '_CALIBRE</tem:CHARACT>';
     cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.datosPaletizaje.detalle[0].calibre.VALUE_CHAR + '</tem:VALUE_CHAR>';
-    cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
-    cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
     cadenaXML += '               <tem:BATCH></tem:BATCH>';
     cadenaXML += '               <tem:CHARACT>Z' + $rootScope.dataSeleccion.especie.VALUE_CHAR + '_CALIDAD</tem:CHARACT>';
     cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.datosPaletizaje.detalle[0].categoria.VALUE_CHAR + '</tem:VALUE_CHAR>';
-    cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
-    cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    /*cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
     cadenaXML += '               <tem:BATCH></tem:BATCH>';
     cadenaXML += '               <tem:CHARACT>ZEMBALA</tem:CHARACT>';
     cadenaXML += '               <tem:VALUE_CHAR>DDC</tem:VALUE_CHAR>';
-    cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
-    cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';*/
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
     cadenaXML += '               <tem:BATCH></tem:BATCH>';
     cadenaXML += '               <tem:CHARACT>ZPRODUCTOR_ET</tem:CHARACT>';
     cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.datosPaletizaje.detalle[0].productorRotulado.VALUE_CHAR + '</tem:VALUE_CHAR>';
-    cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
-    cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
     cadenaXML += '               <tem:BATCH></tem:BATCH>';
     cadenaXML += '               <tem:CHARACT>ZSAG_CSP</tem:CHARACT>';
     cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.userData.CSP + '</tem:VALUE_CHAR>';
-    cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
-    cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
     cadenaXML += '               <tem:BATCH></tem:BATCH>';
     cadenaXML += '               <tem:CHARACT>ZFCOSECHA</tem:CHARACT>';
     cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.HSDAT + '</tem:VALUE_CHAR>';
-    cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
-    cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
     cadenaXML += '               <tem:BATCH></tem:BATCH>';
     cadenaXML += '               <tem:CHARACT>ZNPARTIDA</tem:CHARACT>';
     cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.NPARTIDA + '</tem:VALUE_CHAR>';
-    cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
-    cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
     cadenaXML += '               <tem:BATCH></tem:BATCH>';
     cadenaXML += '               <tem:CHARACT>ZPRODUCTOR</tem:CHARACT>';
     cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.LIFNR + '</tem:VALUE_CHAR>';
-    cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
-    cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
     cadenaXML += '               <tem:BATCH></tem:BATCH>';
     cadenaXML += '               <tem:CHARACT>TIPIFICACION</tem:CHARACT>';
     cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.TIPIFICACION + '</tem:VALUE_CHAR>';
-    cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
-    cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
     cadenaXML += '               <tem:BATCH></tem:BATCH>';
     //cadenaXML += '               <tem:CHARACT>Z'+$rootScope.dataSeleccion.especie.VALUE_CHAR+'_TDFRIO</tem:CHARACT>';
     cadenaXML += '               <tem:CHARACT>ZTFRIO</tem:CHARACT>';
     cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.TDFRIO + '</tem:VALUE_CHAR>';
-    cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    /*CAMARA*/
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
+    cadenaXML += '               <tem:BATCH></tem:BATCH>';
+    cadenaXML += '               <tem:CHARACT>ZCAMARA</tem:CHARACT>';
+    cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.CAMARA + '</tem:VALUE_CHAR>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    /* SDP */
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
+    cadenaXML += '               <tem:BATCH></tem:BATCH>';
+    cadenaXML += '               <tem:CHARACT>ZSAG_SDP</tem:CHARACT>';
+    cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.SAG_SDP + '</tem:VALUE_CHAR>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    /* TIPO_PROCESO */
+    cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
+    cadenaXML += '               <tem:BATCH></tem:BATCH>';
+    cadenaXML += '               <tem:CHARACT>Z_TIPO_PROCESO</tem:CHARACT>';
+    cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.TIPO_PROCESO + '</tem:VALUE_CHAR>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+
     if ($rootScope.dataSeleccion.especie.ATBEZ === "CAROZO") {
-      cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+      cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
       cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
       cadenaXML += '               <tem:BATCH></tem:BATCH>';
       cadenaXML += '               <tem:CHARACT>ZPLU</tem:CHARACT>';
       cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.datosPaletizaje.detalle[0].PLU.VALUE_CHAR + '</tem:VALUE_CHAR>';
-      cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
-      cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+      cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+      cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
       cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
       cadenaXML += '               <tem:BATCH></tem:BATCH>';
       cadenaXML += '               <tem:CHARACT>Z' + $rootScope.dataSeleccion.especie.VALUE_CHAR + '_COLOR</tem:CHARACT>';
       cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.datosPaletizaje.detalle[0].color.VALUE_CHAR + '</tem:VALUE_CHAR>';
-      cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
+      cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     }
     if ($rootScope.dataSeleccion.especie.VALUE_CHAR == "UVAS") {
-      cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+      cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
       cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
       cadenaXML += '               <tem:BATCH></tem:BATCH>';
       cadenaXML += '               <tem:CHARACT>ZSAG_IDP</tem:CHARACT>';
       cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.datosPaletizaje.detalle[0].IDP.VALUE_CHAR + '</tem:VALUE_CHAR>';
-      cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
-      cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+      cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+      cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
       cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
       cadenaXML += '               <tem:BATCH></tem:BATCH>';
       cadenaXML += '               <tem:CHARACT>ZSAG_IDG</tem:CHARACT>';
       cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.datosPaletizaje.detalle[0].IDG.VALUE_CHAR + '</tem:VALUE_CHAR>';
-      cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
-      /* cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+      cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+      /* cadenaXML += '            <tem:ZMOV_2003'+rfc+'_LT_CARACT>';
        cadenaXML += '               <tem:MATERIAL>'+angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR)+'</tem:MATERIAL>';
        cadenaXML += '               <tem:BATCH></tem:BATCH>';
        cadenaXML += '               <tem:CHARACT>Z'+$rootScope.dataSeleccion.especie.VALUE_CHAR+'_T</tem:CHARACT>';
        cadenaXML += '               <tem:VALUE_CHAR>'+$rootScope.datosPaletizaje.detalle[0].tipificacion.VALUE_CHAR+'</tem:VALUE_CHAR>';
-       cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';*/
+       cadenaXML += '            </tem:ZMOV_2003'+rfc+'_LT_CARACT>';*/
     }
     if ($rootScope.userData.mail == "servicio") {
-      cadenaXML += '            <tem:ZMOV_20030_LT_CARACT>';
+      cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
       cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
       cadenaXML += '               <tem:BATCH></tem:BATCH>';
       cadenaXML += '               <tem:CHARACT>ZCLIENTE</tem:CHARACT>';
       cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.datosPaletizaje.detalle[0].cliente.VALUE_CHAR + '</tem:VALUE_CHAR>';
-      cadenaXML += '            </tem:ZMOV_20030_LT_CARACT>';
+      cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     }
     cadenaXML += '            </tem:LT_CARACT><tem:LT_ITEMS>';
-    cadenaXML += '               <tem:ZMOV_20030_LT_ITEMS>';
+    cadenaXML += '               <tem:ZMOV_2003' + rfc + '_LT_ITEMS>';
     cadenaXML += '                  <tem:STCK_TYPE></tem:STCK_TYPE>';
     cadenaXML += '                  <tem:MATERIAL>' + $rootScope.datosPaletizaje.detalle[0].material.MATNR + '</tem:MATERIAL>';
     cadenaXML += '                  <tem:BATCH></tem:BATCH>';
     cadenaXML += '                  <tem:QUANTITY>' + $rootScope.datosPaletizaje.detalle[0].cantidad + '</tem:QUANTITY>';
-    cadenaXML += '                  <tem:PO_UNIT>'+$rootScope.datosPaletizaje.detalle[0].material.MEINS+'</tem:PO_UNIT>';
+    cadenaXML += '                  <tem:PO_UNIT>' + $rootScope.datosPaletizaje.detalle[0].material.MEINS + '</tem:PO_UNIT>';
     cadenaXML += '                  <tem:HSDAT>' + $rootScope.datosPaletizaje.detalle[0].fechaEmbalagePakingTab.value + '</tem:HSDAT>';
     cadenaXML += '                  <tem:PLANT>' + $rootScope.userData.centro + '</tem:PLANT>';
-    cadenaXML += '                  <tem:STGE_LOC>' + $rootScope.userData.almacenGranel + '</tem:STGE_LOC>';
+    cadenaXML += '                  <tem:STGE_LOC>' + almacen + '</tem:STGE_LOC>';
     cadenaXML += '                  <tem:FREE_ITEM>X</tem:FREE_ITEM>';
     cadenaXML += '                  <tem:ITEM_CAT>L</tem:ITEM_CAT>';
     cadenaXML += '                  <tem:MOVE_BATCH></tem:MOVE_BATCH>';
     cadenaXML += '                  <tem:BATCH_GRANEL>' + angular.uppercase($rootScope.dataSeleccion.loteProceso) + '</tem:BATCH_GRANEL>'; /**/
     cadenaXML += '                  <tem:ACCTASSCAT>' + $rootScope.dataSeleccion.ACCTASSCAT + '</tem:ACCTASSCAT>';
     cadenaXML += '                  <tem:ALMAC_TRASP>' + (($rootScope.userData.mail === 'recepcionPallet') ? '' : 'PA02') + '</tem:ALMAC_TRASP>'; //Cambie el turno por planta, ya que mas arriba se solicita el turno; cambie el almacen de traspaso al campo turno.
-    cadenaXML += '                  <tem:AUFEX>' + (($rootScope.switch_embalaje)?'':'X')+ '</tem:AUFEX>';
-    cadenaXML += '               </tem:ZMOV_20030_LT_ITEMS>';
+    cadenaXML += '                  <tem:AUFEX>' + (($rootScope.switch_embalaje) ? '' : 'X') + '</tem:AUFEX>';
+    cadenaXML += '               </tem:ZMOV_2003' + rfc + '_LT_ITEMS>';
     cadenaXML += '            </tem:LT_ITEMS>';
     cadenaXML += '            <tem:LT_ITEM_DEST>';
     cadenaXML += '            </tem:LT_ITEM_DEST>';
+    cadenaXML += '            <tem:LT_MATNR>';
+    if ($rootScope.dataSeleccion.reembalaje) {
+      angular.forEach($scope.dataTable.LT_DETALLE, function (val, key) {
+        if (val.chek) {
+          cadenaXML += '          <tem:ZMOV_20034_LT_MATNR>\
+                                      <tem:MATNR>'+ val.MATNR + '</tem:MATNR>\
+                                  </tem:ZMOV_20034_LT_MATNR>';
+        }
+      })
+    }
+    cadenaXML += '            </tem:LT_MATNR>';
+
     cadenaXML += '         </tem:datos>';
-    cadenaXML += '      </tem:ZMOV_20030>';
+    cadenaXML += '      </tem:ZMOV_2003' + rfc + '>';
     cadenaXML += '   </soapenv:Body>';
     cadenaXML += '</soapenv:Envelope>';
     cadenaXML = cadenaXML.split('>undefined<').join('><');
-    console.log(cadenaXML);
+    //console.log(cadenaXML);
     return cadenaXML;
   }
-  $scope.send_xml = function() {
+  $scope.send_xml = function () {
+    $rootScope.loading.show();
     $rootScope.blockReEnvio = 1;
 
     document.getElementById('btnContinuar_').style.display = 'none';
@@ -907,6 +1121,8 @@ appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope
     $rootScope.btnContinuar = 'none';
     $scope.mostrarRespuesta(true);
     $rootScope.httpRequest.successRedirect = "menuProceso";
+    //$scope.Get_XML()
+    //return;
     $http({
       method: 'POST',
       url: IPSERVER + 'rfcNET.asmx?',
@@ -916,17 +1132,18 @@ appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope
       processData: false,
       dataType: 'xml',
       data: $scope.Get_XML()
-    }).success(function(data) {
-      console.log(data)
+    }).success(function (data) {
+      //console.log(data)
       document.getElementById('btnContinuar_').style.display = 'block';
       document.getElementById('loadingCajaEmabalda').style.display = 'none';
       $('#cargandoDatosSAP').hide('fade');
       var print = data.split("&lt;").join("<").split("&gt;").join(">").split("&quot;").join('"').split('"').join("'").split("<?xml version='1.0' encoding='ISO-8859-1' standalone='no' ?>").join("");
       var xmlData = $.parseXML(print);
-      console.log(print);
+      //console.log(print);
       var mensajeRespuesta1;
       var mensajeRespuesta2;
       var mensajeHU;
+      var bool_creacion = true;
       try {
         var thirdPartyNode = $(xmlData).find("E_MATERIALDOCUMENT")[0];
         var mensajeRespuesta4 = (serializeXmlNode(thirdPartyNode).split("\t").join(""));
@@ -944,16 +1161,16 @@ appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope
         mensajeHU = (serializeXmlNode(thirdPartyNode).split("\t").join(""));
 
       } catch (e) {
+        bool_creacion = false;
         mensajeRespuesta1 = '"No se generó documento material, favor consultar en SAP';
       }
 
       if (mensajeRespuesta1 == '<MATERIALDOCUMENT xmlns="http://tempuri.org/"/>') {
         mensajeRespuesta1 = 'ERROR, No se generó documento material, favor consultar en SAP';
       }
-
       var thirdPartyNode = $(xmlData).find("MESSAGE")[0]; //MESSAGE
       var mensajeRespuesta3 = (serializeXmlNode(thirdPartyNode).split("\t").join(""));
-      console.log(mensajeRespuesta4)
+      //console.log(mensajeRespuesta4)
       mensaje = '<div class="contabilizar-text">' +
         '<h1>UM: </h1> <p>' + (mensajeHU) + '</p>' +
         '<h1>Pedido Cajas: </h1> <p>' + (mensajeRespuesta2) + '</p>' +
@@ -961,12 +1178,45 @@ appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope
         '<h1>Alta Mov. 543: </h1> <p>' + (mensajeRespuesta1) + '</p>' +
         '<h1>Alta Orden CO: </h1> <p>' + (mensajeRespuesta4) + '</p>' +
         '<h1>Mensaje : </h1> <p>' + (mensajeRespuesta3) + '</p>';
-      $rootScope.btnContinuar = 'block';
-      //'<div class="contabilizar-text"> <h1>Alta Mov. 543:</h1> <p>' + mensajeRespuesta1 + '</p><h1>Comp. Cajas Mov. 541:</h1> <p>' + mensajeRespuesta5 + '</p><h1>Alta Orden CO:</h1> <p>' + mensajeRespuesta4 + '</p><h1>Pedido Cajas:</h1><p>' + mensajeRespuesta2 + '</p><h1>UM</h1><p>' + mensajeHU + '</p><h1>Mensaje:</h1><p>' + mensajeRespuesta3 + '</p></div>';
-      document.getElementById('popRespuestaEnvioCajaEmbalada').innerHTML = mensaje;
+      if (bool_creacion && $scope.CLIENTE_DESTINO != '') {
+        var json_envio = {
+          IT_EXIDV: [
+            {
+              EXIDV: $rootScope.datosPaletizaje.detalle[0].codigoPallet
+            }
+          ],
+          UPDATE_HEADER: [
+            {
+              EXIDV: $rootScope.datosPaletizaje.detalle[0].codigoPallet,
+              FIELD_NAME: 'ZZCLIENTE_DESTINO',
+              FIELD_VALUE: $scope.CLIENTE_DESTINO
+            }
+          ]
+        }
+        console.log('JSON_ZMOV_50011.aspx?EXIDV=' + JSON.stringify(json_envio));
+        $http({
+          method: 'POST',
+          url: IPSERVER + 'JSON_ZMOV_50011.aspx?EXIDV=' + JSON.stringify(json_envio),
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json',
+          timeout: 500000
+        }).success(function (data_hu) {
+          console.log(data_hu);
+          $rootScope.loading.hide();
+          $rootScope.btnContinuar = 'block';
+          //'<div class="contabilizar-text"> <h1>Alta Mov. 543:</h1> <p>' + mensajeRespuesta1 + '</p><h1>Comp. Cajas Mov. 541:</h1> <p>' + mensajeRespuesta5 + '</p><h1>Alta Orden CO:</h1> <p>' + mensajeRespuesta4 + '</p><h1>Pedido Cajas:</h1><p>' + mensajeRespuesta2 + '</p><h1>UM</h1><p>' + mensajeHU + '</p><h1>Mensaje:</h1><p>' + mensajeRespuesta3 + '</p></div>';
+          document.getElementById('popRespuestaEnvioCajaEmbalada').innerHTML = mensaje;
+        })
+      } else {
+        $rootScope.loading.hide();
+        $rootScope.btnContinuar = 'block';
+        //'<div class="contabilizar-text"> <h1>Alta Mov. 543:</h1> <p>' + mensajeRespuesta1 + '</p><h1>Comp. Cajas Mov. 541:</h1> <p>' + mensajeRespuesta5 + '</p><h1>Alta Orden CO:</h1> <p>' + mensajeRespuesta4 + '</p><h1>Pedido Cajas:</h1><p>' + mensajeRespuesta2 + '</p><h1>UM</h1><p>' + mensajeHU + '</p><h1>Mensaje:</h1><p>' + mensajeRespuesta3 + '</p></div>';
+        document.getElementById('popRespuestaEnvioCajaEmbalada').innerHTML = mensaje;
+      }
+
     })
   }
-  $scope.generaXML = function() {
+  $scope.generaXML = function () {
     $rootScope.blockReEnvio = 1;
 
     document.getElementById('btnContinuar_').style.display = 'none';
@@ -1165,7 +1415,7 @@ appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope
       cadenaXML += '                  <tem:MATERIAL>' + $rootScope.datosPaletizaje.detalle[0].material.MATNR + '</tem:MATERIAL>';
       cadenaXML += '                  <tem:BATCH></tem:BATCH>';
       cadenaXML += '                  <tem:QUANTITY>' + $rootScope.datosPaletizaje.detalle[0].cantidad + '</tem:QUANTITY>';
-      cadenaXML += '                  <tem:PO_UNIT>'+$rootScope.datosPaletizaje.detalle[0].material.MEINS+'</tem:PO_UNIT>';
+      cadenaXML += '                  <tem:PO_UNIT>' + $rootScope.datosPaletizaje.detalle[0].material.MEINS + '</tem:PO_UNIT>';
       cadenaXML += '                  <tem:HSDAT>' + $rootScope.datosPaletizaje.detalle[0].fechaEmbalagePakingTab.value + '</tem:HSDAT>';
       cadenaXML += '                  <tem:PLANT>' + $rootScope.userData.centro + '</tem:PLANT>';
       cadenaXML += '                  <tem:STGE_LOC>' + $rootScope.userData.almacenGranel + '</tem:STGE_LOC>';
@@ -1184,7 +1434,7 @@ appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope
       cadenaXML += '   </soapenv:Body>';
       cadenaXML += '</soapenv:Envelope>';
       cadenaXML = cadenaXML.split('>undefined<').join('><');
-      console.log(cadenaXML);
+      //console.log(cadenaXML);
     }
     /// VALIDAR ENVIO POR USUARIO DEMO OFLINE
     if ($rootScope.userData.idUsuario != "demo") {
@@ -1193,7 +1443,7 @@ appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope
       var mensajeRespuesta2;
       xmlhttp.open('POST', IPSERVER + '/rfcNET.asmx', true);
       var sr = cadenaXML;
-      xmlhttp.onreadystatechange = function() {
+      xmlhttp.onreadystatechange = function () {
 
         if (xmlhttp.readyState == 4) {
           if (xmlhttp.status == 200) {
@@ -1203,7 +1453,7 @@ appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope
 
             var print = xmlhttp.responseText.split("&lt;").join("<").split("&gt;").join(">").split("&quot;").join('"').split('"').join("'").split("<?xml version='1.0' encoding='ISO-8859-1' standalone='no' ?>").join("");
             var xmlData = $.parseXML(print);
-            console.log(print);
+            //console.log(print);
             var mensajeRespuesta1;
             var mensajeRespuesta2;
             var mensajeHU;
@@ -1233,7 +1483,7 @@ appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope
 
             var thirdPartyNode = $(xmlData).find("MESSAGE")[0]; //MESSAGE
             var mensajeRespuesta3 = (serializeXmlNode(thirdPartyNode).split("\t").join(""));
-            console.log(mensajeRespuesta4)
+            //console.log(mensajeRespuesta4)
             document.getElementById('popRespuestaEnvioCajaEmbalada').innerHTML = '<div class="contabilizar-text"> <h1>Material Document:</h1> <p>' + mensajeRespuesta1 + '</p><h1>Mov. 541:</h1> <p>' + mensajeRespuesta5 + '</p><h1>Doc. Material Orden:</h1> <p>' + mensajeRespuesta4 + '</p><h1>Pedido:</h1><p>' + mensajeRespuesta2 + '</p><h1>E_EXIDV</h1><p>' + mensajeHU + '</p><h1>Mensaje:</h1><p>' + mensajeRespuesta3 + '</p></div>';
 
           }
@@ -1257,7 +1507,7 @@ appExpled.lazyController('crtResumen', function($scope, $routeParams, $rootScope
     }
 
   }
-  $scope.btnAceptar = function() {
+  $scope.btnAceptar = function () {
     //avanzar('','StockAlmacen','fadeInRight');
     $scope.btnGeneraXML = 'block';
     $scope.navegacionPagina('PROD_FiltroProductor', 'fadeInRight', '/reset');

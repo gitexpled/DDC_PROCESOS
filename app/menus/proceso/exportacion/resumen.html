@@ -1,5 +1,5 @@
 <script src="app/menus/proceso/ctrExportacion.js"></script>
-﻿<div id="crtPaletizar" data-role="page" ng-controller="crtResumen">    
+<div id="crtPaletizar" data-role="page" ng-controller="crtResumen">    
     <div class="container">
         <div class="box-resumen">
             <!-- TOP -->
@@ -50,7 +50,7 @@
                             </div>
                             <div class="section-resumen">
                                 <h4 id="resumLote" ng-class="resumLote">Pallet Completo</h4>
-                                <p id="resumenLoteTab1">{{datosPaletizaje.detalle[idxTab].palletCompleto}}</p>
+                                <p id="resumenLoteTab1">{{((datosPaletizaje.detalle[idxTab].palletCompleto=='')?'NO':'SI')}}</p>
                             </div>
                             <div class="section-resumen">
                                 <h4 id="resumLote" ng-class="resumLote">Productor Rotulado</h4>
@@ -98,46 +98,83 @@
                 <div class="footer">
                     <!-- inicia BOX MOBILE -->
                     <div class="mobile-full">
-                        <div id="btnContinuar_" class="btn btn-center" ng-click="send_xml()">Enviar</div>
+                        <div id="btnContinuar_" class="btn btn-center" ng-click="((dataSeleccion.reembalaje)?Pop_Up_Material():send_xml())">Enviar</div>
                     </div>
                     <!-- end BOX MOBILE -->
                 </div>
             </div>
             <!--  TAB CONTAINER  -->
         </div>
-    
-    <div id="PACK_EnvioCajaEmbalada" class="PopUp" data-role="page" style="display:{{verPopRespuesta}}">
-    <div id="envioCajaEnvaladaPOP" class="popup-sap">
-        <!-- CLOSED-->
-        <!--<div class="cerrar-popup" onClick="cerrarPopup('PROD_EnvioCajaEmbalada', 'envioCajaEnvaladaPOP')"></div>
-         CLOSED -->
-        <!-- HEADER POP-UP -->
-        <div class="header-popup">
-            <h1>Respuesta SAP</h1>
-        </div>
-        <!-- HEADER POP-UP -->
-        
-        <!-- AQUI SE CARGARAN LOS MERCADOS -->
-        <div id="cargandoDatosSAP" class="LoadingMercados">
-            <h1>Enviando datos</h1>
-            <div id="loadingCajaEmabalda" class="animarLoading">
-                <ul class="bokeh"><li></li><li></li><li></li><li></li></ul>
+    <div id="PACK_SelectLoteProceso" class="PopUp" ng-hide="POP_DATA2" data-role="page">
+        <div id="BuscarLoteProceso" class="popup-sap" style="min-height: 300px">
+            <div class="header-popup">
+                <h1>Listado Material</h1>
+            </div>
+            <div ng-hide="Componentes">
+                <table style="width: 100%">
+                    <tr>
+                        <td class="tableHeader">MATERIAL</td>
+                        <td class="tableHeader">DESCRIPCIÓN</td>
+                        <td class="tableHeader">CANTIDAD</td>
+                        <td class="tableHeader">CHECK</td>
+                    </tr>
+                    <tr ng-repeat="item in dataTable.LT_DETALLE track by $index">
+                        <td class="tableBody">{{item.MATNR}}</td>
+                        <td class="tableBody">{{item.MAKTX}}</td>
+                        <td class="tableBody" style="text-align: center">{{item.CANTIDAD}}</td>
+                        <td class="tableBody" ng-disabled='{{item.disabled}}' ng-click="clickearCheck($index)">
+                            <center>
+                                <img src="{{item.img}}" width="15px">
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div ng-show="Componentes">
+                <div id="msgAlerta" class="mensaje-alert">Componentes de pallets ya fueron consumidos. Se mueve UM</div>
+            </div>
+            <div class="clearfix" style="height: 150px;"></div>
+            <div class="footer">
+                <div class="col-md-12 col-xs-12 col-lg-12" id="optionsResponse">
+                    <div class="btn col-md-6 col-xs-6 col-lg-6" id="btnError" ng-Click="POP_DATA2=true">CANCELAR</div>
+                    <div class="btn col-md-6 col-xs-6 col-lg-6" id="btnContinuar_" style="width: 50%!important;"
+                        ng-click="send_xml()">ACEPTAR</div>
+                </div>
             </div>
         </div>
-        <!-- AQUI SE CARGA mensaje no encontrado  ercados -->
-        <div id="popRespuestaEnvioCajaEmbalada"></div>
-
-        <div class="clearfix"></div>
-        <!-- FOOTER -->
-        <div class="footer">
-            <!-- inicia BOX MOBILE -->
-            <div class="mobile-full">
-                <div class="btn btn-center" id="btnContinuar_" style="display:{{btnContinuar}}" ng-Click="goToPage('/menuProceso')">ACEPTAR</div>
-                <div class="btn btn-center" id="btnError" style="display:none" ng-Click="navegacionPagina('PACK_MenuPacking', 'fadeInLeft', '')">VOLVER</div>
-            </div>
-            <!-- end BOX MOBILE -->
-        </div>
-        <!-- /FOOTER -->
     </div>
-</div>
+    <div id="PACK_EnvioCajaEmbalada" class="PopUp" data-role="page" style="display:{{verPopRespuesta}}">
+        <div id="envioCajaEnvaladaPOP" class="popup-sap">
+            <!-- CLOSED-->
+            <!--<div class="cerrar-popup" onClick="cerrarPopup('PROD_EnvioCajaEmbalada', 'envioCajaEnvaladaPOP')"></div>
+            CLOSED -->
+            <!-- HEADER POP-UP -->
+            <div class="header-popup">
+                <h1>Respuesta SAP</h1>
+            </div>
+            <!-- HEADER POP-UP -->
+            
+            <!-- AQUI SE CARGARAN LOS MERCADOS -->
+            <div id="cargandoDatosSAP" class="LoadingMercados">
+                <h1>Enviando datos</h1>
+                <div id="loadingCajaEmabalda" class="animarLoading">
+                    <ul class="bokeh"><li></li><li></li><li></li><li></li></ul>
+                </div>
+            </div>
+            <!-- AQUI SE CARGA mensaje no encontrado  ercados -->
+            <div id="popRespuestaEnvioCajaEmbalada"></div>
+
+            <div class="clearfix"></div>
+            <!-- FOOTER -->
+            <div class="footer">
+                <!-- inicia BOX MOBILE -->
+                <div class="mobile-full">
+                    <div class="btn btn-center" id="btnContinuar_" style="display:{{btnContinuar}}" ng-Click="goToPage('/menuProceso')">ACEPTAR</div>
+                    <div class="btn btn-center" id="btnError" style="display:none" ng-Click="navegacionPagina('PACK_MenuPacking', 'fadeInLeft', '')">VOLVER</div>
+                </div>
+                <!-- end BOX MOBILE -->
+            </div>
+            <!-- /FOOTER -->
+        </div>
+    </div>
 </div>

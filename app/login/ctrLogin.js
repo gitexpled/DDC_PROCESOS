@@ -303,6 +303,114 @@ appExpled.lazyController('ctrLogin', function ($scope, $location, $http, $rootSc
                 $scope.contadorRfc++;
                // $scope.validaAcceso();
             }).error($rootScope.httpRequest.error);
+			/* MERCADOS */
+            $rootScope.MERCADOS = [];
+            var options_table = [
+                {
+                    TEXT: "BRACO NE '0001'"
+                }
+            ];
+            $http({
+                method: 'POST',
+                url: IPSERVER + '/JSON_RFC_READ_TABLE_2.aspx?TABLA=TBRCT&SEPARADOR=;&OPTIONS=' + JSON.stringify(options_table),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                timeout: 500000
+            }).success(function (data) {
+                angular.forEach(data.DATA, (v, k) => {
+                    $rootScope.MERCADOS.push({ DESCRIPTION: v.WA[3], VALUE_CHAR: v.WA[2] });
+                })
+                $scope.contadorRfc++;
+            }).error($rootScope.httpRequest.error);
+			/*CLIENTES*/
+            $rootScope.CLIENTES_ARR = [];
+            var options_table = [
+                {
+                    TEXT: "BAHNE NE '' AND NAME3 EQ 'CLIENTE'"
+                }
+            ];
+            var fields_table = [
+                {
+                    FIELDNAME: "BAHNE",
+                    OFFSET: "000011",
+                    LENGTH: "000035",
+                    TYPE: "",
+                    FIELDTEXT: ""
+                },
+                {
+                    FIELDNAME: "KUNNR",
+                    OFFSET: "000000",
+                    LENGTH: "000010",
+                    TYPE: "",
+                    FIELDTEXT: ""
+                }
+            ];
+            $http({
+                method: 'POST',
+                url: IPSERVER + '/JSON_RFC_READ_TABLE_2.aspx?TABLA=KNA1&SEPARADOR=;&OPTIONS=' + JSON.stringify(options_table) + '&FIELDS=' + JSON.stringify(fields_table),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                timeout: 500000
+            }).success(function (data) {
+                console.log(data);
+
+                var clienteaux = [];
+                var cliente_arr_aux = [];
+                angular.forEach(data.DATA, (v, k) => {
+                    if (v.WA[0] != 'Cliente Bloqueado ') {
+                        if (clienteaux.indexOf(v.WA[0]) == -1) {
+                            clienteaux.push(v.WA[0]);
+                            $rootScope.CLIENTES_ARR.push({ DESCRIPTION: v.WA[0], VALUE_CHAR: v.WA[1] });
+                        }
+                    }
+                })
+                angular.forEach($rootScope.CLIENTES_ARR, (v) => {
+                    var description = v.DESCRIPTION.split('');
+                    var description_rial = '';
+                    var bool_description = true;
+                    for (let i = (description.length - 1); i > -1; i--) {
+                        if (bool_description) {
+                            if (description[i] == ' ') {
+                                description_rial += description[i];
+                            } else {
+                                bool_description = false;
+                            }
+                        }
+                    }
+                    v.DESCRIPTION = v.DESCRIPTION.replace(description_rial, '');
+                })
+                angular.forEach($rootScope.CLIENTES_ARR, (v) => {
+                    if (v.DESCRIPTION != 'Cliente Bloqueado') {
+                        cliente_arr_aux.push(v.DESCRIPTION)
+                    }
+                })
+                cliente_arr_aux = cliente_arr_aux.sort();
+                var aux_arr = [];
+                angular.forEach(cliente_arr_aux, function (val) {
+                    angular.forEach($rootScope.CLIENTES_ARR, (v) => {
+                        if (val == v.DESCRIPTION) {
+                            aux_arr.push(v)
+                        }
+                    })
+                })
+                angular.forEach(aux_arr,function(v,k){
+                    v.text = v.DESCRIPTION;
+                    v.value = v.VALUE_CHAR;
+                })
+                $rootScope.CLIENTES_ARR = aux_arr;
+                $scope.contadorRfc++;
+            }).error($rootScope.httpRequest.error);
+			 //TEMPORADA
+            $rootScope.TEMPORADA_ = [];
+            $http({
+                method: 'POST',
+                url: IPSERVER + 'JSON_GET_TEMPORADA_ACTIVA.aspx',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                timeout: 500000
+            }).success(function (data) {
+                $rootScope.TEMPORADA_ = data;
+            })
             //json productores
             $http({
                 method: 'POST',

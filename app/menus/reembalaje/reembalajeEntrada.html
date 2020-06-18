@@ -40,6 +40,14 @@
                         <input id='loteProceso' ng-model="codPallet"  ng-keypress="($event.charCode==13)?codearPallet():return;" class="inp-default" type="text" maxlength="20" placeholder="" />
                     </div>
                 </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <h3>Productor</h3>
+                    <div class="box-inp-medium">
+                        <select class="inp-default ng-valid" ng-model="dataSeleccion.productor" ng-options="item as item.DESCRIPTION for item in listaProductor track by item.VALUE_CHAR">
+                        </select>
+                    </div>
+                </div>
+
             </div>
             <hr>
             <div style="cont-pallet">
@@ -60,23 +68,23 @@
                             <th> </th>
                         </tr>
                     </tbody>
-                    <tbody ng-repeat="items in detalleLote track by $index">
-                        <tr ng-repeat="item in items track by $index">
+                    <tbody ng-repeat="item in detalleLote track by $index" ng-if="item.PRODUCTOR==dataSeleccion.productor.VALUE_CHAR">
+                        <tr>
                             <td>{{item.CHARG}}</td>
                             <td>{{item.MATNR}}</td>
                             <td>{{item.LGORT}}</td>
-                            <td>{{item.PRODUCTOR_ET}}</td>
+                            <td>{{item.PRODUCTOR}}</td>
                             <td>{{item.CALIBRE}}</td>
                             <td>{{item.VEMNG}}</td>
                             <td><fieldset class="atr-fieldset">
-                                <input type="checkbox" id="chk1_2_{{item.id}}" ng-model="item.reembalaCaja" ng-click="item.totalCajas(item,$index)" ng-true-value="'X'" ng-false-value="''" class="ng-pristine ng-untouched ng-valid">
-                                <label for="chk1_2_{{item.id}}"></label>
+                                <input type="checkbox" id="chk1_2_{{$index}}" ng-model="item.reembalaCaja" ng-click="item.totalCajas(item,$index)" ng-true-value="'X'" ng-false-value="''" class="ng-pristine ng-untouched ng-valid">
+                                <label for="chk1_2_{{$index}}"></label>
                             </fieldset></td>
                             <td><input type="number" style="color:black"  ng-model="item.cantidadRembala" ng-readonly="item.readonly" ng-blur="item.validaCantidad(item)" ></td>
                             <td>{{item.PESOSIS}}</td>
                             <td><input type="text" style="color:black"  ng-model="item.pesoR"></td>
-                            <td><input type="text" style="color:black"  ng-model="item.loteProceso" ng-blur="validaLoteProceso(item,$index)" maxlength="10"></td>
-                            <td><label ng-click="item.EliminarLote(item.id)">Eliminar</label></td>
+                            <td><input type="text" style="color:black"  ng-model="item.loteProceso" ng-blur="item.validaLoteProceso(item,$index)" maxlength="10"></td>
+                            <td><label ng-click="item.EliminarLote($index)">Eliminar</label></td>
                         </tr>
                     </tbody>
                 </table>

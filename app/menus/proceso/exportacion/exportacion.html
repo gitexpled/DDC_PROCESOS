@@ -73,6 +73,18 @@
                                 <option value="" class="">Seleccionar</option>
                             </select>
                         </div>
+                        <div class="col-xs-6 col-sm-4 col-md-6" style="display: block">
+                            <div class="inp-atr-chk">
+                                CLIENTE
+                            </div>
+                            <fieldset class="atr-fieldset">
+                                <input type="checkbox" id="cliente_select1"
+                                    ng-model="datosPaletizaje.detalle[idxTab].CLIENTE_SELECT"
+                                    ng-change="Cambio_cliente(datosPaletizaje.detalle[idxTab].CLIENTE_SELECT,datosPaletizaje.detalle[idxTab])"
+                                    ng-true-value="'X'" ng-false-value="''" class="ng-pristine ng-untouched ng-valid">
+                                <label for="cliente_select1"></label>
+                            </fieldset>
+                        </div>
                         <div class="col-xs-12 col-sm-6 col-md-5">
                             <h3>Tipo Pallet</h3>
                             <input ng-model="datosPaletizaje.detalle[idxTab].tipoPallet" class="inp-default" type="text"
@@ -196,6 +208,38 @@
                                 <option value="">Seleccionar</option>
                             </select>
                         </div>
+                        <!--Nuevo-->
+                        <div class="col-xs-12 col-sm-4 col-md-4" ng-if="Cliente_Switch">
+                            <h3>CLIENTE</h3>
+                            <div class="box-inp-medium">
+                                <input ng-model='datosPaletizaje.detalle[idxTab].CLIENTE_NEW' id='selClientes'
+                                    class="inp-default" type="text" placeholder="Seleccione Cliente"
+                                    ng-blur="Get_pedidos(idxTab)" />
+                                <!--<select class="inp-default" ng-model="datosPaletizaje.detalle[idxTab].CLIENTE_NEW" ng-change="Get_pedidos(datosPaletizaje.detalle[idxTab].CLIENTE_NEW)"
+                                ng-options="item as item.DESCRIPTION for item in CLIENTES_ARR track by item.VALUE_CHAR">
+                                <option value="">Seleccionar</option>
+                            </select>-->
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-2" ng-if="Cliente_Switch">
+                            <h3>PEDIDO</h3>
+                            <select class="inp-default" ng-model="datosPaletizaje.detalle[idxTab].PEDIDO_NEW"
+                                ng-disabled="bool_pedido"
+                                ng-options="item as item.DESCRIPTION for item in Lista_Pedidos track by item.VALUE_CHAR">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-2" ng-if="!Cliente_Switch">
+                            <h3>MERCADO</h3>
+                            <!--<div class="box-inp-medium">
+                                <input ng-model='selProductor' id='selProductor' class="inp-red" type="text" placeholder="Seleccionar Productor" />
+                            </div>-->
+                            <select class="inp-default" ng-model="datosPaletizaje.detalle[idxTab].MERCADO_NEW"
+                                ng-options="item as item.DESCRIPTION for item in MERCADOS track by item.VALUE_CHAR">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                        <!--Nuevo FIN-->
                         <!-- EMBALAJE Y MERCADO -->
                         <div class="clearfix"></div>
                         <div class="border-grey"></div>

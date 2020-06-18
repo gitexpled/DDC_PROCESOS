@@ -182,7 +182,15 @@ appExpled.lazyController('menuProceso', function ($scope, $routeParams, $rootSco
     });
   });
   $scope.actualizaPallet = function (dir) {
-    console.log($rootScope.dataSeleccion.especie.VALUE_CHAR)
+    $rootScope.mostrarComponente=false;
+    if(dir=="/exportacion"){
+      $rootScope.dataSeleccion.loteProceso=angular.uppercase($rootScope.dataSeleccion.loteProceso);
+      var letP=$rootScope.dataSeleccion.loteProceso.charAt();
+      if(letP=="R"){
+        $rootScope.mostrarComponente=true;
+      }
+    }
+    //console.log($rootScope.dataSeleccion.especie.VALUE_CHAR)
     if ($rootScope.dataSeleccion.especie.VALUE_CHAR == "CEREZAS") {
       $rootScope.dataSeleccion.CHARG = "M-CEREZAS";
     }
@@ -219,16 +227,31 @@ appExpled.lazyController('menuProceso', function ($scope, $routeParams, $rootSco
         $rootScope.alert.buttons.accept.show = "block";
       } else {
         if (data.STOCKPROCESO[0].ESPECIE == $rootScope.dataSeleccion.especie.VALUE_CHAR) {
-          if (data.STOCKPROCESO[0].ESTADO_PROCESO === 'Cerrado') {
+          if (data.STOCKPROCESO[0].ESTADO_PROCESO == 'Cerrado') {
             $rootScope.alert.show({
               message: "El lote de proceso se encuentra CERRADO"
             });
             $rootScope.alert.buttons.accept.show = "block";
           } else {
-            console.log(data.STOCKPROCESO[0]);
+            $rootScope.dataSeleccion.reembalaje=false;
+            if(data.STOCKPROCESO[0].MATNR.charAt()=="R"){
+              $rootScope.dataSeleccion.reembalaje=true;
+            }
+            //console.log(data.STOCKPROCESO[0]);
             $rootScope.dataSeleccion.nombreProductor = data.STOCKPROCESO[0].NOMBRE_PRODUCTOR;
             $rootScope.dataSeleccion.LIFNR = data.STOCKPROCESO[0].LIFNR;
-            $rootScope.dataSeleccion.totalKilo = data.STOCKPROCESO[0].LBLAB;
+			$rootScope.dataSeleccion.totalKilo = 0;
+			if($rootScope.dataSeleccion.reembalaje)
+			{
+			angular.forEach(data.STOCKPROCESO, function (value, key) {
+				$rootScope.dataSeleccion.totalKilo = +$rootScope.dataSeleccion.totalKilo + +value.LBLAB;
+			});
+			}
+			else
+			{
+				$rootScope.dataSeleccion.totalKilo = data.STOCKPROCESO[0].LBLAB;
+			}
+			
             //$rootScope.dataSeleccion.HSDAT = formattedDate(data.STOCKPROCESO[0].HSDAT);
             $rootScope.dataSeleccion.HSDAT = data.STOCKPROCESO[0].FCOSECHA;
             $rootScope.dataSeleccion.ACCTASSCAT = "F";
@@ -239,6 +262,12 @@ appExpled.lazyController('menuProceso', function ($scope, $routeParams, $rootSco
             $rootScope.dataSeleccion.TDFRIO = data.STOCKPROCESO[0].TDFRIO;
             $rootScope.dataSeleccion.LINEA_PRD = data.STOCKPROCESO[0].LINEA_PRD;
             $rootScope.dataSeleccion.TURNO_PRD = data.STOCKPROCESO[0].TURNO_PRD;
+            $rootScope.dataSeleccion.MOTIVO_REEM = data.STOCKPROCESO[0].MOTIVO_REEM;
+            $rootScope.dataSeleccion.ACUENTA_REEM = data.STOCKPROCESO[0].ACUENTA_REEM;
+            $rootScope.dataSeleccion.AUTORIZA_REEM = data.STOCKPROCESO[0].AUTORIZA_REEM;
+            $rootScope.dataSeleccion.CAMARA = data.STOCKPROCESO[0].CAMARA;
+            $rootScope.dataSeleccion.SAG_SDP = data.STOCKPROCESO[0].SAG_SDP;
+            $rootScope.dataSeleccion.TIPO_PROCESO = data.STOCKPROCESO[0].TIPO_PROCESO;
             $rootScope.alert.show({
               message: "Carga finalizada"
             });
