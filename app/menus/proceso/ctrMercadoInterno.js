@@ -19,6 +19,7 @@ appExpled.lazyController('ctrMercadoInterno', function ($scope, $routeParams, $r
             $scope.verPopRespuesta = "none";
         }
     }
+	//Paso a pre_prd
    $scope.clienteSeleccion = "none";
    if($rootScope.userData.mail=="servicio"){
        $scope.clienteSeleccion = "";

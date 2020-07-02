@@ -991,12 +991,19 @@ appExpled.lazyController('crtResumen', function ($scope, $routeParams, $rootScop
     cadenaXML += '               <tem:CHARACT>ZPRODUCTOR</tem:CHARACT>';
     cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.LIFNR + '</tem:VALUE_CHAR>';
     cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+	cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
+    cadenaXML += '               <tem:BATCH></tem:BATCH>';
+    cadenaXML += '               <tem:CHARACT>TIPIFICACION</tem:CHARACT>';
+    cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.TIPIFICACION + '</tem:VALUE_CHAR>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+	/*
     cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
     cadenaXML += '               <tem:BATCH></tem:BATCH>';
     cadenaXML += '               <tem:CHARACT>' + (($rootScope.dataSeleccion.especie.VALUE_CHAR == 'UVA') ? 'Z' + $rootScope.dataSeleccion.especie.VALUE_CHAR + '_T' : 'Z' + $rootScope.dataSeleccion.especie.VALUE_CHAR + '_TIPIFICACION') + '</tem:CHARACT>';
     cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.TIPIFICACION + '</tem:VALUE_CHAR>';
-    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';
+    cadenaXML += '            </tem:ZMOV_2003' + rfc + '_LT_CARACT>';*/
     cadenaXML += '            <tem:ZMOV_2003' + rfc + '_LT_CARACT>';
     cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
     cadenaXML += '               <tem:BATCH></tem:BATCH>';
@@ -1178,7 +1185,7 @@ appExpled.lazyController('crtResumen', function ($scope, $routeParams, $rootScop
         '<h1>Alta Mov. 543: </h1> <p>' + (mensajeRespuesta1) + '</p>' +
         '<h1>Alta Orden CO: </h1> <p>' + (mensajeRespuesta4) + '</p>' +
         '<h1>Mensaje : </h1> <p>' + (mensajeRespuesta3) + '</p>';
-      if (bool_creacion && $scope.CLIENTE_DESTINO != '') {
+      /*if (bool_creacion && $scope.CLIENTE_DESTINO != '') {
         var json_envio = {
           IT_EXIDV: [
             {
@@ -1207,12 +1214,12 @@ appExpled.lazyController('crtResumen', function ($scope, $routeParams, $rootScop
           //'<div class="contabilizar-text"> <h1>Alta Mov. 543:</h1> <p>' + mensajeRespuesta1 + '</p><h1>Comp. Cajas Mov. 541:</h1> <p>' + mensajeRespuesta5 + '</p><h1>Alta Orden CO:</h1> <p>' + mensajeRespuesta4 + '</p><h1>Pedido Cajas:</h1><p>' + mensajeRespuesta2 + '</p><h1>UM</h1><p>' + mensajeHU + '</p><h1>Mensaje:</h1><p>' + mensajeRespuesta3 + '</p></div>';
           document.getElementById('popRespuestaEnvioCajaEmbalada').innerHTML = mensaje;
         })
-      } else {
+      } else {*/
         $rootScope.loading.hide();
         $rootScope.btnContinuar = 'block';
         //'<div class="contabilizar-text"> <h1>Alta Mov. 543:</h1> <p>' + mensajeRespuesta1 + '</p><h1>Comp. Cajas Mov. 541:</h1> <p>' + mensajeRespuesta5 + '</p><h1>Alta Orden CO:</h1> <p>' + mensajeRespuesta4 + '</p><h1>Pedido Cajas:</h1><p>' + mensajeRespuesta2 + '</p><h1>UM</h1><p>' + mensajeHU + '</p><h1>Mensaje:</h1><p>' + mensajeRespuesta3 + '</p></div>';
         document.getElementById('popRespuestaEnvioCajaEmbalada').innerHTML = mensaje;
-      }
+      //}
 
     })
   }
@@ -1354,12 +1361,19 @@ appExpled.lazyController('crtResumen', function ($scope, $routeParams, $rootScop
       cadenaXML += '               <tem:CHARACT>ZPRODUCTOR</tem:CHARACT>';
       cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.LIFNR + '</tem:VALUE_CHAR>';
       cadenaXML += '            </tem:ZMOV_CREATE_RECEP_PT_FRESCO_OR_LT_CARACT>';
+	  cadenaXML += '            <tem:ZMOV_CREATE_RECEP_PT_FRESCO_OR_LT_CARACT>';
+      cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
+      cadenaXML += '               <tem:BATCH></tem:BATCH>';
+      cadenaXML += '               <tem:CHARACT>TIPIFICACION</tem:CHARACT>';
+      cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.TIPIFICACION + '</tem:VALUE_CHAR>';
+      cadenaXML += '            </tem:ZMOV_CREATE_RECEP_PT_FRESCO_OR_LT_CARACT>';
+	  /*
       cadenaXML += '            <tem:ZMOV_CREATE_RECEP_PT_FRESCO_OR_LT_CARACT>';
       cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
       cadenaXML += '               <tem:BATCH></tem:BATCH>';
       cadenaXML += '               <tem:CHARACT>' + (($rootScope.dataSeleccion.especie.VALUE_CHAR == 'UVA') ? 'Z' + $rootScope.dataSeleccion.especie.VALUE_CHAR + '_T' : 'Z' + $rootScope.dataSeleccion.especie.VALUE_CHAR + '_TIPIFICACION') + '</tem:CHARACT>';
       cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.TIPIFICACION + '</tem:VALUE_CHAR>';
-      cadenaXML += '            </tem:ZMOV_CREATE_RECEP_PT_FRESCO_OR_LT_CARACT>';
+      cadenaXML += '            </tem:ZMOV_CREATE_RECEP_PT_FRESCO_OR_LT_CARACT>';*/
       cadenaXML += '            <tem:ZMOV_CREATE_RECEP_PT_FRESCO_OR_LT_CARACT>';
       cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
       cadenaXML += '               <tem:BATCH></tem:BATCH>';
@@ -1394,6 +1408,12 @@ appExpled.lazyController('crtResumen', function ($scope, $routeParams, $rootScop
         cadenaXML += '               <tem:CHARACT>ZSAG_IDG</tem:CHARACT>';
         cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.datosPaletizaje.detalle[0].IDG.VALUE_CHAR + '</tem:VALUE_CHAR>';
         cadenaXML += '            </tem:ZMOV_CREATE_RECEP_PT_FRESCO_OR_LT_CARACT>';
+		cadenaXML += '            <tem:ZMOV_CREATE_RECEP_PT_FRESCO_OR_LT_CARACT>';
+		  cadenaXML += '               <tem:MATERIAL>' + angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR) + '</tem:MATERIAL>';
+		  cadenaXML += '               <tem:BATCH></tem:BATCH>';
+		  cadenaXML += '               <tem:CHARACT>TIPIFICACION</tem:CHARACT>';
+		  cadenaXML += '               <tem:VALUE_CHAR>' + $rootScope.dataSeleccion.TIPIFICACION + '</tem:VALUE_CHAR>';
+		  cadenaXML += '            </tem:ZMOV_CREATE_RECEP_PT_FRESCO_OR_LT_CARACT>';
         /* cadenaXML += '            <tem:ZMOV_CREATE_RECEP_PT_FRESCO_OR_LT_CARACT>';
          cadenaXML += '               <tem:MATERIAL>'+angular.uppercase($rootScope.datosPaletizaje.detalle[0].material.MATNR)+'</tem:MATERIAL>';
          cadenaXML += '               <tem:BATCH></tem:BATCH>';
