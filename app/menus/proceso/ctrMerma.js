@@ -67,10 +67,14 @@ appExpled.lazyController('ctrMerma', function ($scope, $routeParams, $rootScope)
         document.getElementById('popRespuestaEnvioCajaEmbalada').innerHTML = '';
         $('#cargandoDatosSAP').show();
         $scope.mostrarRespuesta(true);
+        var rfc = "";
+        if ($rootScope.dataSeleccion.reembalaje) {
+        rfc = "_R";
+        }
         var cadenaXML = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">';
         cadenaXML += '    <soapenv:Header/>';
         cadenaXML += '    <soapenv:Body>';
-        cadenaXML += '      <tem:ZMOV_CREATE_RECEP_PT_FRESCO>';
+        cadenaXML += '      <tem:ZMOV_CREATE_RECEP_PT_FRESCO'+rfc+'>';
         cadenaXML += '         <tem:datos>';
         cadenaXML += '            <tem:HEADER>';
         cadenaXML += '               <tem:BUKRS>' + $rootScope.userData.sociedad + '</tem:BUKRS>';
@@ -87,7 +91,7 @@ appExpled.lazyController('ctrMerma', function ($scope, $routeParams, $rootScope)
         cadenaXML += '            <tem:LT_CARACT>';
         cadenaXML += '            </tem:LT_CARACT>';
         cadenaXML += '            <tem:LT_ITEMS>';
-            cadenaXML += '               <tem:ZMOV_CREATE_RECEP_PT_FRESCO_LT_ITEMS>';
+            cadenaXML += '               <tem:ZMOV_CREATE_RECEP_PT_FRESCO'+rfc+'_LT_ITEMS>';
             cadenaXML += '                  <tem:STCK_TYPE></tem:STCK_TYPE>';
             cadenaXML += '                  <tem:ITEM_CAT>L</tem:ITEM_CAT>';
             cadenaXML += '                  <tem:MATERIAL>' + $scope.datosMerma.material.MATNR+ '</tem:MATERIAL>';
@@ -102,12 +106,12 @@ appExpled.lazyController('ctrMerma', function ($scope, $routeParams, $rootScope)
             cadenaXML += '                  <tem:MOVE_BATCH></tem:MOVE_BATCH>';
             cadenaXML += '                  <tem:BATCH_GRANEL>'+angular.uppercase($rootScope.dataSeleccion.loteProceso)+'</tem:BATCH_GRANEL>';
             cadenaXML += '                  <tem:ACCTASSCAT>'+$rootScope.dataSeleccion.ACCTASSCAT+'</tem:ACCTASSCAT>';
-            cadenaXML += '               </tem:ZMOV_CREATE_RECEP_PT_FRESCO_LT_ITEMS>';
+            cadenaXML += '               </tem:ZMOV_CREATE_RECEP_PT_FRESCO'+rfc+'_LT_ITEMS>';
         cadenaXML += '            </tem:LT_ITEMS>';
         cadenaXML += '            <tem:LT_ITEM_DEST>';
         cadenaXML += '            </tem:LT_ITEM_DEST>';
         cadenaXML += '         </tem:datos>';
-        cadenaXML += '      </tem:ZMOV_CREATE_RECEP_PT_FRESCO>';
+        cadenaXML += '      </tem:ZMOV_CREATE_RECEP_PT_FRESCO'+rfc+'>';
         cadenaXML += '   </soapenv:Body>';
         cadenaXML += '</soapenv:Envelope>';
         cadenaXML = cadenaXML.split('>undefined<').join('><');

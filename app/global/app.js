@@ -520,6 +520,38 @@ function getXmlMessage(jsonData,xmlData){
             display:'block'
         }
     };
+    $rootScope.getFechaBapi = function(){
+        var d = new Date();
+        var mes =d.getMonth()+1;
+        if(mes>=1 && mes<=9){
+            mes="0"+mes;
+        }else{
+            mes =d.getMonth()+1;
+            //mes ="09"
+        }
+        var dia = d.getDate();
+        if(dia>=1 && dia<=9){
+            dia="0"+dia;
+        }
+        var fechaIngreso = d.getFullYear()+ "" + mes + "" + dia;
+        return fechaIngreso;
+    }
+    $rootScope.getFechaSeparado = function(sep){
+        var d = new Date();
+        var mes =d.getMonth()+1;
+        if(mes>=1 && mes<=9){
+            mes="0"+mes;
+        }else{
+            mes =d.getMonth()+1;
+            //mes ="09"
+        }
+        var dia = d.getDate();
+        if(dia>=1 && dia<=9){
+            dia="0"+dia;
+        }
+        var fechaIngreso = dia+sep+ mes + sep + d.getFullYear();
+        return fechaIngreso;
+    }
     $rootScope.alert={
         show:function(options){
             options=(options)?options:{};

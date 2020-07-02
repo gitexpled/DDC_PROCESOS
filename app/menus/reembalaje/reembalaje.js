@@ -465,6 +465,7 @@ appExpled.lazyController('reembalajeEntrada', function($scope, $routeParams, $ro
                 jsonMateriales.UNIDAD = val.VEMEH;
                 materiales.push(jsonMateriales);
                 jsonMateriales.MOVIMIENTO = 543;
+                jsonMateriales.ITEM_TEXT = val.pesoR;
                 jsonMateriales.ALMACEN = $scope.arrayAlmacenLote[val.CHARG];
                 arrayMat.push(val.MATNR)
                 materiales2.push(jsonMateriales);
@@ -477,6 +478,7 @@ appExpled.lazyController('reembalajeEntrada', function($scope, $routeParams, $ro
             "CANTIDAD": kilosTotales.toString().replace(".",","),
             "LOTE": arrLoteSE[0],
             "MOVIMIENTO": 101,
+            "ITEM_TEXT":"",
             "UNIDAD":"KG"
         }
         var matTraspProv={

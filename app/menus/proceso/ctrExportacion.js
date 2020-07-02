@@ -20,7 +20,7 @@ appExpled.lazyController('ctrExportacion', function ($scope, $routeParams, $root
   $scope.Lista_Pedidos = [];
   $scope.bool_pedido = true;
   $scope.TEMP = {};
-  angular.forEach($rootScope.TEMPORADA_, (item) => {
+  angular.forEach($rootScope.TEMPORADA_, function(item)  {
     if ($rootScope.dataSeleccion.especie.VALUE_CHAR == item.ESPECIE && $rootScope.dataSeleccion.variedad == item.VARIEDAD) {
       console.log(item);
       $scope.TEMP.DESDE = item.DESDE.split('-');
@@ -635,7 +635,7 @@ appExpled.lazyController('ctrExportacion', function ($scope, $routeParams, $root
       $rootScope.goToPage('/resumenPaletizar');
     }
   }
-  $scope.Cambio_cliente = (x, items) => {
+  $scope.Cambio_cliente = function (x, items)  {
     //console.log(x);
     $scope.Cliente_Switch = (x == 'X') ? true : false;
     items.CLIENTE_NEW = '';
@@ -647,7 +647,7 @@ appExpled.lazyController('ctrExportacion', function ($scope, $routeParams, $root
       });
     }, 1000);
   }
-  $scope.Get_pedidos = (id) => {
+  $scope.Get_pedidos = function (id) {
     console.log(id);
     if ($('#selClientes').val() == '') {
       return;
@@ -673,7 +673,7 @@ appExpled.lazyController('ctrExportacion', function ($scope, $routeParams, $root
       var hasta = new Date($scope.TEMP.HASTA[0], parseInt($scope.TEMP.HASTA[1]) - 1, $scope.TEMP.HASTA[2]);
       $scope.Lista_Pedidos = [];
       var pedidos_list = [];
-      angular.forEach(data.E_RESULT, (item) => {
+      angular.forEach(data.E_RESULT,function (item) {
         var f = item.AUDAT.split('-');
         var check = new Date(f[0], parseInt(f[1]) - 1, f[2]);
         if (check >= desde && check <= hasta) {
