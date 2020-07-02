@@ -1,0 +1,31 @@
+<script src="app/login/ctrLogin.js"></script>
+<div  class="login" ng-controller="ctrLogin">
+        <div id="box-login" class="box-login  animated fadeInDown">
+            <div class="logo">
+                <img src="img/bg/ddc-w.png" width="300" style="margin-left: -70px"/>
+            <div id="version">Versi&oacute;n {{VERSION}}</div>
+            </div>
+            <form name="accesoLogear" novalidate>
+                <div class="inp-login">
+                    <input type="text" placeholder="Usuario" ng-model="accesoUsuario" class="inp-user" required />
+                </div>
+                <div class="inp-login">
+                    <input type="password" placeholder="Password" ng-model="accesoPassword" class="inp-pass" required />
+                </div>
+
+                <div class="btn-login" ng-click="logearce(accesoUsuario,accesoPassword)" ng-hide="accesoLogear.$invalid">INGRESAR</div>             
+
+            </form>
+       <!-- <div ng-hide="porcent" style="text-align: center;font-size:large;color:white;margin-left: 96%">{{porcentaje}}%</div>-->
+        </div>
+            <div class="box-menu-principal">
+	        <a href="{{LINKDESCARGA}}" class="nav-principal">
+	            <div style="float: left">
+	                <img src="img/icon/agregar-lista.png" width="80px" />
+	            </div>
+	            <h1 style="color: rgb(204,204,204)">Descargar actualización</h1>
+	        </a>
+	    </div>
+    </div>
+
+

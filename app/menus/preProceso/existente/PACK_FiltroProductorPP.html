@@ -1,0 +1,107 @@
+<script src="app/preProceso/existente/crtProcesoExistente.js"></script>
+﻿<div id="PACK_FiltroProductor" data-role="page" ng-controller="crtPPExistente">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="nav-back" ng-click="navegacionPagina('PACK_MenuPackingEspecie','fadeInRight','')">
+            <p>Volver</p>
+        </div>
+        <div class="breadcrumbs">
+            <ul>
+                <li>{{datosExportadora.exportadora.DESCRIPTION}}</li>
+                <li>{{nombreMenuPagina}}</li>
+                <li>Productor</li>
+                <li>{{datosExportadora.especie.DESCRIPTION}}</li>
+            </ul>
+        </div>
+    </div>
+    <!-- /HEADER -->
+    <!-- CONTENT -->
+    <div class="container">
+        <div class="new-productor">
+            <div class="col-xs-12 col-sm-12 col-md-5">
+                <div class="box-productor">
+                    <div class="img-productor"></div>
+                    <div class="name-productor" id="selNombreProductorPaking">{{datosLoteProcesoPaking.nombreProductor}}</div>
+                    <div class="code-productor" id="selIdProductorPaking">{{datosLoteProcesoPaking.codigoProductor}}</div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="box-datos-generales">
+                    <!-- GENERALES -->
+                    <div class="hgroup">Datos generales</div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <h3>Fecha Contabilización</h3>
+                            <select class="inp-default inp-fecha" ng-model="datosLoteProcesoPaking.selFechaContabilizacion" ng-options="item as item.name for item in selFechaContabilizacionOpciones track by item.value">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <h3>Referencia</h3>
+                            <input class="inp-default" type="text" id="pakingGuia" ng-model="datosLoteProcesoPaking.pakingGuia" placeholder="Nº" />
+                        </div>
+                        <!--<div class="col-xs-6 col-sm-6 col-md-6">
+                              <h3>Cajas</h3>
+                              <input class="inp-default" type="text" id="pakingGuia" placeholder="Nº" />
+                          </div>
+                          <div class="col-xs-6 col-sm-6 col-md-6">
+                              <h3>KILOS NETOS</h3>
+                              <input class="inp-default" type="text" id="pakingGuia" placeholder="KILOS" />
+                          </div>
+                      </div>-->
+                        <!--  KILOS ACUMULADOS  -->
+                        <div class="kilos-lote-packing">
+                            <div class="acumulados-lote-proceso">
+                                <h2>Lote Proceso</h2>
+                                <p id="loteProcesoPaking_1">{{datosLoteProcesoPaking.embalajeLoteProcesoPaking}}</p>
+                            </div>
+                            <div class="acumulados-packing">
+                                <h2>Kg Total:</h2>
+                                <p id="kiloAcumuladoPaking_1">{{datosLoteProcesoPaking.LBLAB}}</p>
+                            </div>
+                        </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- CONTENT -->
+        <!-- FOOTER -->
+        <div class="footer-big">
+            <div class="line-qr"></div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <!-- onclick="javascript: aceptarPakingDescartes();"> -->
+                <div class="menu-descartes" ng-click="irNotificacion('Bins','BINS')">
+                    <img class="img-descartes" src="img/icon/packing_buscar.png">
+                    <p class="mt-30">BINS <BR>PRE-PROCESO</p>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <!-- onclick="javascript: aceptarPakingDescartes();"> -->
+                <div class="menu-descartes" ng-click="irNotificacion('FrutaComercial','FCOM')">
+                    <img class="img-descartes" src="img/icon/packing_buscar.png">
+                    <p class="mt-30">BINS <BR> COMERCIAL</p>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="menu-descartes" ng-click="irNotificacion('Desecho','DESECHO')">
+                    <img class="img-descartes" src="img/icon/packing_buscar.png">
+                    <p class="mt-10"> DESECHO</p>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="menu-descartes" ng-click="irNotificacion('Merma','MERMA')">
+                    <img class="img-descartes" src="img/icon/packing_buscar.png">
+                    <p class="mt-10"> MERMA</p>
+                </div>
+            </div>
+            <!--<div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="menu-descartes" ng-click="irNotificacion('Exportacion','EXP')">
+                    <img class="img-descartes" src="img/icon/packing_buscar.png">
+                    <p class="mt-10">CAJA <BR>EXPORTACIÓN</p>
+                </div>
+            </div>-->
+        </div>
+        <!-- /FOOTER -->
+    </div>
+   </div>
+ </div>

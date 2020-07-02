@@ -1,0 +1,81 @@
+<script src="app/menus/recepcion/resumen/ctrResumenRecepcion.js?id=3"></script>
+<div class="{{page.animation}}" ng-controller="resumenRecepcionEspecie">
+    <div class="container">
+        <div class="box-resumen-granel">
+            <!-- RESUMEN GRANEL -->
+            <div class="resumen-granel">
+                <h2 class="cajas-ok">Lotes Recibidos</h2>
+                <div class="box-datos-resumen">
+                    <div class="section-resumen-granel">
+                        <h4 id="resProductorGranel">Productor</h4>
+                        <p id="resProductorGranel_" class="font-bold">{{datosGranel.LIFNR.DESCRIPTION}}</p>
+						<!--<p id="resProductorGranel_">{{codProductor}} - {{datoProductorDetalle.NAME1}}</p>-->
+                    </div>
+                    <div class="section-resumen-granel">
+                        <h4 id="resContabilizadoGranel">Contabilizado</h4>
+                        <p id="resContabilizadoGranel_" class="font-bold">{{datosGranel.BUDAT.name}}</p>
+                    </div>
+                    <div class="section-resumen-granel">
+                        <h4 id="resFechaCosechaGranel">F. Cosecha</h4>
+                        <p id="resFechaCosechaGranel_" class="font-bold">{{datosGranel.HSDAT.value}}</p>
+                    </div>
+                    <div class="section-resumen-granel">
+                        <h4 id="resGuiaGranel">Gu&iacute;a N&ordm;</h4>
+                        <p id="resGuiaGranel_" class="font-bold">{{datosGranel.XBLNR}}</p>
+                    </div>
+                    <div class="section-resumen-granel">
+                        <h4 id="resVariedadGranel">Variedad</h4>
+                        <p id="resVariedadGranel_" class="font-bold">{{datosGranel.VARIEDAD.DESCRIPTION}}</p>
+                    </div>
+                    <div class="section-resumen-granel">
+                        <h4 id="resCuartelGranel">Cuartel</h4>
+                        <p id="resCuartelGranel_" class="font-bold">{{datosGranel.ZCUARTEL.DESCRIPTION}}</p>
+                    </div>
+                    <div class="section-resumen-granel" style="width:48%;">
+                        <h4 id="resSelectorGranel">Material</h4>
+                        <p id="resSelectorGranel_" class="font-bold">{{datosMaterial.MATERIAL.DESCRIPTION}}</p>
+                    </div>
+                </div>
+                <div class="box-lotes-resumen">
+                    <div class="titulo-resumen-grenel">
+                        <h3 class="col-xs-1 col-sm-1 col-md-1">N&ordm;</h3>
+                        <h3 class="col-xs-5 col-sm-5 col-md-4">lOTE</h3>
+                        <h3 class="col-xs-5 col-sm-5 col-md-4">KILOS NETO</h3>
+                    </div>
+                    <div class="LoteResumenGranel">
+                        <div class="item-ResumenGranel" ng-repeat="item in listaResumen">
+                            <h3 class="col-xs-1 col-sm-1 col-md-1">{{item.numero}}</h3>
+                            <h3 class="col-xs-5 col-sm-5 col-md-4">{{item.selCodeLoteGranel}}</h3>
+                            <h3 class="col-xs-5 col-sm-5 col-md-4">{{item.calcPesoNetoSubGranel}}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- RESUMEN GRANEL -->
+            <!-- TOTALES -->
+            <div class="totales-granel">
+                <div class="section-tabs">
+                    <div class="box-pie left" style="background-color:rgba(0,0,0,0.5);">
+                        <p>Kilos Por Bins</p>
+                        <h3 id="resTotalLotesGranel">{{datosGranel.detalle[0].totalNeto}}</h3>
+                    </div>
+                    <div class="box-pie right">
+                        <h5><span style="color:rgba(255.255.255.0.5)">Total Neto: </span> <span id="resTotalNetoGranel">{{datosGranel.KILOSNETO}}</span>Kg</h5>
+                    </div>
+                </div>
+            </div>
+            <!-- TOTALES -->
+        </div>
+    </div>
+    <!-- CONTENT -->
+    <!-- FOOTER -->
+    <div class="footer">
+        <!-- inicia BOX MOBILE -->
+        <table style="margin: auto;"><tr><td>
+        <div class="mobile-full">
+            <div id="btnEnviarGranel" class="btn btn-center" style="display:{{btnGeneraXML}}; width: 75%" ng-click="viewFucntion()">ENVIAR</div>
+        </div></td></tr></table>
+        <!-- end BOX MOBILE -->
+    </div>
+</div>
+

@@ -1,0 +1,185 @@
+ <script src="app/preProceso/nuevo/ctrProcesoNuevo.js"></script>
+ ﻿<div id="PACK_AsignarLotes" data-role="page" ng-controller="ctrPPNuevo">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="nav-back" ng-click="navegacionPagina('PACK_MenuPackingEspecie', 'fadeInLeft', '');">
+            <p>Volver</p>
+        </div>
+        <div class="breadcrumbs">
+            <ul>
+                <li>{{datosExportadora.exportadora.DESCRIPTION}}</li>
+                <li>{{nombreMenuPagina}}</li>
+                <li>Asignar Lotes</li>
+                <li>{{datosExportadora.especie.DESCRIPTION}}</li>
+            </ul>
+        </div>
+    </div>
+    <!-- /HEADER -->
+    <!-- CONTENT -->
+    <div class="container">
+        <div class="box-asignar-lotes-packing">
+            <!--**** ROW ****-->
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="btn-asignar-lotes" ng-click="asignarLotesPaking()">
+                        <div class="agregar-pallet">
+                            <h2>ASIGNAR LOTES AL PACKING</h2>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col-xs-9 col-sm-5 col-md-5">
+                            <h3 style="color:#fff">Tipo Material</h3>
+                            <select class="inp-default inp-tab-variedad" id="materialPaking{{adignado.id}}" ng-model="tipoMaterialPacking" ng-options="item as item.DESCRIPTION for item in materialesProductorOpciones track by item.VALUE_CHAR">
+                                <option value=''>Seleccione</option>
+                            </select>
+                </div>-->
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3 style="color:#fff">Referencia</h3>
+                        <div class="box-inp-tabs">
+                            <input class="inp-default"  ng-model="referenciaAgrupaLote"  placeholder="Ingresar" />
+                        </div>
+                </div>
+                <!--<div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3 style="color:#fff">Centro</h3>
+                        <div class="box-inp-tabs">
+                            <input class="inp-default"  ng-model="centroAgrupaLote"  placeholder="Ingresar" />
+                        </div>
+                </div>-->
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                        <h3 style="color:#fff">Fecha Contabilización</h3>
+                        <select class="inp-default" ng-model="fechaContabilizacionAgrupaLote" ng-options="item as item.name for item in selFechaContabilizacionOpciones track by item.value">
+                            <option value="">Seleccionar</option>
+                        </select>
+                    </div>
+            </div>
+            <!--**** ROW ****-->
+            <!--**** ROW ****-->
+            <div class="row">
+                <ul class="AsignarLotesPacking" id="contenedorLotesAsignadosPaking">
+                    <li class="lote-packing" ng-repeat="asignado in listaAsignado">
+                        <div style="float:left;">
+                            <div class="scan" ng-click="codearLote(asignado.id)"></div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-3">
+                            <h3>Lote</h3>
+                            <input id="codeLotePaking{{asignado.id}}" class="inp-lotes" type="text" ng-model="listaAsignado[asignado.id].lote" placeholder="Ingresar C&oacute;digo" maxlength="10" ng-change="validaLotePack(asignado.id)" />
+                        </div>
+
+                        <!--<div class="col-xs-7 col-sm-4 col-md-4">
+                            <h3>Tipo Material</h3>
+                            <select class="inp-default inp-tab-variedad" id="materialPaking{{adignado.id}}" ng-model="listaAsignado[asignado.id].tipoMaterial" ng-options="item as item.DESCRIPTION for item in materialesProductorOpciones track by item.VALUE_CHAR">
+                                <option value=''>Seleccione</option>
+                            </select>
+                        </div>-->
+                        <div class="col-xs-1 col-sm-1 col-md-2" >
+                        <h3>Bins</h3>
+                        <div class="box-inp-tabs">
+                            <input id="codeLotePakingBins{{asignado.id}}"  type="number"class="inp-default"  ng-model="listaAsignado[asignado.id].Bins"   placeholder="" />
+                        </div>
+                         </div>
+                        <div class="col-xs-1 col-sm-1 col-md-1" >
+                        <h3>Kilos</h3>
+                        <div class="box-inp-tabs">
+                            <input id="codeLotePakingKilos{{asignado.id}}"  type="number"class="inp-default"  ng-model="listaAsignado[asignado.id].kilos" ng-change="validaMaxKilosAcopio(asignado.id)"  placeholder="" />
+                        </div>
+                         </div>
+                        <div class="col-xs-1 col-sm-1 col-md-3" >
+                        <h3>Material</h3>
+                        <div class="box-inp-tabs">
+                            <input id="codeLotePakingMATNR{{asignado.id}}" class="inp-default"  ng-model="listaAsignado[asignado.id].MATNR" disabled />
+                        </div>
+                         </div>
+                        <!--<div class="col-xs-1 col-sm-1 col-md-1" >
+                        <h3>Acopio</h3>
+                        <div class="box-inp-tabs">
+                            <!--<input id="codeLotePakingLGORT{{asignado.id}}"  class="inp-default"  ng-model="listaAsignado[asignado.id].LGORT"  placeholder="" disabled/>
+							<select class="inp-default inp-tab-variedad"  ng-change="actualizaAcopioValue(asignado.id)" ng-model="listaAsignado[asignado.id].LGORTobj" ng-options="item as item.LGORT for item in listaAsignado[asignado.id].comboAcopio track by item.LGORT">
+                                <option value=''>Acopio</option>
+                            </select>
+                        </div>
+                         </div>-->
+                        <div class="lote-packing-right">
+                            <div class="number-lista">{{asignado.id + 1}}</div>
+                            <div class="remover-li-packing" ng-click="remueveLotePaking(asignado.id)">ELIMINAR</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--**** ROW ****-->
+            <!--**** ROW ****-->
+            
+            <div class="row">
+                <div class="total-scroll">
+                    <div class="total-scan">
+                        <div class="scan" ng-click="codearProceso();"></div>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-md-3">
+                        <h3>N&ordm; Lote Proceso</h3>
+                        <div class="box-inp-tabs">
+                            <input id="numeroLoteProcesoPaking" class="inp-default" type="text" ng-model="numeroLoteProcesoPaking" placeholder="Ingresar C&oacute;digo" maxlength="10"/>
+                        </div>
+                    </div>
+                    <div class="total-lista">
+                        <h2>Total Lote</h2>
+                        <p id="totalLoteAsignadoPaking">{{totalLoteAsignadoPaking}}</p>
+                    </div>
+                </div>
+            </div>
+            <!--**** ROW ****-->
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="clear"></div>
+    <!-- FOOTER -->
+    <div class="footer">
+        <div ng-click="finalizarEnvioLotePakingEspecie()">
+            <div class="btn btn-center">CONFIRMAR</div>
+        </div>
+    </div>
+    <!-- /FOOTER -->
+    
+<div id="PROD_EnvioLotesPaking" class="PopUp" data-role="page" style="display:{{verPopRespuesta}}">
+    <div id="envioLotesPakingPOP" class="popup-mercado">
+        <!-- CLOSED -->
+
+
+        <!-- CLOSED -->
+        <!-- HEADER POP-UP -->
+        <div class="header-popup">
+            <h1>Respuesta SAP</h1>
+        </div>
+        <!-- HEADER POP-UP -->
+        <!-- HEADER POP-UP -->
+        <div class="img-mercado"></div>
+        <!-- CONTENT POP-UP -->
+        <!-- inicia BOX MOBILE -->
+        <div class="mobile-right mobile-60">
+            <!-- AQUI SE CARGARAN LOS MERCADOS -->
+            <div id="cargandoPopLotesPaking" class="LoadingMercados">
+                <h1>Enviando datos</h1>
+                <div id="loadingLotesPaking" class="animarLoading">
+                    <ul class="bokeh"><li></li><li></li><li></li><li></li></ul>
+                </div>
+            </div>
+            <!-- AQUI SE CARGA mensaje no encontrado  ercados -->
+            <div id="popRespuestaLotesPaking"></div>
+        </div>
+        <!-- end BOX MOBILE -->
+
+        <div class="clearfix"></div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <!-- inicia BOX MOBILE -->
+            <div class="mobile-full">
+                <div class="btn btn-center" id="btnContinuar_" style="display:{{btnContinuar}}" ng-Click="navegacionPagina('PACK_MenuPackingEspecie', 'fadeInRight', '');">FINALIZAR</div>
+                <div class="btn btn-center" id="btnError" style="display:none" ng-Click="navegacionPagina('PACK_MenuPackingEspecie', 'fadeInLeft', '/volver')">VOLVER</div>
+            </div>
+            <!-- end BOX MOBILE -->
+        </div>
+        <!-- /FOOTER -->
+    </div>
+</div>
+
+</div>

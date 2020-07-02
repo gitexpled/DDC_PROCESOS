@@ -1,0 +1,109 @@
+<script src="app/menus/recepcion/recepcion/ingresoRecepcion.js"></script>
+<div class="{{page.animation}}" id="MenuInicial" ng-controller="recepcionGranel">
+    <div class="RecepDDC">
+            <!-- BODY LOTE -->
+        <div ng-repeat="item in datosGranel.detalle" class="ng-scope">    
+            <div class="lote-granel">
+                <div class="variable-lote-granel">
+                    
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <h3>{{CerezaCamion.KILOS}}</h3>
+                                <div class="box-inp-tabs">
+                                    <input ng-model="datosGranel.KILOSBRUTO" ng-change="cambioNeto()" class="inp-default" type="number" placeholder="Kg" style="width: 86%" >
+                                    <img src="img/icon/e-scale-min.png" class="inp-pesabt-min" title="Capturar kilos" ng-click="btGetKilos('camion')">
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6" style="display: {{CerezaCamion.viewCam}}">
+                                <h3>Kilos Destare Camion</h3>
+                                <div class="box-inp-tabs">
+                                    <input class="inp-default" ng-readonly="{{disableCamion}}" type="number" ng-model="datosGranel.kilosBrutosCamion" placeholder="Kg" style="width: 86%" />
+                                    <img src="img/icon/e-scale-min.png" class="inp-pesabt-min" title="Capturar kilos" ng-click="btGetKilos('camion')">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-1">
+                            <h3>Cantidad</h3>
+                            <div class="box-inp-tabs">
+                                <input ng-model="datosGranel.detalle[item.idx].selCantidadGranel" class="inp-default ng-pristine ng-valid ng-touched" type="number" placeholder="Nº" ng-change="cambioNeto()">
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <h3>Material de Destare</h3>
+                            <div class="box-inp-tabs">
+                                <select  class="inp-default ng-pristine ng-valid ng-touched" ng-model="datosGranel.detalle[item.idx].selTipoMaterialGranel" ng-options="item as item.DESCRIPTION for item in materialesOpciones track by item.VALUE_CHAR" ng-change="cambioNeto()">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-1">
+                            <h3>Cantidad</h3>
+                            <div class="box-inp-tabs">
+                                <input ng-change="cambioNeto()" ng-model="datosGranel.detalle[item.idx].selCantidadGranel2" class="inp-default ng-pristine ng-valid ng-touched" type="number" placeholder="Nº">
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <h3>Material de Destare 2</h3>
+                            <div class="box-inp-tabs">
+                               <!-- <select class="inp-default ng-pristine ng-valid ng-touched" ng-model="datosGranel.detalle[item.idx].selTipoMaterialGranel2" ng-options="item as item.DESCRIPTION for item in materialesOpciones track by item.VALUE_CHAR" ng-change="actualizaKilosBaika(item.idx,subItem.idx)">
+                                </select>-->
+                               <select class="inp-default ng-pristine ng-valid ng-touched">
+                                   <option></option>
+                                   <option>TOTEM-2KG</option>
+                               </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /BODY LOTE -->
+            <!-- PIE LOTE -->
+            <div class="pie-lote-granel">
+                <div class="row">
+                    <div style="width: 90%">   
+                    <div class="col-xs-6 col-sm-4 col-md-6" style="display: {{CerezaCamion.view}}">
+                        <div class="inp-atr-chk">
+                                Camion
+                        </div>
+                        <fieldset class="atr-fieldset">
+                            <input type="checkbox" id="chk1_2" ng-model="CerezaCamion.Camion" ng-change="Chnge()" ng-true-value="'SI'" ng-false-value="'NO'" />
+                            <label for="chk1_2"></label>
+                        </fieldset>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-md-6" style="display: {{CerezaCamion.bins}}">
+                        <div class="inp-atr-chk">
+                                Retorna Bins
+                        </div>
+                        <fieldset class="atr-fieldset">
+                            <input type="checkbox" id="RBNS" ng-model="CerezaCamion.RBines" ng-change="Chnge()" ng-true-value="'SI'" ng-false-value="'NO'" />
+                            <label for="RBNS"></label>
+                        </fieldset>
+                    </div>
+                </div>
+                    <div class="box-pie right">
+                        <h4>{{datosGranel.detalle[item.idx].totalNeto}}</h4>
+                    </div>
+                    <div class="box-pie right">
+                        <h1>Peso Neto</h1>
+                    </div>
+                </div>
+            </div>
+            <!-- /PIE LOTE -->
+    </div>    
+        <div class="footer">
+            <table style="margin-left:auto;margin-right:auto">
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <div style="display: flex">
+                                <div class="btn btn-center" ng-click="datosTabResumenGranel()" style="width: 84%">CONTINUAR</div>
+                               <!--<div class="btn"  ng-click="print()" style="display:{{disableBtn}}; width: 29%; float: left"><img src="img/icon/print-128.png" id="Printimg"/></div>-->
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+	</div>
+    </div>
+    
+</div>

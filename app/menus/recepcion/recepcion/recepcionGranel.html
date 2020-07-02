@@ -1,0 +1,229 @@
+<script src="app/menus/recepcion/recepcion/ingresoRecepcion.js"></script>
+<div class="{{page.animation}}" id="MenuInicial" ng-controller="recepcionGranel">
+    <div  style="display: {{RecepDDC}}">
+            <!-- BODY LOTE -->
+             <div class="pie-lote-granel">
+                <div class="row">
+                    <div style="width: 90%">   
+                    <div class="col-xs-6 col-sm-4 col-md-6" style="display: {{CerezaCamion.view}}">
+                        <div class="inp-atr-chk">
+                                Camion
+                        </div>
+                        <fieldset class="atr-fieldset">
+                            <input type="checkbox" id="chk1_2" ng-model="CerezaCamion.Camion" ng-change="Chnge();cambioNeto()" ng-true-value="'SI'" ng-false-value="'NO'" />
+                            <label for="chk1_2"></label>
+                        </fieldset>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-md-6" style="display: {{CerezaCamion.bins}}">
+                        <div class="inp-atr-chk">
+                                Retorna Bins
+                        </div>
+                        <fieldset class="atr-fieldset">
+                            <input type="checkbox" id="RBNS" ng-model="CerezaCamion.RBines" ng-true-value="'SI'" ng-false-value="'NO'" />
+                            <label for="RBNS"></label>
+                        </fieldset>
+                    </div>
+                </div>
+                    <!-- <div class="box-pie right">
+                        <img src="img/icon/atr-plus.png" class="inp-pesabt-min" style="width: 20%" title="Agregar Item" ng-click="AddItems()">
+                        <div class="box-pie right">
+                            <h1>Agregar</h1>
+                        </div>
+                        <div class="btn btn-center" ng-click="AddItems()" style="width: 84%">Agregar</div
+                    </div>>-->
+                  <!--  <div class="box-pie right">
+                        <h4>{{item.totalNeto}}</h4>
+                    </div>
+                    <div class="box-pie right" style="margin-right: 0px">
+                        <h1>Kilos por Bins</h1>
+                    </div>-->
+                </div>
+            </div>   
+        <div ng-repeat="item in datosGranel.detalle" class="ng-scope">
+            <div class="lote-granel">
+                <div class="variable-lote-granel">
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <h3>{{CerezaCamion.KILOS}}</h3>
+                                <div class="box-inp-tabs">
+                                    <input ng-model="item.KILOSBRUTO" ng-change="cambioNeto()" class="inp-default" type="number" placeholder="Kg" style="width: 86%" >
+                                    <img src="img/icon/e-scale-min.png" class="inp-pesabt-min" title="Capturar kilos" ng-click="btGetKilos2(item.id)">
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6" style="display: {{CerezaCamion.viewCam}}">
+                                <h3>Kilos Destare Camion</h3>
+                                <div class="box-inp-tabs">
+                                    <input class="inp-default" type="number" ng-change="cambioNeto()" ng-model="datosGranel.kilosBrutosCamion" placeholder="Kg" style="width: 86%" />
+                                    <img src="img/icon/e-scale-min.png" class="inp-pesabt-min" title="Capturar kilos" ng-click="btGetKilos('camion')">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <h3>Cantidad Lotes</h3>
+                                <div class="box-inp-tabs">
+                                    <input ng-model="datosGranel.CANTIDADLOTE" ng-change="CalculaUnidades();" class="inp-default" type="number" placeholder="" style="width: 86%" ng-change="">
+                                </div>                                
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <h3>Kilos Neto</h3>
+                                <div class="box-inp-tabs">
+                                    <input ng-model="datosGranel.KILOSNETO" ng-change="" disabled="disabled" class="inp-default" type="number" placeholder="Kg" style="width: 86%" >
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <h3>Unidad por Lote</h3>
+                                <div class="box-inp-tabs">
+                                    <input ng-model="datosGranel.UNIDADLOTE" ng-change="" disabled="disabled" class="inp-default" type="number" placeholder="" style="width: 86%" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2">
+                            <h3>Cantidad</h3>
+                            <div class="box-inp-tabs">
+                                <input ng-model="datosGranel.selCantidadGranel" class="inp-default ng-pristine ng-valid ng-touched" type="number" placeholder="Nº" ng-change="cambioNeto();defineCantidad(CerezaCamion.idxTab,idxTabSub);CalculaUnidades();">
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <h3>Material de Destare</h3>
+                            <div class="box-inp-tabs">
+                                <select  class="inp-default ng-pristine ng-valid ng-touched" ng-model="datosGranel.selTipoMaterialGranel" ng-options="item as item.DESCRIPTION for item in materialesOpciones track by item.VALUE_CHAR" ng-change="cambioNeto();validaFormato(CerezaCamion.idxTab,idxTabSub)">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2">
+                            <h3>Cantidad</h3>
+                            <div class="box-inp-tabs">
+                                <input ng-change="cambioNeto();defineCantidad(CerezaCamion.idxTab,idxTabSub)" ng-model="datosGranel.selCantidadGranel2" class="inp-default ng-pristine ng-valid ng-touched" type="number" placeholder="Nº">
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <h3>Material de Destare 2</h3>
+                            <div class="box-inp-tabs">
+                               <!-- <select class="inp-default ng-pristine ng-valid ng-touched" ng-model="item.selTipoMaterialGranel2" ng-options="item as item.DESCRIPTION for item in materialesOpciones track by item.VALUE_CHAR" ng-change="actualizaKilosBaika(item.idx,subItem.idx)">
+                                </select>-->
+                               <select class="inp-default ng-pristine ng-valid ng-touched" style="width: {{CerezaCamion.W}}" ng-model="datosGranel.Destare2" ng-options="item as item.DESCRIPTION for item in materialesOpciones track by item.VALUE_CHAR" ng-change="cambioNeto();validaFormato(CerezaCamion.idxTab,idxTabSub)">  
+                               </select>
+                               <img src="img/icon/closed-b.png" class="inp-pesabt-min" title="Capturar kilos" ng-click="eliminarLoteGranel(Subitem.SubId)" style="Display:{{CerezaCamion.Eliminar2}}">
+                            </div>
+                        </div>
+                        
+                            <div class="col-xs-2 col-sm-2 col-md-2">
+                                <h3>Cantidad</h3>
+                                <div class="box-inp-tabs">
+                                    <input ng-model="datosGranel.selCantidadGranel3" class="inp-default ng-pristine ng-valid ng-touched" type="number" placeholder="Nº" ng-change="cambioNeto();defineCantidad(CerezaCamion.idxTab,idxTabSub)">
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+                                <h3>Material de Destare 3</h3>
+                                <div class="box-inp-tabs">
+                                    <select  class="inp-default ng-pristine ng-valid ng-touched" ng-model="datosGranel.selTipoMaterialGranel3" ng-options="item as item.DESCRIPTION for item in materialesOpciones track by item.VALUE_CHAR" ng-change="cambioNeto();validaFormato(CerezaCamion.idxTab,idxTabSub)">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2">
+                                <h3>Cantidad</h3>
+                                <div class="box-inp-tabs">
+                                    <input ng-change="cambioNeto();defineCantidad(CerezaCamion.idxTab,idxTabSub)" ng-model="datosGranel.selCantidadGranel4" class="inp-default ng-pristine ng-valid ng-touched" type="number" placeholder="Nº">
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+                                <h3>Material de Destare 4</h3>
+                                <div class="box-inp-tabs">
+                                   <select class="inp-default ng-pristine ng-valid ng-touched" style="width: {{CerezaCamion.W}}" ng-model="datosGranel.Destare4" ng-options="item as item.DESCRIPTION for item in materialesOpciones track by item.VALUE_CHAR" ng-change="cambioNeto();validaFormato(CerezaCamion.idxTab,idxTabSub)">  
+                                   </select>
+                                   <img src="img/icon/closed-b.png" class="inp-pesabt-min" title="Capturar kilos" ng-click="eliminarLoteGranel(Subitem.SubId)" style="Display:{{CerezaCamion.Eliminar2}}">
+                                </div>
+                            </div>
+                            </div>
+                </div>
+           <div class="pie-lote-granel">
+                <div class="row">
+                   <!-- <div class="left" style="Display:{{CerezaCamion.Eliminar1}}; margin-left: -103px">
+                      <img src="img/icon/atr-less.png" class="inp-pesabt-min" style="width: 20%" title="Eliminar Item" ng-click="eliminarLoteGranel(item.id)">
+                        <div class="box-pie right">
+                            <h1>Eliminar</h1>
+                        </div>
+                        <div class="btn" ng-click="eliminarLoteGranel(item.id)" style="width: 82%; margin-top: 12px">Eliminar</div>
+                    </div>-->
+                    <div class="box-pie right">
+                        <h4>{{item.totalNeto}}</h4>
+                    </div>
+                    <div class="box-pie right" style="margin-right: 0px">
+                        <h1>Kilos por Bins</h1>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <!-- /BODY LOTE -->
+            <!-- PIE LOTE -->
+            <!-- /PIE LOTE -->
+    </div>    
+            <div class="mobile-full" style="display: flex;">
+                <div class="btn" ng-click="datosTabResumenGranel()" style="width:193px;margin:auto;margin-bottom: 16px">CONTINUAR</div>
+                <div class="btn"  ng-click="GuardarRecepcion()" style="display:{{CerezaCamion.save}} ;width:193px;margin:auto;margin-bottom: 16px" >Guardar</div>
+               <div class="btn"  ng-click="showResumen()" style="display:{{CerezaCamion.save}} ;;width:281px;margin:auto;margin-bottom: 16px">imprimir</div>
+            </div>
+    </div>
+    
+    <div style="display: {{imprimirCamion}}">   
+      <div class="container">
+        <div class="box-resumen-granel">
+            <div class="resumen-granel">
+                <h2 class="cajas-ok">Resumen Impresión</h2>
+                <div class="box-datos-resumen">
+                    <div class="section-resumen-granel">
+                        <h4 id="resProductorGranel">Productor</h4>
+                        <p id="resProductorGranel_" class="font-bold">{{datosGranel.LIFNR.DESCRIPTION}}</p>
+						<!--<p id="resProductorGranel_">{{codProductor}} - {{datoProductorDetalle.NAME1}}</p>-->
+                    </div>
+                    <div class="section-resumen-granel">
+                        <h4 id="resContabilizadoGranel">Contabilizado</h4>
+                        <p id="resContabilizadoGranel_" class="font-bold">{{datosGranel.BUDAT.name}}</p>
+                    </div>
+                    <div class="section-resumen-granel">
+                        <h4 id="resFechaCosechaGranel">F. Cosecha</h4>
+                        <p id="resFechaCosechaGranel_" class="font-bold">{{datosGranel.HSDAT.value}}</p>
+                    </div>
+                    <div class="section-resumen-granel">
+                        <h4 id="resGuiaGranel">Gu&iacute;a N&ordm;</h4>
+                        <p id="resGuiaGranel_" class="font-bold">{{datosGranel.XBLNR}}</p>
+                    </div>
+                    <div class="section-resumen-granel">
+                        <h4 id="resVariedadGranel">Variedad</h4>
+                        <p id="resVariedadGranel_" class="font-bold">{{datosGranel.VARIEDAD.DESCRIPTION}}</p>
+                    </div>
+                    <div class="section-resumen-granel">
+                        <h4 id="resCuartelGranel">Cuartel</h4>
+                        <p id="resCuartelGranel_" class="font-bold">{{datosGranel.ZCUARTEL.DESCRIPTION}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="totales-granel">
+                <div class="section-tabs">
+                    <div class="box-pie left" style="background-color:rgba(0,0,0,0.5);">
+                        <p>Kilos Por Bins</p>
+                        <h3 id="resTotalLotesGranel">{{datosGranel.detalle[0].totalNeto}}</h3>
+                    </div>
+                    <div class="box-pie right">
+                        <h5><span style="color:rgba(255.255.255.0.5)">Total Neto: </span> <span id="resTotalNetoGranel">{{datosGranel.KILOSNETO}}</span>Kg</h5>
+                    </div>
+                </div>
+            </div>
+            <!-- TOTALES -->
+        </div>
+    </div>
+    <!-- CONTENT -->
+    <!-- FOOTER -->
+    <div class="footer">
+        <!-- inicia BOX MOBILE -->
+        <table style="margin: auto;"><tr><td>
+        <div class="mobile-full">
+            <div id="btnEnviarGranel" class="btn btn-center" style="display:{{datosGranel.detalle[0].btnGeneraXML}}; width: 75%" ng-click="imprimirResumen()">Imprimir</div>
+            <div id="btnEnviarGranel" class="btn btn-center" style="display:{{CerezaCamion.reimprime}}; width: 75%" ng-click="imprimir(true)">Re-Imprimir</div>
+        </div></td></tr></table>
+        <!-- end BOX MOBILE -->
+    </div>
+    </div>
+</div>

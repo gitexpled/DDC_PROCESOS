@@ -1,0 +1,75 @@
+<script src="app/menus/crtMenu.js"></script>
+<div class="{{page.animation}}" id="MenuInicial" ng-controller="menuBase">
+  <!-- CONTENT -->
+  <div class="box-menu-principal">
+    <div class="nav-principal" ng-click="ir_recep('recepcionGranel')" style="display: {{menuRecepcionGranel}}">
+      <div class="icon-mp">
+        <img src="img/icon/mp/recepcion.png" width="80px" />
+      </div>
+      <h1>Recepci&oacute;n Granel</h1>
+    </div>
+    <div class="border-bottom" style="display: {{menuProceso}}"></div>
+    <div class="nav-principal" ng-click="goToPageProceso('/menuProceso')" style="display: {{menuProceso}}">
+      <div class="icon-mp">
+        <img src="img/icon/mp/recepcion.png" width="80px" />
+      </div>
+      <h1>Proceso</h1>
+    </div>
+    <div class="border-bottom" style="display: {{inspeccion}}"></div>
+    <div class="nav-principal" ng-click="goToPage('/numeroinspeccion')" style="display: {{inspeccion}}">
+      <div class="icon-mp">
+        <img src="img/icon/mp/recepcion.png" width="80px" />
+      </div>
+      <h1>Inspección</h1>
+    </div>
+    <div class="border-bottom" style="display: {{asignacion}}"></div>
+    <div class="nav-principal" ng-click="goToPage('/asignacion')" style="display: {{asignacion}}">
+      <div class="icon-mp">
+        <img src="img/icon/mp/recepcion.png" width="80px" />
+      </div>
+      <h1>Asignación Parametros de Calidad</h1>
+    </div>
+    <div class="border-bottom" style="display: {{mantenedorEt}}"></div>
+    <div class="nav-principal" ng-click="goToPage('/galeria')" style="display: {{mantenedorEt}}">
+      <div class="icon-mp">
+        <img src="img/icon/mp/recepcion.png" width="80px" />
+      </div>
+      <h1>Mantenedor de etiquetas</h1>
+    </div>
+    <div class="border-bottom" style="display: {{paletizar}}"></div>
+    <div class="nav-principal" ng-click="goToPage('/menuPaletizar')" style="display: {{paletizar}}">
+      <div class="icon-mp">
+        <img src="img/icon/mp/recepcion.png" width="80px" />
+      </div>
+      <h1>Paletizar</h1>
+    </div>
+    <div class="border-bottom" style="display: {{recepcionPallet}}"></div>
+    <div class="nav-principal" ng-click="goToPage('/menuRecepPallet')" style="display: {{recepcionPallet}}">
+      <div class="icon-mp">
+        <img src="img/icon/mp/recepcion.png" width="80px" />
+      </div>
+      <h1>Recepcion Pallet</h1>
+    </div>
+    <div class="border-bottom"></div>
+    <div class="nav-principal" ng-click="goToPage('/SelectMenu')" style="display: {{monitor}}">
+      <div class="icon-mp">
+        <img src="img/icon/mp/recepcion.png" width="80px">
+      </div>
+      <h1>Monitor Proceso</h1>
+    </div>
+    <div class="border-bottom"></div>
+    <div class="border-bottom"></div>
+    <div class="nav-principal" ng-click="goToPage('/menuReembalaje')">
+      <div class="icon-mp">
+        <img src="img/icon/mp/recepcion.png" width="80px">
+      </div>
+      <h1>Reembalaje</h1>
+    </div>
+    <div class="nav-principal" ng-click="goToPage('/ReImprimir')">
+      <div class="icon-mp">
+        <img src="img/icon/mp/recepcion.png" width="80px">
+      </div>
+      <h1>Re-Imprimir</h1>
+    </div>
+  </div>
+</div>

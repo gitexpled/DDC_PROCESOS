@@ -1,0 +1,611 @@
+
+.sapUiFormResLayout > div {
+	background: none;
+	padding: 0;
+}
+.sapUiBody {
+	font-family:'abelregular'!important;
+	background: none!important;
+	 
+}
+label, button > div, .sapMListTbl .sapMText, .sapMListTbl .sapMLabel {
+	font-family:'abelregular'!important;
+}
+.sapUiUfdShellBackground, .sapMGlobalBackgroundColor {
+	background: none!important;
+}
+.sapMPageWithHeader > section, .sapMPageWithSubHeader > section {
+    top: 62px;
+}
+
+.sapMSLIIconThumb, .sapMSLIDescNoIcon, .sapMSLIDescIcon{
+	height:auto;
+}
+/* header*/
+header .sapMLabel {
+	font-size:19px!important;
+}
+.sapMLabel {
+	font-size:18px!important;
+	color:#000000;
+	white-space: normal;
+	font-weight: bold !important;
+}
+.sapMBar {
+	color:#ffffff!important;
+	
+	height:63px;
+	text-shadow:none!important;
+	/*padding:5px 0;*/
+	
+}
+
+.sapMBar label {
+	color:#b50e2d!important;
+	letter-spacing:0;
+	font-size:18px;
+	
+	
+	
+}
+
+.sapMPageHeader::before {
+    border-top:none;
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 7;
+
+}
+
+#formQrScanForm {
+	  margin-bottom: 10px;
+}
+
+/*login*/
+
+#pagLogin-title {
+	color:#ffffff;
+}
+#pagLogin-cont .sapUiFormResLayout {
+	  
+}
+#pagLogin-cont .sapUiFormResLayout  > div {
+	     background:none!important;
+    /*padding: 16px 16px 16px 16px ;*/
+}
+
+h3{
+	font-family:'abelregular'!important;
+	color:#ffffff;
+	text-align:center;
+	font-size:20px;
+	letter-spacing: 2px;
+	margin-top:25px;
+	margin-bottom:25px;
+	border-bottom: solid 1px #ffffff;
+	padding-bottom:10px;
+	padding-top:10px;
+	border-top: solid 1px #ffffff;
+	text-transform: uppercase;
+}
+h3, #ttlFormScanQr, #ttlFormQrScanForm , #ttlTemperaturaForm, #ttlFormPesoPolvo, #ttlForm{
+	
+	color:#007833;
+	text-align:center;
+	font-size:20px;
+	letter-spacing: 2px;
+	margin-top:0;
+	margin-bottom:25px;
+	border-bottom: solid 1px #007833 ;
+	padding-bottom:10px;
+	padding-top:10px;
+	border-top: solid 1px #007833;
+}
+input { 
+    -moz-border-radius-topleft: 5px!important;
+    -moz-border-radius-topright:5px!important;
+    -moz-border-radius-bottomleft:5px!important;
+    -moz-border-radius-bottomright:5px!important;
+    -webkit-border-top-left-radius:5px!important;
+    -webkit-border-top-right-radius:5px!important;
+    -webkit-border-bottom-left-radius:5px!important;
+    -webkit-border-bottom-right-radius:5px!important;
+    border-top-left-radius:5px!important;
+    border-top-right-radius:5px!important;
+    border-bottom-left-radius:5px!important;
+    border-bottom-right-radius:5px!important;
+}
+
+#__label0, #__label1, label {
+	color:#333333;
+	font-size:17px;
+	letter-spacing: 2px;
+}
+
+#butSave {
+	width:100%!important;
+	 
+}
+/*#butSave div.sapMBtnInner.sapMBtnAccept*/. {
+	background:#ff7300 !important;
+	border-color:#ff7300 !important;
+	-moz-border-radius-topleft: 5px!important;
+    -moz-border-radius-topright:5px!important;
+    -moz-border-radius-bottomleft:5px!important;
+    -moz-border-radius-bottomright:5px!important;
+    -webkit-border-top-left-radius:5px!important;
+    -webkit-border-top-right-radius:5px!important;
+    -webkit-border-bottom-left-radius:5px!important;
+    -webkit-border-bottom-right-radius:5px!important;
+    border-top-left-radius:5px!important;
+    border-top-right-radius:5px!important;
+    border-bottom-left-radius:5px!important;
+    border-bottom-right-radius:5px!important;
+    font-size:22px;
+    letter-spacing: 2px;
+  
+}
+div.sapMBtnInner.sapMBtnAccept {
+background:#ff7300 ;
+	border-color:#ff7300 ;	
+} 
+
+.sapMBtnInner {
+	font-size:22px!important;
+
+}
+/* menu-inicio*/
+.btnMenu {
+	padding-top:0;
+}
+.btnMenu .sapMBtnInner {
+	
+	background: none!important;
+}
+.btnMenu .sapMBtnIcon {
+	width: 50px;
+	height:50px;
+	min-height: 50px;
+}
+.btnMenu .sapMBtnInner{
+	width: 50px;
+	height:50px;
+}
+
+/*
+#formQrScanForm #__element4--RFLayout-row0, #formQrScanForm #__element5--RFLayout-row0, #formQrScanForm #__element6--RFLayout-row0 ,  #formQrScanForm #__element7--RFLayout-row0,  #formQrScanForm #__element8--RFLayout-row0,  #formQrScanForm #__element9--RFLayout-row0, #formQrScanForm #__element10--RFLayout-row0   {
+	width:40%;
+	float:left;
+}
+
+
+#formQrScanForm #__element4--RFLayout-row1, #formQrScanForm #__element5--RFLayout-row1, #formQrScanForm #__element6--RFLayout-row1 , #formQrScanForm #__element7--RFLayout-row1, #formQrScanForm #__element8--RFLayout-row1, #formQrScanForm #__element9--RFLayout-row1, #formQrScanForm #__element10--RFLayout-row1{
+	width:48%;
+	float:right;
+	
+}
+*/
+section {
+	padding:20px 10px;
+	background:url("../img/back-desktop.jpg") no-repeat left top ;
+}
+.appSection{
+	background:url("../img/back-desktop.jpg") no-repeat left top ;
+}
+#menuInicio-listUl, #menuAtributosInspeccion-listUl {
+	margin-top:20px;
+}
+/*#menuInicio-listUl li, #menuAtributosInspeccion-listUl li*/ {
+	border:none;
+	text-align:center;
+	margin-bottom:10px;
+	background: #FF7300!important;
+	-moz-border-radius-topleft: 5px!important;
+    -moz-border-radius-topright:5px!important;
+    -moz-border-radius-bottomleft:5px!important;
+    -moz-border-radius-bottomright:5px!important;
+    -webkit-border-top-left-radius:5px!important;
+    -webkit-border-top-right-radius:5px!important;
+    -webkit-border-bottom-left-radius:5px!important;
+    -webkit-border-bottom-right-radius:5px!important;
+    border-top-left-radius:5px!important;
+    border-top-right-radius:5px!important;
+    border-bottom-left-radius:5px!important;
+    border-bottom-right-radius:5px!important;
+    font-size:17px;
+    letter-spacing: 2px;
+    height:50px;
+    color:#ffffff!important;
+}
+#menuInicio-listUl li .sapMSLITitleOnly, #menuAtributosInspeccion-listUl li .sapMSLITitleOnly {
+
+    color:#ffffff!important;
+}
+#menuInicio-listUl li .sapMLIBContentMargin {
+padding:13px 0!important;
+}
+
+#menuInicio-listUl li .sapMILILabel, #menuAtributosInspeccion-listUl li .sapMILILabel {
+	color:#ffffff!important;
+	font-size:19px;
+	text-align: left;
+	font-weight:normal;
+	max-width: 80%;
+}
+#menuInicio-listU li .sapMCb, #menuAtributosInspeccion-listUl li .sapMCb {
+	padding: 7px 0 0 30px;
+	height: 44px;
+}
+#menuInicio-listUl li .sapMCbBg , #menuAtributosInspeccion-listUl li .sapMCbBg {
+	border: 0.125rem solid #ffffff;
+}
+
+/*tabla*/
+
+table {
+	-moz-border-radius-topleft: 5px!important;
+    -moz-border-radius-topright:5px!important;
+    -moz-border-radius-bottomleft:5px!important;
+    -moz-border-radius-bottomright:5px!important;
+    -webkit-border-top-left-radius:5px!important;
+    -webkit-border-top-right-radius:5px!important;
+    -webkit-border-bottom-left-radius:5px!important;
+    -webkit-border-bottom-right-radius:5px!important;
+    border-top-left-radius:5px!important;
+    border-top-right-radius:5px!important;
+    border-bottom-left-radius:5px!important;
+    border-bottom-right-radius:5px!important;
+    background: none;
+    /*border: solid 1px #6d9b55;*/
+}
+table thead th {
+	
+	color:#ffffff;
+	/*padding: 5px 16px!important;*/
+}
+
+table thead th label {
+	margin:0;
+	color:#ffffff!important;
+	font-size:18px!important;
+}
+
+/*Capturar imagen*/
+
+#pagIngresoImagenes-cont {
+
+}
+
+/*#pagIngresoImagenes-cont .sapMFlexItem #butIngresoImagenesFinish-inner,#pagIngresoImagenes-cont .sapMFlexItem #butIngresoImagenesGet-inner, .sapMBtnDefault*/  {
+	border:none;
+	-moz-border-radius-topleft: 5px!important;
+    -moz-border-radius-topright:5px!important;
+    -moz-border-radius-bottomleft:5px!important;
+    -moz-border-radius-bottomright:5px!important;
+    -webkit-border-top-left-radius:5px!important;
+    -webkit-border-top-right-radius:5px!important;
+    -webkit-border-bottom-left-radius:5px!important;
+    -webkit-border-bottom-right-radius:5px!important;
+    border-top-left-radius:5px!important;
+    border-top-right-radius:5px!important;
+    border-bottom-left-radius:5px!important;
+    border-bottom-right-radius:5px!important;
+    background:#b50e2d;
+    color:#ffffff;
+  font-family:'abelregular'!important;
+
+    text-shadow: none;
+}
+.sapMBtn {
+	height:auto!important;
+}
+.sapMBtn #__button1-inner:hover {
+	height:auto!important;
+	 background:red!important;
+    color:#333333;
+}
+#pagIngresoImagenes-cont .sapMFlexItem   {
+	width:100%!important;
+}
+#pagIngresoImagenes-cont .sapMFlexItem button   {
+	width:100%!important;
+}
+
+#pagIngresoImagenes-cont .sapMFlexItem img {
+	border:solid 1px #ffffff;
+	padding:5px;
+	margin-bottom: 20px;
+	margin-top: 10px;
+	width:100%!important;
+}
+#__page2-cont  .sapUiFormResLayout  > div {
+	   background:none;
+    padding: 16px 16px 100px 16px ;
+}
+
+/*scan codigo*/
+
+#pagQrScan-cont {
+	
+}
+#pagQrScan-cont .sapUiHLayout {
+	display:block;
+}
+ .sapUiHLayoutChildWrapper {
+	width:100%!important;
+	display: block;
+}
+.sapUiHLayoutChildWrapper {
+	margin-bottom:10px;
+}
+.sapUiHLayoutChildWrapper button {
+	width:100%!important;
+	
+	
+}
+.sapUiHLayout {
+    display: block;
+}
+.sapUiHLayoutChildWrapper button #butQrScan-inner, .sapUiHLayoutChildWrapper button #butQrScanSiguiente-inner  {
+	width:100%!important;
+	-moz-border-radius-topleft: 5px!important;
+    -moz-border-radius-topright:5px!important;
+    -moz-border-radius-bottomleft:5px!important;
+    -moz-border-radius-bottomright:5px!important;
+    -webkit-border-top-left-radius:5px!important;
+    -webkit-border-top-right-radius:5px!important;
+    -webkit-border-bottom-left-radius:5px!important;
+    -webkit-border-bottom-right-radius:5px!important;
+    border-top-left-radius:5px!important;
+    border-top-right-radius:5px!important;
+    border-bottom-left-radius:5px!important;
+    border-bottom-right-radius:5px!important;
+	
+}
+#pagQrScan-cont .sapUiHLayoutChildWrapper button #butQrScanSiguiente-inner {
+	background: #b50e2d;
+	border: none;
+	text-shadow: none;
+	color:#ffffff;
+}
+
+
+/*atributos*/
+
+/*#menuAtributosInspeccion, #flexIngresoImagenesButtons, #menuInicio, #tblData, #formPesoPolvo, #formLogin */.sapMPageScroll {
+	background-color: rgba(255, 255, 255, 0.8);
+    box-sizing: border-box;
+    padding: 5px;
+    min-height: auto;
+}
+
+#__popover0-cont {
+	width: 100%!important;
+}
+
+ #menuAtributosInspeccion-listUl li .sapMLIBContentMargin {
+	padding:0!important;
+}
+
+#pagListaPesos-cont .sapMBtnDefault  {
+
+}
+#pagListaPesos-cont table  {
+	
+}
+.sapMListTblCell {
+	vertical-align:middle;
+}
+
+#formTemperatura #__label14-cont0_0, #formTemperatura #__label15-cont0_0, #formTemperatura #__label16-cont0_0 {
+	width: 50%!important;
+	float:left;
+}
+#formTemperatura #txtPromedioCalculado-cont0_1, #formTemperatura #txtMinimoCalculado-cont0_1, #formTemperatura #txtMaximoCalculado-cont0_1 {
+	width: 20%!important;
+	float:right;
+}
+
+
+
+/*datos scaner GR*/
+
+#tblLayoutQrScanForm-listUl {
+		border:none;
+}
+
+#tblLayoutQrScanForm-listUl thead th {
+		background: none;
+}
+#tblLayoutQrScanForm-listUl .sapMLIB {
+		background:none;
+}
+#tblLayoutQrScanForm-listUl .sapMLIB td {
+		padding: 0;
+}
+#tblLayoutQrScanForm-listUl #__item2_cell0 {
+		padding-right: 10px;
+}
+
+
+
+/*Ingreso Peso*/
+
+#butPesoFin-cont0_0 {
+	width:57%!important;
+}
+
+/*temperaturas*/
+
+ 
+/*lista */
+
+.lista {
+	border:none;
+	/*text-align:center;*/
+	margin-bottom:10px;
+	/*background: #8A8A8A!important;*/
+	background: #DF771C !important;
+	-moz-border-radius-topleft: 5px!important;
+    -moz-border-radius-topright:5px!important;
+    -moz-border-radius-bottomleft:5px!important;
+    -moz-border-radius-bottomright:5px!important;
+    -webkit-border-top-left-radius:5px!important;
+    -webkit-border-top-right-radius:5px!important;
+    -webkit-border-bottom-left-radius:5px!important;
+    -webkit-border-bottom-right-radius:5px!important;
+    border-top-left-radius:5px!important;
+    border-top-right-radius:5px!important;
+    border-bottom-left-radius:5px!important;
+    border-bottom-right-radius:5px!important;
+    font-size:17px;
+    letter-spacing: 2px;
+    /*height:50px;*/
+    color:#ffffff!important;
+}
+.lista .labelListaS {
+    color: #ffffff!important;
+    font-size: 19px !important;
+    text-align: left;
+    font-weight: normal;
+    max-width: 80%;
+    margin-left:15px;
+    margin-top:10px;
+}
+
+/*botones*/
+.btnSiguiente div.sapMBtnInner.sapMBtnAccept {
+	background:#205D9E;
+	border-color:#205D9E;
+}
+.btnGetImagen  div.sapMBtnInner.sapMBtnAccept {
+	background:#205D9E;
+	border-color:#205D9E;
+}
+.btnTermino div.sapMBtnDefault{
+	background:#cc1919;
+	border-color:#cc1919;
+	text-shadow: none;
+	color:#ffffff;
+}
+
+.btnTermino div.sapMBtnInner.sapMBtnReject {
+    background-color: #cc1919;
+    background-image: none;
+    border-color: #b51616;
+    color: #ffffff;
+    text-shadow: none;
+}
+
+.btnScan div.sapMBtnInner.sapMBtnReject {
+    background-color: #07B0E8;
+    background-image: none;
+    border-color: #07B0E8;
+    color: #ffffff;
+    text-shadow: none;
+}
+/*Reporte de calidad*/
+/*	
+	table {
+		margin-bottom:10px!important;
+		border-color:#8a8a8a ;
+	}
+*/
+
+/*temperaturas*/
+.sapMListTbl th {
+    background: #8a8a8a none repeat scroll 0 0;
+    border-bottom: 1px solid #8a8a8a;
+}
+
+
+/*tabla lista peso*/
+
+.tablaListaPesos span.sapMText {
+		font-size:15px;
+}
+
+.tablaNota .sapMLabel {
+	font-size:14px!important;
+}
+.sapMRbB .sapMRbBInn {
+    margin: 0.0875em !important;
+}
+.sapUiMnuLst{
+	font-size:1.87rem !important;
+}
+.sapUiMnuItm{
+	height:3rem !important;
+	line-height:3rem !important;
+}
+.sapMText {
+    font-size: 1.175rem !important;
+}
+.sapMDialogSection {
+    background: #fff;
+}
+
+.sapMILIDiv {
+	margin: 0 !important;
+}
+.sapMILILabel {
+    overflow: initial;
+}
+.sapMILI {
+     height: auto !important; 
+}
+
+ @media (max-width: 480px) { 
+	section {
+		padding:20px 10px;
+		background:url("../img/back_movil.jpg") no-repeat left top ; 
+	}
+}
+ 
+
+ @media (max-width: 768px) { 
+
+ }
+ .sapMMsgBoxText{
+ color:#000;
+ text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+ }
+ 
+ @media (max-width: 992px) { 
+
+ }
+
+ .tableHeader{
+	text-align: center;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #000;
+	background-color: #37647f!important;
+	color:white!important;
+}
+
+.tableBody{
+	text-align: center;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #000;
+	background-color: #37647f!important;
+	color:white!important;
+}
+
+.tableRepaHeader{
+	border: solid black 1px;
+    margin: 0px;
+    background: #37647f;
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+}
+.eliminarRepa{
+	color: red;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 20px;
+}

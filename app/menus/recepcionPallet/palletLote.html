@@ -1,0 +1,244 @@
+<script  src="app/menus/recepcionPallet/crtRecepcionPallet.js"></script>
+<div id="recepcionCajaLote" data-role="page" ng-controller="recepPaletizadaPalletLote">
+    <div class="container">
+        <div id="PaletizarCajas" class="popup-paletizar-palletlote" style="overflow: auto">
+        <!-- CLOSED -->
+        <!--<div class="cerrar-popup" ng-Click="mostrarPaletizaje(false)"></div>-->
+        <div class="kilos-lote-packing">
+                <div class="acumulados-lote-proceso">
+                    <h2>Productor</h2>
+                    <p id="loteProcesoPaking_1">{{datosGranel.LIFNR.DESCRIPTION}}</p>
+                </div>
+                <div class="acumulados-lote-proceso">
+                    <h2>Guia</h2>
+                    <p id="kiloAcumuladoPaking_1">{{datosGranel.XBLNR}}</p>
+                </div>
+            </div>
+        <!-- CLOSED -->
+        <!-- HEADER POP-UP -->
+        <div class="header-popup">
+            <h1>Paletizar Cajas</h1>
+        </div>
+        <!-- HEADER POP-UP -->
+        <!--**********************  TAB POR PALLET  **********************-->
+        <div class="clear"></div>
+        
+        <!--**********************  MENU TABS  **********************-->
+        <div class="clearfix"></div>
+
+        <!-- INGRESAR PALLET -->
+        <div class="box-scan-paletizar col-xs-12 col-md-3" style="width:95%">
+            <div class="scan-small" ng-click="codearPalet()"></div>
+            <input placeholder="Codigo Pallet" ng-model="datosPaletiza.HU_EXID" id="paletizaCajaNumeroPalet" ng-blur="autoCompletaNum()" class="inp-default col-xs-8" type="text" placeholder="Numero de Pallet" maxlength="20" style="margin-bottom:0px;" />
+        </div>
+        <!-- TIPO DE PALLET -->
+        <div class="col-xs-6 col-md-2" id="#">
+            <h3 style="margin-bottom:5px;">Tipo de Pallet</h3>
+            <div class="box-sl-tabs">
+                    <input ng-model="datosPaletiza.CONTENT" class="inp-default" type="text" placeholder="Tipo Pallet" disabled/>
+                <!--<select class="inp-default" ng-model="datosPaletiza.CONTENT" ng-options="item as item.INHALT for item in ZMOV_QUERY_HU_DATOADICIONAL.INHALT track by item.INHALT">
+                    <option value="">-Sin Info-</option>
+                </select> -->
+            </div>
+        </div>
+        <!-- TIPO DE PALLET -->
+        <!-- PALLET COMPLETO -->
+        <div class="col-xs-6 col-md-2" id="">
+            <h3 style="margin-bottom:5px;">¿Pallet Completo?</h3>
+            <div class="box-inp-tabs">
+                <fieldset>
+                    <input class="SwitchVerde" type="checkbox" id="selPaletizaPCompleto" ng-model="datosPaletiza.KZGVH" ng-true-value="'X'" ng-false-value="''" ng-change="Carga_Altura()">
+                    <label class="SwitchVerde" for="selPaletizaPCompleto"></label>
+                </fieldset>
+            </div>
+        </div>
+        <!--<div class="col-xs-6 col-md-2" id="#" style="">
+            <h3 style="margin-bottom:5px;">Mercado</h3>
+            <div class="box-sl-tabs">
+                <select class="inp-default" ng-model="datosPaletiza.HU_GRP3" ng-options="item as item.BEZEI for item in ZMOV_QUERY_HU_DATOADICIONAL.VEGR3 track by item.VEGR3">
+                    <option value="">-Sin Info-</option>
+                </select> 
+            </div>
+        </div>-->
+        <div class="col-xs-6 col-sm-6 col-md-6">
+            <h3>Altura</h3>
+            <select class="inp-default ng-pristine ng-valid ng-touched" ng-model="datosPaletiza.altura" ng-options="item as item.DESCRIPTION for item in listarAltura track by item.VALUE_CHAR">
+                <option value="" class="">Seleccionar</option>
+            </select>
+        </div>
+        <div class="col-xs-6 col-md-2" id="#" style="display:none">
+            <h3 style="margin-bottom:5px;">Variedad </h3>
+            <div class="box-sl-tabs">
+                <select style="" class="inp-default" ng-model="datosPaletiza.VARIEDAD" ng-options="item as item.name for item in selPaletizaTipiPalletOpciones track by item.value">
+                    <option value="">-Sin Info-</option>
+                </select> 
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-2" id="#" style="display:none">
+            <h3 style="margin-bottom:5px;">Calibre</h3>
+            <div class="box-sl-tabs">
+                <select class="inp-default" ng-model="datosPaletiza.CALIBRE" ng-options="item as item.name for item in selPaletizaTipiPalletOpciones track by item.value">
+                    <option value="">-Sin Info-</option>
+                </select> 
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-2" id="#" style="display:none">
+            <h3 style="margin-bottom:5px;">Ubicacion</h3>
+            <div class="box-sl-tabs">
+                <select class="inp-default" ng-model="datosPaletiza.HU_GRP5" ng-options="item as item.BEZEI for item in ZMOV_QUERY_HU_DATOADICIONAL.VEGR5 track by item.VEGR5">
+                    <option value="">-Sin Info-</option>
+                </select> 
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <!-- PALETIZAR CAJAS -->
+
+        <div class="clear"></div>
+        <!-- /FOOTER -->
+    </div>
+        <div class="box-embalajes">
+            <!--  TAB CONTAINER  -->
+            <div class="tab-container">
+                <!--*****  TAB POR MATERIAL  *****-->
+                <div class="tab-embalajes" id="div_tab_embalajePaking">
+                    <!--**** ROW ****-->
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-5">
+                            <h3>Material</h3>
+                            <select class="inp-default" ng-model="datosGranel.detalle[idxTab].material" ng-change="restaKgTotal(idxTab);Changue_Tipo_Pallet(idxTab);" ng-options="item as item.DESCRIPTION for item in pakingTipoMaterialOpciones track by item.MATNR">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-5" style="display: {{visibleColor}}">
+                            <h3>Color</h3>
+                            <select class="inp-default" ng-model="datosGranel.detalle[idxTab].color" ng-change="restaKgTotal(idxTab)" ng-options="item as item.DESCRIPTION for item in listarColor track by item.VALUE_CHAR">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-5" style="display: {{visibleTip}}">
+                            <h3>Tipificación</h3>
+                            <select class="inp-default" ng-model="datosGranel.detalle[idxTab].tipificacion" ng-change="restaKgTotal(idxTab)" ng-options="item as item.DESCRIPTION for item in listarTipificacion track by item.VALUE_CHAR">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- FECHA EMBALAJE -->
+                    <div class="clearfix"></div>
+                    <div class="border-grey"></div>
+                    <!-- EMBALAJE Y MERCADO -->
+                    <div class="clearfix"></div>
+                    <!-- LOTE -->
+                    <!--<div style="float:left;">
+                        <div class="scan" ng-click="codearLote(idxTab)"></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-5">
+                        <h3>Lote N&ordm;</h3>
+                        <div class="box-inp-tabs">
+                            <input id="embalajeLoteTab{{idxTab}}" ng-model="datosGranel.detalle[idxTab].BATCH" class="inp-default" type="text" placeholder="Ingresar C&oacute;digo" maxlength="10"/>
+                        </div>
+                    </div>-->
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <h3>Variedad</h3>
+                        <select class="inp-default" ng-model="datosGranel.detalle[idxTab].VARIEDAD" ng-options="itemS as itemS.DESCRIPTION for itemS in variedadOpciones track by itemS.VALUE_CHAR">
+                                <option value="">Seleccionar</option>
+                            </select>
+                    </div>
+                    <div class="col-xs3 col-sm-3 col-md-3">
+                        <h3>Categoria</h3>
+                        <div class="box-inp-tabs">
+                            <!--<input id="embalajeLoteTab1" ng-model="datosGranel.detalle[idxTab].categoria" class="inp-default" type="text" placeholder="Ingresar C&oacute;digo" maxlength="10"/>-->
+                            <select class="inp-default" ng-model="datosGranel.detalle[idxTab].ZCATEGORIA"  ng-options="item as item.DESCRIPTION for item in pakingCategoriaOpciones track by item.VALUE_CHAR">
+                                <option value="">Seleccionar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="border-grey"></div>
+                    <div class="clearfix"></div>
+                   
+                    <div class="col-xs-6 col-sm-5 col-md-2">
+                            <h3>Calibre</h3>
+                            <select class="inp-default" ng-model="datosGranel.detalle[idxTab].calibre"  ng-options="item as item.DESCRIPTION for item in pakingCalibreOpciones track by item.VALUE_CHAR">
+                                <option value="">Seleccionar</option>
+                            </select>
+                    </div>
+                    
+                    <div class="col-xs-12 col-sm-4 col-md-3">
+                            <h3>Cajas</h3>
+                            <input class="inp-default" type="number" placeholder="Cajas" ng-model="datosGranel.detalle[idxTab].QUANTITY" ng-change="restaKgTotal(idxTab)"/>
+                    </div>
+                    <div class="col-xs-3 col-md-2" id="" style="">
+                        <h3 style="margin-bottom:5px;">¿PLU?</h3>
+                        <div class="box-inp-tabs">
+                            <fieldset>
+                                <input class="SwitchVerde ng-pristine ng-untouched ng-valid" type="checkbox" id="selPaletizaPLU" ng-model="datosGranel.detalle[idxTab].ZNUM_PLU" ng-true-value="'CON PLU'" ng-false-value="'SIN PLU'">
+                                <label class="SwitchVerde" for="selPaletizaPLU"></label>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <!--**********************  TAB POR MATERIAL  **********************-->
+                <div class="clear"></div>
+                <!--**********************  MENU TABS  **********************-->
+                <div class="section-03">
+                    <div class="tab-menu" id="tabEmbalajes">
+                        <div id="btn-more" class="btn-more" ng-click="agregarTab();"></div>
+                        <div id="btn_tab_emb_1" class="btn-tab-{{tabs.seleccionado}}" ng-repeat="tabs in selTab" ng-click="irAlTab(tabs.idx)">{{tabs.nombre}}</div>
+                        <div id="btn_tab_tra_deshacer_2" class="btn-tab-delete" ng-click="deshacerTab();" style="display:{{verBtnEliminar}}"><div id="btn-more" class="btn-delete"></div></div>
+                    </div>
+                </div>
+                <!--**********************  MENU TABS  **********************-->
+            </div>
+           <!-- FOOTER -->
+            <div class="footer">
+                <div class="btn btn-center" ng-click="Pop_Up()">CONTINUAR </div>
+            </div>
+    <!-- /FOOTER -->
+        </div>
+        <div id="PACK_SelectLoteProceso" class="PopUp" ng-hide="POP_DATA"  data-role="page">
+            <div id="BuscarLoteProceso" class="popup-sap" style="min-height: 534px">
+                <div class="header-popup">
+                    <h1>Listado Material</h1>
+                </div>
+                <div>
+                    <table style="width: 100%">
+                        <tr>
+                            <td class="tableHeader">MATERIAL</td>
+                            <td class="tableHeader">DESCRIPCIÓN</td>
+                            <td class="tableHeader">CANTIDAD</td>
+                            <td class="tableHeader">CHECK</td>
+                        </tr>
+                        <tr ng-repeat="item in dataTable.LT_DETALLE track by $index">
+                            <td class="tableBody">{{item.MATNR}}</td>
+                            <td class="tableBody">{{item.MAKTX}}</td>
+                            <td class="tableBody" style="text-align: center">{{item.CANTIDAD}}</td>
+                            <td class="tableBody" ng-disabled='{{item.disabled}}' ng-click="clickearCheck($index)">
+                                <center>
+                                    <img src="{{item.img}}" width="15px">
+                                </center>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!--<div class="mobile-right mobile-60">
+                    <div>
+                        <div class="contabilizar-text">
+                                <h1>Documento Material: </h1> 
+                                <p>Hola Mario</p>
+                        </div>
+                    </div>
+                </div>-->
+                <div class="clearfix" style="height: 350px;"></div>
+                <div class="footer">
+                    <div class="col-md-12 col-xs-12 col-lg-12" id="optionsResponse">
+                        <div class="btn col-md-6 col-xs-6 col-lg-6" id="btnError" ng-Click="POP_DATA=true">CANCELAR</div>
+                        <div class="btn col-md-6 col-xs-6 col-lg-6" id="btnContinuar_" style="width: 50%!important;" ng-click="Send_xml()">ENVIAR</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /CONTENT -->
+    
+

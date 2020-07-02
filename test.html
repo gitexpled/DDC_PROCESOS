@@ -1,0 +1,107 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.getJSON demo</title>
+  <style>
+  img {
+    height: 100px;
+    float: left;
+  }
+  </style>
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+ 
+<html>
+<body style="margin:0px">
+ <table style="border-collapse: collapse;">
+  <tr style= "padding:0px;margin:0;">
+   <td>
+    <button type="button" id="bt1" style="font-size: 20;width: 145px;height: 115px;padding:0px;" value= "aas" ></button>
+   </td>
+   <td>
+    <button type="button" id="bt2" style="font-size: 20;width: 145px;height: 115px;"></button>
+   </td>
+   </td>
+  </tr>
+  <tr>
+   <td>
+    <button type="button" id="bt3" style="font-size: 20;width: 145px;height: 115px;"</button>
+   </td>
+   <td>
+    <button type="button" id="bt4" style="font-size: 20;width: 145px;height: 115px;"></button>
+   </td>
+  </tr>
+ </table>
+</body>
+</html>
+<script>
+window.setInterval(function(){
+  /// call your function here
+(function() {
+ $.getJSON( "http://ddcqas.expled.cl/ddc/JSON_CONFIG_LINEA.aspx", function( data ) {
+  var items = [];
+  $.each( data, function( key, val ) {
+    console.log(val.filas[0].Pantalla1);
+	console.log(val.filas[0].Pantalla1[2].name);
+	
+	if(val.filas[0].Pantalla1[0].name !=="")
+	{
+		$("#bt1").html(val.filas[0].Pantalla1[0].name);
+		$("#bt1").prop("disabled",false);
+	}
+	else
+	{
+		$("#bt1").html("SIN ASIGNAR");
+		$("#bt1").prop("disabled",true);
+	}	
+	
+	if(val.filas[0].Pantalla1[1].name !=="")
+	{
+		$("#bt2").html(val.filas[0].Pantalla1[1].name);
+		$("#bt2").prop("disabled",false);
+	}
+	else
+	{
+		$("#bt2").html("SIN ASIGNAR");
+		$("#bt2").prop("disabled",true);
+	}	
+	
+	if(val.filas[0].Pantalla1[2].name !=="")
+	{
+		$("#bt3").html(val.filas[0].Pantalla1[2].name);
+		$("#bt3").prop("disabled",false);
+	}
+	else
+	{
+		$("#bt3").html("SIN ASIGNAR");
+		$("#bt3").prop("disabled",true);
+	}	
+	
+	if(val.filas[0].Pantalla1[3].name !=="")
+	{
+		$("#bt4").html(val.filas[0].Pantalla1[3].name);
+		$("#bt4").prop("disabled",false);
+	}
+	else
+	{
+		$("#bt4").html("SIN ASIGNAR");
+		$("#bt4").prop("disabled",true);
+	}	
+	return false;
+    });
+    
+  $( "<ul/>", {
+    "class": "my-new-list",
+    html: items.join( "" )
+  }).appendTo( "body" );
+});
+})();
+
+
+}, 5000);
+</script>
+ 
+</body>
+</html>

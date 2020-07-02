@@ -1,0 +1,17 @@
+<script src="app/menus/recepcion/vistaimpresion/vistaimpresion.js"></script>
+<div class="{{page.animation}}" id="MenuInicial" ng-controller="vista">
+    <div style="width: 500px">
+    <div class="box-datos-generales" >
+       <div class="hgroup">Etiqueta: {{name}}</div>
+    </div>
+    </div>    
+        <div class="preview" style="width:95%;margin:18px 20px 20px">
+        <img id="image" style="width:100% "/>
+      </div>
+         <div class="footer">
+        <!-- inicia BOX MOBILE -->
+        <div class="mobile-full">
+            <div id="btnEnviarGranel" class="btn btn-center"  ng-click="Envio()">Guardar Imagen</div>
+        </div>
+    </div>
+</div>

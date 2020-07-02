@@ -1,0 +1,65 @@
+.popupContainer{
+	position:absolute;
+	width:330px;
+	height: auto;
+	left:45%;
+	top:150px;
+	background: #D8D8D8;
+        box-shadow: 26px 24px 109px -5px rgba(0,0,0,0.83);
+        text-align: center;
+
+}
+.confir{
+    width: 93px;
+}
+.headerMP{
+    float: left;
+    width: 16.6%;
+    text-align: center;
+    height: 100%;
+    word-wrap: break-word;
+     white-space: normal;
+}
+.popUE{
+    width: 221px;
+    text-align: center;
+    padding: inherit;
+    
+}
+.PopUp-overlay {
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    display:none;
+    background-color: #777777;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+
+.Btn_Resumen{
+    float: right; 
+    margin-bottom: 3px;
+    margin-right: 6px;
+    width: 154px;
+}
+
+#head{
+    height: 30px;
+    background: #39648a;
+}
+#ddc_im{
+    width: 50px;
+    margin-left: auto;
+    margin-bottom: -27px;
+    margin-right: auto;
+}
+
+#red{
+    width: 15px;
+    float: right;
+    margin-bottom: -10px;
+    margin-right: 10px;
+}

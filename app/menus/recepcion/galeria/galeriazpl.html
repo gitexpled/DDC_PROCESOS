@@ -1,0 +1,415 @@
+<script src="app/menus/recepcion/galeria/galeriazpl.js"></script>
+<div class="{{page.animation}}" id="MenuInicial" ng-controller="gallery">
+    <div class="box-datos-generales" style="z-index: -1">
+        <div class="row">
+            <div class="btnGal btn-hide" style="width: 85px; height: 23px; margin-top: -2px" ng-click="hide()">{{Ocultar}}</div>
+           <div class="hgroup">Modelos de etiqueta</div>
+        </div>
+
+        <div ng-hide="ocultar">
+            <ul class="draggable-objects">
+            <li ng-repeat="obj in listItems">
+                <div ng-drag="true" ng-drag-data="obj" data-allow-transform="true" class="item"><div class="dname"><p class="pname">{{obj.name}}</p></div><div class="dimg"><img src="{{obj.url}}" ng-click="Imagen(obj)" style="width:90%; height: 87%; margin-top: 4px"/></div></div>
+            </li>
+          </ul> 
+        </div>
+    </div>  
+        <div  class="MainGallery" style="background-color: rgba(0,0,0,0.2)">
+            <div ng-repeat="objLinea in Linea"  class="LineGallery" ng-hide="objLinea.LineaUsuario">
+              <div class="bannerGal">Linea Nº{{objLinea.index+1}} <div class="btnGal btn-hide" ng-click="hideLinea(objLinea)" style="width: 85px">{{objLinea.OcultarL}}</div></div>
+              <div class="bannerGal2">
+                  <div id="btn-more" class="btn-more" ng-click="AgregarProceso(objLinea);"></div>
+                  <div ng-repeat="item in objLinea.procesos" ng-click="selectProceso(objLinea,$index)" class="btn-tab-{{item.on}} " id="loteProc{{$index}}">{{objLinea.procesos[$index].LOTE}}</div>
+                   <div id="btn_tab_tra_deshacer_2" class="btn-tab-delete" ng-click="EliminarProceso(objLinea,objLinea.procesos[objLinea.procesosIndex].id,$index);" style="display:{{objLinea.Eliminar}}"><div id="btn-more" class="btn-delete"></div></div>    
+                   <input class="inp-default ProcesoGAl" ng-model="objLinea.codigo" ng-keypress="($event.charCode==13)?AgregarProceso(objLinea):return;"  placeholder="Lote Proceso" maxlength="10" />
+              </div>
+              <div ng-hide="objLinea.LineaHide" style="border:1px solid">  
+                    <div class="tab-embalajes" id="div_tab_embalajePaking">
+                        <div class="row mant1">
+                    <div class="col-xs-6 col-sm-3 col-md-3">
+                        <h3 style="color: black">Productor</h3>
+                        <div class="box-inp-tabs letGal">
+                            {{objLinea.procesos[objLinea.procesosIndex].productor}}
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3">
+                        <h3 style="color: black">Especie</h3>
+                        <div class="box-inp-tabs letGal">
+                            {{objLinea.procesos[objLinea.procesosIndex].especie}}
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3">
+                        <h3 style="color: black">Variedad</h3>
+                        <div class="box-inp-tabs letGal">
+                            {{objLinea.procesos[objLinea.procesosIndex].variedad}} 
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3">
+                        <h3 style="color: black">Material</h3>
+                        <div class="box-inp-tabs letGal">
+                            {{objLinea.procesos[objLinea.procesosIndex].material}} 
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3">
+                        <h3 style="color: black">Kilos Granel</h3>
+                        <div class="box-inp-tabs letGal">
+                            {{objLinea.procesos[objLinea.procesosIndex].kilosGranel}} 
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3">
+                        <h3 style="color: black">Kilos Paletizados</h3>
+                        <div class="box-inp-tabs letGal">
+                            {{objLinea.procesos[objLinea.procesosIndex].kilosPal}} 
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3">
+                        <h3 style="color: black">Kilos etiqueta</h3>
+                        <div class="box-inp-tabs letGal">
+                            {{objLinea.procesos[objLinea.procesosIndex].kilosEtiqueta}} 
+                        </div>
+                    </div>
+                            <div class="col-xs-6 col-sm-3 col-md-3">
+                        <h3 style="color: black">ESTADO</h3>
+                        <div class="box-inp-tabs letGal">
+                            {{objLinea.procesos[objLinea.procesosIndex].ESTADO}} 
+                        </div>
+                    </div>
+               </div>
+                    </div>
+                <div class="MantenFil" ng-hide="objLinea.FilaHide">  
+                    <div ng-repeat="objFilas in objLinea.procesos[objLinea.procesosIndex].filas"  class="FileGallery">
+                        <div style="width: 50%;float: left">Salida {{($index*2)+1}}</div><div style="width: 50%">Salida {{($index*2)+2}}</div>
+                        <div class="Izquierda">   
+                            <div ng-repeat="objZpl in objFilas.Pantalla1" ng-drag="true" ng-drop="true" ng-drag-data="objZpl" ng-drag-success="onDragComplete($data,$event,objZpl)" ng-drop-success="onDropComplete($data,$event,objZpl)" class="ZPLGallery1">
+                               <img src="{{objZpl.url}}" style="width:100%;height: 100%" ng-click="PopUP(objZpl,objLinea )"/>
+                            </div>
+                        </div>
+                        <div class="Derecha">
+                            <div ng-repeat="objZpl in objFilas.Pantalla2" ng-drag="true" ng-drop="true" ng-drag-data="objZpl" ng-drag-success="onDragComplete($data,$event,objZpl)" ng-drop-success="onDropComplete($data,$event,objZpl)" class="ZPLGallery2">
+                               <img src="{{objZpl.url}}" style="width:100%;height: 100%" ng-click="PopUP(objZpl,objLinea)"/>
+                            </div>
+                        </div>    
+                    </div>    
+                </div>   
+            </div>  
+          </div>
+        </div>
+        <div class="footer"  style="z-index: 0">
+            <!-- inicia BOX MOBILE -->
+            <div class="mobile-full" style="display: flex;">
+            <div class="btn btn-center"  ng-click="Save()">Guardar</div>
+            <div class="btn btn-center"  ng-click="Generar()" >Generar Etiqueta</div>
+            <!--<div class="btn btn-center"  ng-click="pantalla()" >Pantalla</div>-->
+            </div>
+        </div>
+    <div class="PopUp ng-scope" data-role="page" style="display:{{IMG}}">
+        <div  class="popup-productor">
+            <div class="cerrar-popup" ng-click="IMG='none';"></div>
+            <div class="header-popup">
+                <h1>Etiqueta {{imagen.title}}</h1>
+            </div>
+                <img src='{{imagen.imagen}}' style='width: 98%;height: 85%;margin: 8px;'>
+        </div>
+    </div>   
+    <div class="PopUp ng-scope" data-role="page" style="display:{{displayTextCodeInput}}; overflow: auto">
+        <div  class="popup-productor" style="height: auto">
+            <div class="cerrar-popup" ng-click="displayTextCodeInput='none';"></div>
+                <div class="header-popup">
+                    <h1>Etiqueta {{etiqueta.name}}</h1>
+                </div>
+                    <div style="margin-left: 9px;">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                     <img src='{{etiqueta.url}}' style="width: 100%; height: 100%">
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                   <!-- Duplicado + Stock --> 
+                                    <div class="col-xs-12 col-sm-12 col-md-12">   
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="inp-atr-chk">
+                                                    Duplicar Etiqueta
+                                            </div>
+                                            <fieldset class="atr-fieldset">
+                                                <input type="checkbox" id="chk1_2" ng-model="etiqueta.duplicateTag" ng-true-value="'SI'" ng-false-value="'NO'" />
+                                                <label for="chk1_2"></label>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <h3>Stock</h3>
+                                            <input class="inp-default" type="number" ng-model="etiqueta.Stock" style="width: 70%" placeholder="-" maxlength="10" />
+                                           <!-- <img src="img/icon/save.png" class="inp-pesabt-min" title="Save Stock" ng-click="SaveStock(etiqueta)">-->
+                                        </div>
+                                     </div>    
+                                   <!-- Relleno Etiqueta -->  
+                                       <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Especie</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.especie" placeholder="" maxlength="10" />
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Variedad</h3>
+                                            <div class="box-inp-tabs">
+                                               <!-- <input class="inp-default"  ng-model="etiqueta.etiqueta.variedad" placeholder="" maxlength="10" />-->
+                                               <select class="inp-default" ng-model="etiqueta.etiqueta.variedad"  placeholder="Ingresar"  ng-options="item as item.DESCRIPTION for item in listaVariedad track by item.VALUE_CHAR">
+                                                    <option value="">Seleccionar</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Material</h3>
+                                            <div class="box-inp-tabs">
+                                                <!--<input class="inp-default"  ng-model="etiqueta.etiqueta.codmat" placeholder="" maxlength="10" />-->
+                                                 <select class="inp-default" ng-model="etiqueta.etiqueta.codmat"  placeholder="Ingresar"  ng-options="item as item.DESCRIPTION for item in materialesTerminado track by item.VALUE_CHAR">
+                                                    <option value="">Seleccionar</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                       <!-- <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>TipoEMB</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.tipoemb" placeholder="" maxlength="10" />
+                                                <select class="inp-default" ng-model="etiqueta.etiqueta.tipoemb"  placeholder="Ingresar"  ng-options="item as item.DESCRIPTION for item in materialesTerminado track by item.KILOS">
+                                                    <option value="">Seleccionar</option>
+                                                </select>
+                                            </div>
+                                        </div>-->
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Grsmunit</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.grsmunit" placeholder="" maxlength="10" />
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>CountAPP</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.countapp" placeholder="" maxlength="10" />
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Calibre</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.nom1calibre" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Glosalibre</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.glosalibre" placeholder="" maxlength="10" />
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Productor</h3>
+                                            <div class="box-inp-tabs">
+                                               <!-- <input class="inp-default"  ng-model="etiqueta.etiqueta.prod" placeholder="" maxlength="10" />-->
+                                                <select class="inp-default" ng-model="etiqueta.etiqueta.prod"  placeholder="Ingresar"  ng-change="cambio();" ng-options="item as item.DESCRIPTION for item in listaProductores track by item.VALUE_CHAR">
+                                                    <option value="">Seleccionar</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>GGN</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.gglote" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Comune(PRD)</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.compprod" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Province(PRD)</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.proproduc" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Region</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.prodesc" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>CSG</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.CSG" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>IDG</h3>
+                                            <div class="box-inp-tabs">
+                                               <!-- <input class="inp-default"  ng-model="etiqueta.etiqueta.IDG" placeholder="" maxlength="10" />-->
+                                               <select class="inp-default" ng-model="etiqueta.etiqueta.IDG"  placeholder="Ingresar"  ng-options="item as item.DESCRIPTION for item in listaIDG track by item.VALUE_CHAR">
+                                                    <option value="">Seleccionar</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>SDP</h3>
+                                            <div class="box-inp-tabs">
+                                               <!-- <input class="inp-default"  ng-model="etiqueta.etiqueta.SDP" placeholder="" maxlength="10" /> -->
+                                               <select class="inp-default" ng-model="etiqueta.etiqueta.SDP"  placeholder="Ingresar"  ng-options="item as item.DESCRIPTION for item in listaSDP track by item.VALUE_CHAR">
+                                                    <option value="">Seleccionar</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Envain14</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.envain14" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Embasex14</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.embasex14" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>DUN14</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.dun14" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>LOTEGTI</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.lotegti" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>NOMFRUT</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.nomfrut" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Comune</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.comfrut" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Province</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.provfrut" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>CSP</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.cspfrut" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>IDP</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.idpfrut" placeholder="" maxlength="10" />
+                                              <!--  <select class="inp-default" ng-model="etiqueta.etiqueta.idpfrut"  placeholder="Ingresar"  ng-options="item as item.DESCRIPTION for item in listaIDP track by item.VALUE_CHAR">
+                                                    <option value="">Seleccionar</option>
+                                                </select>-->
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>FDA</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.fdafrut" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                         <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Kilos</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.kilos" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Diametro</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.diametro" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Turno</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.turno" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Line Pack</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.lpack" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                         <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>SALIDA</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.salida" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                       <!-- <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>CODMAT</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.codmat" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div> --> 
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>NumLote</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.nlote" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Packed on</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.fechprd" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Pack date</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.fechapprd" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>VOICEPICKB</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.voickb" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>VOICEOICKA</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.voicka" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                            <h3>Correlativo</h3>
+                                            <div class="box-inp-tabs">
+                                                <input class="inp-default"  ng-model="etiqueta.etiqueta.correlativo" placeholder="" maxlength="10" />
+                                            </div>
+                                         </div> 
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="btn btn-center popUE" ng-click="validate()">Vista Previa</div>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="btn btn-center popUE" ng-click="SaveVentana(etiqueta)">Guardar</div>
+                                        </div>                       
+                                     </div>
+                                </div>
+                                <div class="footer"  style="z-index: 0">
+                            <!-- inicia BOX MOBILE -->
+                                <div class="mobile-full" style="display: flex;">
+                                <div class="btn btn-center popUE"  ng-click="Acept()" style="margin-bottom: 1px">Aceptar</div>
+                               <!-- <div class="btn btn-center popUE"  ng-click="Confirmar()" style="margin-bottom: 1px">Clonar</div>-->
+                                <div class="btn btn-center popUE"  ng-click="eliminar()" style="margin-bottom: 1px">Eliminar</div>
+                                </div>
+                             </div>
+                    </div>
+        </div> 
+    </div>  
+    
+</div>   
+    
+

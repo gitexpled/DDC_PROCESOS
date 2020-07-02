@@ -1,0 +1,99 @@
+<script src="app/paletizarCajas/ctrPaletizajeQuitar.js"></script>﻿
+<div id="QuitarPallet_Pallet" data-role="page" ng-controller="ctrQuitarPallet_Pallet">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="nav-back" ng-click="navegacionPagina('QuitarPallet_cod','fadeInLeft','')">
+            <p>Volver</p>
+        </div>
+        <div class="breadcrumbs">
+            <ul>
+                <li>{{datosExportadora.exportadora.DESCRIPTION}}</li>
+                <li>{{datosExportadora.especie.DESCRIPTION}}</li>
+                <li>Quitar Cajas</li>
+                <li>Pallet</li>
+            </ul>
+        </div>
+    </div>
+    <!-- /HEADER -->
+    <!-- CONTENT -->
+    <div class="container">
+        <div class="top-aumenta">
+            <ul class="titulares-aumenta">
+                <li>PALLET</li>
+                <li>CONDICION</li>
+                <li>MERCADO-SAG</li>
+                <li>TRATAMIENTO</li>
+                <li>UBICACION</li>
+            </ul>
+            <ul class="result-aumenta">
+                <li>{{datosPaletiza.numeroPallet}} </li>
+                <li>{{ZMOV_QUERY_HU_READ.HUHEADER[0].HU_GRP2}} </li>
+                <li>{{ZMOV_QUERY_HU_READ.HUHEADER[0].HU_GRP3}} </li>
+                <li>{{ZMOV_QUERY_HU_READ.HUHEADER[0].HU_GRP4}} </li>
+                <li>{{ZMOV_QUERY_HU_READ.HUHEADER[0].HU_GRP5}} </li>
+            </ul>
+        </div>
+        <div class="BoxQuitarPallet" style="margin-top:20px;padding-top:15px;">
+            <!-- PALETIZAR CAJAS -->
+            <div class="paletizar-popup">
+                <h2 class="ta-no" style="background-color:#F00;">ELIMINAR Lotes de este Pallet</h2>
+                <div class="titulos-paletizar-popup">
+                    <h3 class="col-xs-2 col-md-3">Lote</h3>
+                    <h3 class="col-xs-2 col-md-3">Material</h3>
+                    <h3 class="col-xs-2 col-md-2">Almacen</h3>
+                    <h3 class="col-xs-3 col-md-2">Cajas Pallet</h3>
+                    <h3 class="col-xs-2 col-md-2">Quitar Cajas</h3>
+                </div>
+                <div class="ul_pallet_popup">
+                    <div class="result-paletizar-popup" ng-repeat="item in datosPaletiza.manual">
+                        <p class="col-xs-2 col-md-3">{{item.CHARG}}</p>
+                        <p class="col-xs-3 col-md-3">{{item.MATNR}}</p>
+                        <p class="col-xs-2 col-md-2">{{item.LGORT}}</p>
+                        <p class="col-xs-3 col-md-2">{{item.VEMNG}}</p>
+                        <p class="col-xs-2 col-md-2"><input ng-model="datosPaletiza.manual[item.idx].inLotePaletizar" type="number" /></p>
+                    </div>
+                </div>
+            </div>
+            <!-- PALETIZAR CAJAS -->
+            <div class="BoxQuitarPalletFooter">
+                <div ng-Click="generaXML()" class="btn btn-center" style="background:#F00;">QUITAR CAJAS</div>
+            </div>
+        </div>
+    </div>
+    <!-- CONTENT -->
+    <!-- FOOTER -->
+    <div class="footer">
+        <div class="btn btn-center" ng-click="navegacionPagina('menuPaletizar', 'fadeInRight','')" >SALIR Y VOLVER</div>
+    </div>
+    <!-- /FOOTER -->
+    
+
+<div id="PROD_EnvioLotesPaking" class="PopUp" data-role="page" style="display:{{verPopRespuesta}}">
+    <div id="envioLotesPakingPOP" class="popup-mercado">
+        <div class="header-popup">
+            <h1>Respuesta SAP</h1>
+        </div>
+        <div class="img-mercado"></div>
+        <div class="mobile-right mobile-60">
+            <div id="cargandoPopLotesPaking" class="LoadingMercados" style="display:none">
+                <h1>Enviando datos</h1>
+                <div id="loadingLotesPaking" class="animarLoading">
+                    <ul class="bokeh"><li></li><li></li><li></li><li></li></ul>
+                </div>
+            </div>
+            <div id="popRespuestaLotesPaking"></div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="footer">
+            <!-- inicia BOX MOBILE -->
+            <div class="mobile-full">
+                <div class="btn btn-center" id="btnContinuar_" style="display:none" ng-Click="irMovimiento('FIN')">FINALIZAR</div>
+                <div class="btn btn-center" id="btnError" style="display:none" ng-Click="irMovimiento('VOLVER')">VOLVER</div>
+            </div>
+            <!-- end BOX MOBILE -->
+        </div>
+        <!-- /FOOTER -->
+    </div>
+</div> 
+</div>
+

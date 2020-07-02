@@ -1,0 +1,20 @@
+<script src="app/menus/ReImprimir/ctrReImprimir.js?id=3"></script>
+<div class="{{page.animation}}" id="MenuInicial" ng-controller="ReImprimir">
+    <div class="col-xs-12 col-md-12 col-lg-12">
+            <div class="box-datos-generales" >
+                <!-- GENERALES -->
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <h3>Lote</h3>
+                        <div class="box-inp-tabs">
+                            <input class="inp-default"  ng-model="datosGranel.PARTIDA" placeholder="Nº" maxlength="10" />
+                        </div>
+                    </div>
+					<!--romana-->
+                </div>
+            </div>
+            <div class="mobile-full">
+                <div class="btn btn-primary" id="btnConsultar_" ng-click="getDataLote()">Consultar</div>
+            </div>
+        </div>  
+</div>

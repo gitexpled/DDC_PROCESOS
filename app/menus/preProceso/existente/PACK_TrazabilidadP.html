@@ -1,0 +1,188 @@
+﻿<div id="PACK_TrazabilidadP" data-role="page">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="nav-back" ng-click="btnVolver()">
+            <p>Volver</p>
+        </div>
+        <div class="breadcrumbs">
+            <ul>
+                <li>Proceso Calibrado</li>
+                <li>Trazabilidad</li>
+            </ul>
+        </div>
+    </div>
+    <!-- /HEADER -->
+    <!-- CONTENT -->
+    <div class="container">
+        <div class="box-trazabilidad">
+            <div class="datos-productor">
+                <div class="productor-heredado">{{datoProductorDetalle.NAME1}}</div>
+                <div class="fecha-heredado">{{datosLoteProcesoPaking.selFechaContabilizacion.name}}</div>
+            </div>
+            <!--  TAB CONTAINER  -->
+            <div class="tab-container">
+                <!--****  TRAZABILIDAD POR MATERIAL  ****-->
+                <div class="tab-trazabilidad" id="div_tab_trazabilidadPaking">
+                    <!-- TOP TRAZABILIDAD -->
+                    <div class="top-table top-trazabilidad">
+                        <!-- EMBALAJE -->
+                        <div class="top-item">
+                            <div class="top-titular">Embalaje</div>
+                            <div class="top-txt" id="trazabilidadEmbalajePakingTab">
+                                {{datosLoteProcesoPaking.detalle[idxTab].selMercadoPakingTab.MAKTG}}
+                            </div>
+                        </div>
+                        <!-- EMBALAJE -->
+                        <!-- MERCADO -->
+                        <div class="top-item">
+                            <div class="top-titular">Mercado</div>
+                            <div class="top-txt" id="trazabilidadMercadoPakingTab">
+                                {{datosLoteProcesoPaking.detalle[idxTab].selMercadoPakingTab.ZMAT_MERCADO}}
+                            </div>
+                        </div>
+                        <!-- MERCADO -->
+                        <!-- LOTE -->
+                        <div class="top-item">
+                            <div class="top-titular">Lote</div>
+                            <div class="top-txt" id="trazabilidadLotePakingTab">
+                                {{datosLoteProcesoPaking.detalle[idxTab].selMercadoPakingTab.MATNR}}
+                            </div>
+                        </div>
+                        <!-- LOTE -->
+                    </div>
+                    <!-- TOP TRAZABILIDAD -->
+                    <!--**** ROW  ****-->
+                    <div class="row">
+                        <div class="clearbig"></div>
+                        <!-- COL -->
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="hgroup">CODIGOS SAG</div>
+                            <div class="title-trazabilidad" id="trazabilidadSinCertificadosPaking" style="display:none">No requiere Certificados</div>
+                            <!-- CUANDO NO HAY CERTIFICADOS -->
+                            <!--<div class="col-xs-6 col-sm-6 col-md-6" id='divSDPTab1' style="display:{{divSDPTab1}}">
+                                <h3>SDP</h3>
+                                <div class="box-inp-tabs">
+                                    <input id='selSDPTab1' ng-model="datosLoteProcesoPaking.detalle[idxTab].selSDP" class="inp-default" type="number" name="" placeholder="Ingresar" />
+                                </div>
+                            </div>-->
+                            <div class="col-xs-6 col-sm-6 col-md-6" id='divCSGTab1' style="display:{{divCSGTab1}}">
+                                <h3>CSG</h3>
+                                <div class="box-inp-tabs">
+                                    <input id='selCSGTab1' ng-model="datosLoteProcesoPaking.detalle[idxTab].selCSG" class="inp-default" type="number" name="" placeholder="Ingresar" />
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6" id='divCSPTab1' style="display:{{divCSPTab1}}">
+                                <h3>CSP</h3>
+                                <div class="box-inp-tabs">
+                                    <input id='selCSPTab1' ng-model="datosLoteProcesoPaking.detalle[idxTab].selCSP" class="inp-default" type="number" name="" placeholder="Ingresar" />
+                                </div>
+                            </div>
+                            <!--<div class="col-xs-6 col-sm-6 col-md-6" id='divGGNTab1' style="display:{{divGGNTab1}}">
+                                <h3>GGN</h3>
+                                <div class="box-inp-tabs">
+                                    <input id='selGGNTab1' ng-model="datosLoteProcesoPaking.detalle[idxTab].selGGN" class="inp-default" type="number" name="" placeholder="Ingresar" />
+                                </div>
+                            </div>-->
+                        </div>
+                        <!-- COL -->
+                        <!-- COL -->
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="hgroup">FECHA ETIQUETAS</div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <h3>Fecha SAG</h3>
+                                <div class="box-inp-tabs">
+                                    <input id="selDatosTrazabilidad_FechaSag" class="inp-default inp-tab-fecha" type="text" placeholder="Ingresar" />
+                                    <input ng-model="datosLoteProcesoPaking.detalle[idxTab].selDatosTrazabilidad_FechaSag" class="inp-default inp-tab-fecha" type="hidden" />
+                                </div>
+                            </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                <h3>Fecha Juliana</h3>
+                                <div class="box-inp-tabs">
+                                    <input id="selDatosTrazabilidad_FechaJuliana" class="inp-default inp-tab-fecha" type="number" ng-model="datosLoteProcesoPaking.detalle[idxTab].selDatosTrazabilidad_FechaJuliana" placeholder="Ingresar" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6" id="divPKLDIL" style="display:{{divCELIDL}}">
+                                <h3>Trazabiliadad LDIL</h3>
+                                <div class="box-inp-tabs">
+                                    <input id="selDatosTrazabilidad_LIDL" class="inp-default" type="number" ng-model="datosLoteProcesoPaking.detalle[idxTab].selDatosTrazabilidad_LIDL" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6" id="divPKPTI" style="display:{{divCEPTI}}">
+                                <h3>Trazabiliadad PTI</h3>
+                                <div class="box-inp-tabs">
+                                    <input id="selDatosTrazabilidad_PTI" class="inp-default" type="number" ng-model="datosLoteProcesoPaking.detalle[idxTab].selDatosTrazabilidad_PTI" />
+                                </div>
+                            </div>
+                        </div>
+                        <!-- COL -->
+                        <div class="clearbig"></div>
+                        <!-- COL 12 -->
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="hgroup">Datos productor y packing</div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <h3>Productor</h3>
+                                <div class="box-sl-tabs mb-10">
+                                    <select title="Region" class="inp-default inp-tab-mercado" ng-model="datosLoteProcesoPaking.detalle[idxTab].trazabilidadProRegionTab" ng-change="getProvinciaPro(datosLoteProcesoPaking.detalle[idxTab].trazabilidadProRegionTab)" ng-options="item as item.name for item in trazabilidadProRegionTabOpciones track by item.value">
+                                        <option value="">Seleccionar Region</option>
+                                    </select>
+                                </div>
+                                <div class="box-sl-tabs mb-10">
+                                    <select title="Provincia" id="trazabilidadProProvinciaTab" class="inp-default inp-tab-mercado" ng-model="datosLoteProcesoPaking.detalle[idxTab].trazabilidadProProvinciaTab" ng-change="getComunaPro(datosLoteProcesoPaking.detalle[idxTab].trazabilidadProProvinciaTab)" ng-options="item as item.name for item in trazabilidadProProvinciaTabOpciones track by item.value">
+                                        <option value="">Seleccionar Provincia</option>
+                                    </select>
+                                </div>
+                                <div class="box-sl-tabs">
+                                    <select title="Comuna" id="trazabilidadProComunaTab" class="inp-default inp-tab-mercado" ng-model="datosLoteProcesoPaking.detalle[idxTab].trazabilidadProComunaTab" ng-options="item as item.name for item in trazabilidadProComunaTabOpciones track by item.value">
+                                        <option value="">Seleccionar Comuna</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <h3>Packing</h3>
+                                <div class="box-sl-tabs mb-10">
+                                    <select title="Region" id="trazabilidadPacRegionTab" class="inp-default inp-tab-mercado" ng-model="datosLoteProcesoPaking.detalle[idxTab].trazabilidadPacRegionTab" ng-change="getProvinciaPac(datosLoteProcesoPaking.detalle[idxTab].trazabilidadPacRegionTab)" ng-options="item as item.name for item in trazabilidadPacRegionTabOpciones track by item.value">
+                                        <option value="">Seleccionar Region</option>
+                                    </select>
+                                </div>
+                                <div class="box-sl-tabs mb-10">
+                                    <select title="Provincia" id="trazabilidadPacProvinciaTab" class="inp-default inp-tab-mercado" ng-model="datosLoteProcesoPaking.detalle[idxTab].trazabilidadPacProvinciaTab" ng-change="getComunaPac(datosLoteProcesoPaking.detalle[idxTab].trazabilidadPacProvinciaTab)" ng-options="item as item.name for item in trazabilidadPacProvinciaTabOpciones track by item.value">
+                                        <option value="">Seleccionar Provincia</option>
+                                    </select>
+                                </div>
+                                <div class="box-sl-tabs">
+                                    <select title="Comuna" id="trazabilidadPacComunaTab" class="inp-default inp-tab-mercado" ng-model="datosLoteProcesoPaking.detalle[idxTab].trazabilidadPacComunaTab" ng-options="item as item.name for item in trazabilidadPacComunaTabOpciones track by item.value">
+                                        <option value="">Seleccionar Comuna</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- COL 12 -->
+                    </div>
+                    <!--**** ROW  ****-->
+                </div>
+                <!--****  TRAZABILIDAD POR MATERIAL  ****-->
+                <div class="clear"></div>
+                <!--**********************  MENU TABS  **********************-->
+                <div class="section-03" id="#">
+                    <div class="tab-menu" id="tabTrazabilidadPaking">
+                        <!-- (SE REPITE CUANTAS VECES SE AGREGO LA PANTALLA EMBALAJES) -->
+                        <div id="btn_tab_emb_1" class="btn-tab-{{tabs.seleccionado}}" ng-repeat="tabs in selTab" ng-click="irAlTab(tabs.idx)">{{tabs.nombre}}</div>
+                        <!-- (SE REPITE CUANTAS VECES SE AGREGO LA PANTALLA EMBALAJES) -->
+                    </div>
+                </div>
+                <!--**********************  MENU TABS  **********************-->
+            </div>
+            <!-- CONTENT TABS -->
+        </div>
+    </div>
+    <!-- /CONTENT -->
+    <!-- FOOTER -->
+    <div class="footer">
+        <!-- inicia BOX MOBILE -->
+        <div class="mobile-full">
+            <div class="btn btn-center" ng-click="btnContinuar()">CONTINUAR</div>
+        </div>
+        <!-- end BOX MOBILE -->
+    </div>
+    <!-- /FOOTER -->
+</div>

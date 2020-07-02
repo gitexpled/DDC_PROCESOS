@@ -1,0 +1,19 @@
+<script src="app/menus/crtMenu.js"></script>
+<div class="{{page.animation}}" id="MenuInicial" ng-controller="menuPaking">
+<div class="container">
+        <div class="box-menu-packing">
+            <div style="display: {{visibleNCC}}" class="col-xs-12 col-sm-6 col-md-6">
+                <div class="menu-packing" ng-click="goToPage('/nuevoLote')">
+                <img class="img-lote-packing" src="img/icon/packing_nuevo.png">
+                    <p>Nuevo <br>Lote Proceso</p>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="menu-packing" ng-click="mostrarPop(true)">
+                    <img class="img-lote-packing" src="img/icon/packing_buscar.png">
+                    <p>Lote Proceso <br>Existente</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

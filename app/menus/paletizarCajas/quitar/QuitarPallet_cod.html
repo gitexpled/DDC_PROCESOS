@@ -1,0 +1,41 @@
+<script src="app/paletizarCajas/ctrPaletizajeQuitar.js"></script>﻿
+<div id="QuitarPallet_cod" data-role="page" ng-controller="ctrQuitarPallet_cod">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="nav-back" ng-click="navegacionPagina('menuPaletizar','fadeInLeft','')">
+            <p>Volver</p>
+        </div>
+        <div class="breadcrumbs">
+            <ul>
+                <li>{{datosExportadora.exportadora.DESCRIPTION}}</li>
+                <li>{{datosExportadora.especie.DESCRIPTION}}</li>
+                <li>Menú Paletizar</li>
+                <li>Quitar Cajas</li>
+            </ul>
+        </div>
+    </div>
+    <!-- /HEADER -->
+    <!-- CONTENT -->
+    <div class="container">
+        <div class="box-menu-packing">
+            <div class="menu-packing">
+                <img class="img-lote-packing" src="img/barcode.png"  ng-click="codearPalet()">
+                <p>Pallet <br>Existente</p>
+                <br>
+                <div class="col-2">
+                    <input class="inp-default" type="text" ng-model="numeroPallet" id="numeroPallet" placeholder="Nº" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CONTENT -->
+    <!-- FOOTER -->
+    <div class="footer">
+        <!-- inicia BOX MOBILE -->
+        <div class="mobile-full">
+            <div class="btn btn-center" ng-click="buscarPallet()">CONTINUAR</div>
+        </div>
+        <!-- end BOX MOBILE -->
+    </div>
+    <!-- /FOOTER -->
+</div>
