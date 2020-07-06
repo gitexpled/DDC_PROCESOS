@@ -27,6 +27,7 @@ target/
 /.nb-gradle/
 build/
 /descargas/
+/config/
 ### VS Code ###
 .vscode/
 
