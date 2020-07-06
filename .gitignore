@@ -28,6 +28,10 @@ target/
 build/
 /descargas/
 /config/
+/nbproject/
+/respaldpo/
+/binr/
+/ZPL/
 ### VS Code ###
 .vscode/
 
