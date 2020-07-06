@@ -19,6 +19,7 @@ appExpled.lazyController('ctrMercadoInterno', function ($scope, $routeParams, $r
             $scope.verPopRespuesta = "none";
         }
     }
+	//Paso a pre_prd
    $scope.clienteSeleccion = "none";
    if($rootScope.userData.mail=="servicio"){
        $scope.clienteSeleccion = "";
@@ -274,6 +275,7 @@ appExpled.lazyController('ctrMercadoInterno', function ($scope, $routeParams, $r
             }else{
                 cadenaXML += '                  <tem:ACCTASSCAT>'+$rootScope.dataSeleccion.ACCTASSCAT+'</tem:ACCTASSCAT>';
             }
+			cadenaXML += '                  <tem:AUFEX>X</tem:AUFEX>';
             cadenaXML += '               </tem:ZMOV_CREATE_RECEP_PT_FRESCO'+rfc+'_LT_ITEMS>';
         cadenaXML += '            </tem:LT_ITEMS>';
         cadenaXML += '            <tem:LT_ITEM_DEST>';

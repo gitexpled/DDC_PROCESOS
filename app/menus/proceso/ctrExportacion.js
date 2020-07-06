@@ -764,7 +764,7 @@ appExpled.lazyController('crtResumen', function ($scope, $routeParams, $rootScop
     $rootScope.loading.show();
     $http({
       method: 'POST',
-      url: IPSERVER + 'JSON_ZMOV_10020.aspx?IV_MATNR=' + $rootScope.datosPaletizaje.detalle[0].material.MATNR + '&IV_WERKS=' + angular.uppercase($rootScope.userData.centro) + '&IV_HU_GRP4=' + $rootScope.datosPaletizaje.detalle[0].altura.VALUE_CHAR + '&IV_STLAL_PALLET=01&IV_TIP_PACKING=' + (($rootScope.userData.mail === 'recepcionPallet') ? 'S' : 'C'),
+      url: IPSERVER + 'JSON_ZMOV_10020.aspx?IV_MATNR=' + $rootScope.datosPaletizaje.detalle[0].material.MATNR + '&IV_WERKS=' + angular.uppercase($rootScope.userData.centro) + '&IV_HU_GRP4=' + $rootScope.datosPaletizaje.detalle[0].altura.VALUE_CHAR + '&IV_STLAL_PALLET=01&IV_TIP_PACKING=0', //+ (($rootScope.userData.mail === 'recepcionPallet') ? 'S' : 'C'),
       headers: { 'Content-Type': 'text/xml; charset=utf-8' },
       processData: false,
       dataType: 'json',
